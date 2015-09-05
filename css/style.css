@@ -565,10 +565,13 @@ a.article-title:hover {
 .article-entry:after {
   clear: both;
 }
-.article-entry p,
+.article-entry p {
+  line-height: 1.8em;
+  margin: 1em 0 0.6em 0;
+}
 .article-entry table {
   line-height: 1.8em;
-  margin: 1.8em 0;
+  margin: 1em 0;
 }
 .article-entry h1,
 .article-entry h2,
@@ -594,7 +597,10 @@ a.article-title:hover {
 .article-entry a:hover {
   text-decoration: underline;
 }
-.article-entry ul,
+.article-entry ul {
+  margin-top: 0;
+  margin-bottom: 0;
+}
 .article-entry ol,
 .article-entry dl {
   margin-top: 1.8em;
@@ -1112,6 +1118,7 @@ a.article-title:hover {
   overflow: auto;
   color: #ccc;
   line-height: 1.6em;
+  font-size: 0.6em;
 }
 .article-entry .highlight .gutter pre,
 .article-entry .gist .gist-file .gist-data .line-numbers {
@@ -1164,7 +1171,7 @@ a.article-title:hover {
 }
 .article-entry .highlight .gutter pre {
   text-align: right;
-  padding-right: 20px;
+  padding-right: 4px;
 }
 .article-entry .highlight .line {
   height: 28.8px;
@@ -1189,7 +1196,7 @@ a.article-title:hover {
 .article-entry .gist .gist-file .gist-data .line-numbers {
   background: none;
   border: none;
-  padding: 0 20px 0 0;
+  padding: 0 0 0 0;
 }
 .article-entry .gist .gist-file .gist-data .line-data {
   padding: 0 !important;
