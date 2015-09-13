@@ -63,27 +63,17 @@
   
     <article id="post-iOS应用内付费(IAP)提交审核一波三折" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/09/12/iOS应用内付费(IAP)提交审核一波三折/" class="article-date">
-  <time datetime="2015-09-12T09:20:18.000Z" itemprop="datePublished">2015-09-12</time>
+    <a href="/2015/09/13/iOS应用内付费(IAP)提交审核一波三折/" class="article-date">
+  <time datetime="2015-09-13T08:09:05.000Z" itemprop="datePublished">2015-09-13</time>
 </a>
     
   </div>
   <div class="article-inner">
     
     
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/09/12/iOS应用内付费(IAP)提交审核一波三折/">iOS应用内付费(IAP)提交审核一波三折</a>
-    </h1>
-  
-
-      </header>
-    
     <div class="article-entry" itemprop="articleBody">
       
-        <p>App Store的审核众所周知是一个耗时耗力的活儿，尤其是第一个版本的提交，如果App又包含的内付费的功能，那就更需要耐心了。为期一个半月的审核终于通过，简单记录下期间的经验，希望能帮助到大家。</p>
+        <h2 id="title:_iOS应用内付费(IAP)提交审核一波三折">title: iOS应用内付费(IAP)提交审核一波三折</h2><p>App Store的审核众所周知是一个耗时耗力的活儿，尤其是第一个版本的提交，如果App又包含的内付费的功能，那就更需要耐心了。为期一个半月的审核终于通过，简单记录下期间的经验，希望能帮助到大家。</p>
 <h4 id="首先汇总下被拒的官方回复：">首先汇总下被拒的官方回复：</h4><ul>
 <li>2.2 - Apps that exhibit bugs will be rejected</li>
 <li>2.9 - Apps that are “demo”, “trial”, or “test” versions will be rejected. Beta Apps may only be submitted through TestFlight and must follow the TestFlight guidelines</li>
@@ -99,34 +89,34 @@
 </li>
 <li><p>2.9，由于我们的App是做了日文的本地化，在首页banner图片上有细小的测试字样，提审的时候没有去除，苹果对这方面的审核非常严格，会认为你的产品当前仍处于测试版，所以不能上架。提醒开发者留意这些细节。</p>
 </li>
-<li><p>3.3，此项是关于iTunes Connect 中App介绍说明的，建议说明文案宁少勿多，不要设计等等、更多字样，只列举明确包含的功能即可。</p>
+<li><p>3.3，此项是关于iTunes Connect 中App介绍说明的，建议说明文案宁少勿多，不要涉及等等、更多字样，只列举明确包含的功能即可。</p>
 </li>
-<li><p>14.1/14.3，建议开发者对应用的评级有一个合理的定位，尤其是UGC、视频方面的App，在不清楚的情况下级别勾选越高越对审核有帮助。详细请参考<a href="https://developer.apple.com/app-store/review/guidelines/" target="_blank" rel="external">官方审核指南</a>。如果是UGC内容要非常明显的增加举报入口，及一定范围的敏感词过滤功能。</p>
+<li><p>14.1/14.3，建议开发者对应用的评级有一个合理的定位，尤其是UGC、视频方面的App，在不清楚的情况下级别勾选越高越对审核有帮助。详细请参考<a href="https://developer.apple.com/app-store/review/guidelines/" target="_blank" rel="external">官方审核指南</a>。如果是UGC内容要有非常明显的举报入口，及一定范围内的敏感词过滤功能。</p>
 </li>
-<li><p>17.2，在App集成第三方登录时会经常遇到，苹果建议开发者有自己的帐号系统，如果仅使用Facebook/Twitter/Weibo/Weixin做认证，除了拉取用户个人资料和分享，App必须包含显著的FB和TW特定账户功能。特定功能比如同步Feed至第三方系统，获取粉丝及关注列表等。针对此条款我们专门做了申诉，大家可以作为参考：</p>
+<li><p>17.2，在App集成第三方登录时会经常遇到，苹果建议开发者有自己的帐号系统，如果是使用Facebook/Twitter/Weibo/Weixin做认证，除了拉取用户个人资料和分享，App必须包含显著的FB和TW特定账户功能。特定功能比如同步Feed至第三方系统，获取粉丝及关注列表等。针对此条款我们专门做了申诉，大家可以作为参考：</p>
 <p>Sorry but I am afraid you misunderstood the function of our application. Actually wedo not force users to share personal information in order to function, we justpull our users’ profile information when they login from Facebook and Twitter.And for the account-based features from Facebook and Twitter, users can share streaming to The-third Party platform, andafter sharing success, there will be link on the-third Party platform  which can click and jump to our app. Userscan also share their clips to Facebook and Twitter and these message will besynchronized. we made screenshots to explain this functionality of ourapplication. I hope it works to help you know more about our app. </p>
-<p>另外还配了应用内使用Facebook功能的配图，比如分享、同步Feed，最后才审核通过。</p>
+<p>另外还配了应用内使用Facebook功能的配图，比如分享、同步Feed，最后才审核通过。下图为数次被拒的原因。</p>
 </li>
 </ul>
 <p><img src="http://7xkptx.com1.z0.glb.clouddn.com/43g34h6.png" alt="Purchases"></p>
 <h4 id="重点说一下IAP审核遇到的问题">重点说一下IAP审核遇到的问题</h4><ul>
 <li>先说购买凭证的验证，在苹果审核期间只会再Sandbox环境购买，所以购买凭证需要链接苹果测试服务器（<a href="https://sandbox.itunes.apple.com/verifyReceipt" target="_blank" rel="external">https://sandbox.itunes.apple.com/verifyReceipt</a> ）来验证，等审核通过，后端部署到苹果正式服务器（<a href="https://buy.itunes.apple.com/verifyReceipt" target="_blank" rel="external">https://buy.itunes.apple.com/verifyReceipt</a>）即可。我们在这方面犯了一个错误就是在期间后段链接的是苹果的测试服务器造成购买失败，应用被拒绝。</li>
-<li>如果应用被拒了一次，再次提交时的如果IAP商品的状态为Developer Action Needed，需要手动刷新下，编辑下商品名称，加个空格即可。然后状态会变为正在等待审核，再上传二进制文件。</li>
+<li>如果应用被拒了一次，再次提交时的如果IAP商品的状态为Developer Action Needed（如下图所示），需要手动刷新下，编辑下商品名称，加个空格即可。然后状态会变为正在等待审核，再上传二进制文件。</li>
 </ul>
 <p><img src="http://7xkptx.com1.z0.glb.clouddn.com/f43thj4b53h235g5b.png" alt="Purchases"></p>
-<h4 id="One_more_thing_-_提交申诉">One more thing - 提交申诉</h4><ul>
+<h4 id="One_more_thing_-_合理申诉">One more thing - 合理申诉</h4><ul>
 <li>如果应用被拒后，第一时间先确认是由于二进制文件的问题，还是文案的描述问题，或者是苹果审核团队的疑问未得到解答。如果是二进制文件被拒，则需要修复问题后重新打包上传，等待审核结果。</li>
 </ul>
 <ul>
 <li>如果是提审文案或者配图的问题只需要修改下再次提交审核即可，无需二次打包。</li>
-<li>还有一种情况是审核被拒，可以不做任何改动，先提交申诉。在iTunes Connect解决方案中心会收到来自苹果审核团队的站内信，只需要详细逐条回复即可。最好绘声绘色，图文并茂，一般24小时内会得到苹果的二次确认。如果审核人员认可了你的申诉，那么你的App很快就会进入In Review的状态，离上架就只有一步之遥了。心路历程附图：</li>
+<li>还有一种情况是审核被拒，可以不做任何改动，直接申诉。在iTunes Connect解决方案中心会收到来自苹果审核团队的站内信，只需要详细逐条回复即可。最好绘声绘色，图文并茂，一般24小时内会得到苹果的二次确认。如果审核人员认可了你的申诉，那么你的App很快就会进入In Review的状态，离上架就只有一步之遥了。心酸经历附个图：</li>
 </ul>
 <p><img src="http://7xkptx.com1.z0.glb.clouddn.com/f2f32g43gwg.png" alt="Purchases"></p>
 <h6 id=""> </h6>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/12/iOS应用内付费(IAP)提交审核一波三折/" data-id="ciegv6kpb0000yib1ekxk506d" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/13/iOS应用内付费(IAP)提交审核一波三折/" data-id="ciei80ozq00000mb1qo41zzbg" class="article-share-link">Share</a>
       
       
     </footer>
@@ -187,7 +177,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/05/使用github发布ios应用/" data-id="ciegv6kpw0001yib1h69f6r94" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/05/使用github发布ios应用/" data-id="ciei80p0e00010mb1g48m8z59" class="article-share-link">Share</a>
       
       
     </footer>
@@ -224,7 +214,7 @@
       <ul>
         
           <li>
-            <a href="/2015/09/12/iOS应用内付费(IAP)提交审核一波三折/">iOS应用内付费(IAP)提交审核一波三折</a>
+            <a href="/2015/09/13/iOS应用内付费(IAP)提交审核一波三折/">(no title)</a>
           </li>
         
           <li>
