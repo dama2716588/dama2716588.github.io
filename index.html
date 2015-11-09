@@ -63,8 +63,8 @@
   
     <article id="post-APNS测试与部署" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/11/08/APNS测试与部署/" class="article-date">
-  <time datetime="2015-11-08T09:08:32.000Z" itemprop="datePublished">2015-11-08</time>
+    <a href="/2015/11/09/APNS测试与部署/" class="article-date">
+  <time datetime="2015-11-09T07:27:42.000Z" itemprop="datePublished">2015-11-09</time>
 </a>
     
   </div>
@@ -75,7 +75,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/08/APNS测试与部署/">APNS测试与部署</a>
+      <a class="article-title" href="/2015/11/09/APNS测试与部署/">APNS测试与部署</a>
     </h1>
   
 
@@ -97,14 +97,14 @@
 <p>完成上述操作后，打开终端，进入p12文件所在文件夹，执行以下命令，生成服务端push所用的pem证书就可以了。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl pkcs12 -in XXX.p12 -out XXX.pem -nodes</span><br></pre></td></tr></table></figure>
 <p>查看证书有效期：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl x509 -in xxx.pem -noout -dates</span><br></pre></td></tr></table></figure></p>
-<p>返回结果<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">notBefore=Nov  <span class="number">6</span> <span class="number">07</span>:<span class="number">55</span>:<span class="number">33</span> <span class="number">2015</span> GMT</span><br><span class="line">notAfter=Nov  <span class="number">5</span> <span class="number">07</span>:<span class="number">55</span>:<span class="number">33</span> <span class="number">2016</span> GMT</span><br></pre></td></tr></table></figure></p>
+<p>返回结果：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">notBefore=Nov  <span class="number">6</span> <span class="number">07</span>:<span class="number">55</span>:<span class="number">33</span> <span class="number">2015</span> GMT</span><br><span class="line">notAfter=Nov  <span class="number">5</span> <span class="number">07</span>:<span class="number">55</span>:<span class="number">33</span> <span class="number">2016</span> GMT</span><br></pre></td></tr></table></figure></p>
 <p>连接APNS测试证书是否合法：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// Development 环境</span><br><span class="line">openssl s_client -connect gateway.sandbox.push.apple.com:<span class="number">2195</span> -cert xxx.pem -key xxx.pem </span><br><span class="line">// Distribution 环境</span><br><span class="line">openssl s_client -connect gateway.push.apple.com:<span class="number">2195</span> -cert xxx.pem -key xxx.pem</span><br></pre></td></tr></table></figure></p>
-<p>合法返回结果<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Protocol  : TLSv1</span><br><span class="line">Cipher    : AES256-SHA</span><br><span class="line">Session-ID:</span><br><span class="line">Session-ID-ctx:</span><br><span class="line">Master-Key: <span class="number">30</span>AF233C50CBEB51B7358BA47E6B4D556CC962BC288F6D51E68300D86400F927925077B5B90C4938B189146E0A4897B2</span><br><span class="line">Key-Arg   : None</span><br><span class="line">Start Time: <span class="number">1446972326</span></span><br><span class="line">Timeout   : <span class="number">300</span> (sec)</span><br><span class="line">Verify <span class="built_in">return</span> code: <span class="number">0</span> (ok)</span><br></pre></td></tr></table></figure></p>
+<p>合法返回结果：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Protocol  : TLSv1</span><br><span class="line">Cipher    : AES256-SHA</span><br><span class="line">Session-ID:</span><br><span class="line">Session-ID-ctx:</span><br><span class="line">Master-Key: <span class="number">30</span>AF233C50CBEB51B7358BA47E6B4D556CC962BC288F6D51E68300D86400F927925077B5B90C4938B189146E0A4897B2</span><br><span class="line">Key-Arg   : None</span><br><span class="line">Start Time: <span class="number">1446972326</span></span><br><span class="line">Timeout   : <span class="number">300</span> (sec)</span><br><span class="line">Verify <span class="built_in">return</span> code: <span class="number">0</span> (ok)</span><br></pre></td></tr></table></figure></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/11/08/APNS测试与部署/" data-id="cigqauze00000acb1c2d5735v" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/11/09/APNS测试与部署/" data-id="cigqauze00000acb1c2d5735v" class="article-share-link">Share</a>
       
       
     </footer>
@@ -278,7 +278,7 @@
       <ul>
         
           <li>
-            <a href="/2015/11/08/APNS测试与部署/">APNS测试与部署</a>
+            <a href="/2015/11/09/APNS测试与部署/">APNS测试与部署</a>
           </li>
         
           <li>
