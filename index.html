@@ -61,10 +61,61 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-通过runtime转换对象为字典" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/11/11/通过runtime转换对象为字典/" class="article-date">
+  <time datetime="2015-11-11T12:34:02.000Z" itemprop="datePublished">2015-11-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/11/11/通过runtime转换对象为字典/">通过runtime转换对象为字典</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="一，先了解一些runtime小知识">一，先了解一些<a href="https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ObjCRuntimeRef/index.html" target="_blank" rel="external">runtime</a>小知识</h3><p>众所周知，<a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html" target="_blank" rel="external">Objective-C</a>是一种面向对象的高级动态语言，它可以将很多编译时期做的事情放到运行时来处理，比如创建类和对象、进行消息传递和转发等，使得代码更具灵活性。与Object-C runtime 交互有三种方式：Objective-C源代码、NSObject方法及Runtime的函数。</p>
+<h3 id="二，如何获取属性名称">二，如何获取属性名称</h3><p>首先介绍一下runtime中的property，它是一个指向<code>objc_property</code>结构体的指针：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/// An opaque type that represents an Objective-C declared property.&#10;typedef struct objc_property *objc_property_t;</span><br></pre></td></tr></table></figure>
+<p>可以通过<code>class_copyPropertyList</code> 和 <code>protocol_copyPropertyList</code>方法来获取类和协议中的属性：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`objc_property_t *class_copyPropertyList(Class cls, unsigned int *outCount)objc_property_t *protocol_copyPropertyList(Protocol *proto, unsigned int *outCount)`</span><br></pre></td></tr></table></figure>
+<p>比如获取某个类（obj）的属性列表：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unsigned int propsCount;&#10;objc_property_t *props = class_copyPropertyList([obj class], &#38;propsCount)</span><br></pre></td></tr></table></figure>
+<p>通过property_getName方法就可以得到某个类属性的名字了：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unsigned int propsCount;&#10;objc_property_t *props = class_copyPropertyList([obj class], &#38;propsCount);&#10;for(int i = 0;i &#60; propsCount; i++)&#10;&#123;&#10;    objc_property_t prop = props[i];&#10;    NSString *propName = [NSString stringWithUTF8String:property_getName(prop)];&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>完整代码如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+ (NSDictionary*)getDicFomObj:(id)obj&#10;&#123;&#10;    NSMutableDictionary *dic = [NSMutableDictionary dictionary];&#10;    unsigned int propsCount;&#10;    objc_property_t *props = class_copyPropertyList([obj class], &#38;propsCount);&#10;    for(int i = 0;i &#60; propsCount; i++)&#10;    &#123;&#10;        objc_property_t prop = props[i];&#10;        &#10;        NSString *propName = [NSString stringWithUTF8String:property_getName(prop)];&#10;        id value = [obj valueForKey:propName];&#10;        if(value == nil)&#10;        &#123;&#10;            value = [NSNull null];&#10;        &#125;&#10;        else&#10;        &#123;&#10;            value = [self getObjectInternal:value];&#10;        &#125;&#10;        [dic setObject:value forKey:propName];&#10;    &#125;&#10;    return dic;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="三，解析属性对应的数据结构">三，解析属性对应的数据结构</h3><p>得到类属性的名称后，就可以知道该属性对应的类型了，如果是Object-C class，直接判断数据类型即可，比如NSString、NSArray、NSDictionary等。如果该属性的值对应的是派生类，则需要回到上一步重新解析，直到遍历完为止。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">+ (id)getObjectInternal:(id)obj&#10;&#123;&#10;    if([obj isKindOfClass:[NSString class]]&#10;       || [obj isKindOfClass:[NSNumber class]]&#10;       || [obj isKindOfClass:[NSNull class]])&#10;    &#123;&#10;        return obj;&#10;    &#125;&#10;    &#10;    if([obj isKindOfClass:[NSArray class]])&#10;    &#123;&#10;        NSArray *objarr = obj;&#10;        NSMutableArray *arr = [NSMutableArray arrayWithCapacity:objarr.count];&#10;        for(int i = 0;i &#60; objarr.count; i++)&#10;        &#123;&#10;            [arr setObject:[self getObjectInternal:[objarr objectAtIndex:i]] atIndexedSubscript:i];&#10;        &#125;&#10;        return arr;&#10;    &#125;&#10;    &#10;    if([obj isKindOfClass:[NSDictionary class]])&#10;    &#123;&#10;        NSDictionary *objdic = obj;&#10;        NSMutableDictionary *dic = [NSMutableDictionary dictionaryWithCapacity:[objdic count]];&#10;        for(NSString *key in objdic.allKeys)&#10;        &#123;&#10;            [dic setObject:[self getObjectInternal:[objdic objectForKey:key]] forKey:key];&#10;        &#125;&#10;        return dic;&#10;    &#125;&#10;  &#10;    // &#24403;&#23646;&#24615;&#20540;&#20026;&#27966;&#29983;&#31867;&#26102;&#65292;&#37325;&#22836;&#35299;&#26512;&#10;    return [self getDicFomObj:obj];&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>如此以来，通过getDicFomObj与getObjectInternal两个方法，即可完成多重结构的类的解析。</p>
+<p>参考：<a href="http://yulingtianxia.com/blog/2014/11/05/objective-c-runtime/" target="_blank" rel="external">http://yulingtianxia.com/blog/2014/11/05/objective-c-runtime/</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/11/11/通过runtime转换对象为字典/" data-id="cigusi7ui000106b1f5d47e6r" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-常用的SVN命令小结" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/11/10/常用的SVN命令小结/" class="article-date">
-  <time datetime="2015-11-10T12:06:22.000Z" itemprop="datePublished">2015-11-10</time>
+  <time datetime="2015-11-10T12:06:23.000Z" itemprop="datePublished">2015-11-10</time>
 </a>
     
   </div>
@@ -110,7 +161,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/11/10/常用的SVN命令小结/" data-id="cigtbrevl000136b1orpzranc" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/11/10/常用的SVN命令小结/" data-id="cigusi7uk000206b133yth8x2" class="article-share-link">Share</a>
       
       
     </footer>
@@ -163,7 +214,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/11/09/APNS测试与部署/" data-id="cigtbreux000036b1t9sj49nw" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/11/09/APNS测试与部署/" data-id="cigusi7tv000006b1hulkabvo" class="article-share-link">Share</a>
       
       
     </footer>
@@ -239,7 +290,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/19/iOS应用内付费(IAP)提交审核一波三折/" data-id="cigtbrevo000336b1t1rvwgjm" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/19/iOS应用内付费(IAP)提交审核一波三折/" data-id="cigusi7um000406b1fi0rpolu" class="article-share-link">Share</a>
       
       
     </footer>
@@ -300,7 +351,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/05/使用github发布ios应用/" data-id="cigtbrevn000236b1y602hwm7" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/05/使用github发布ios应用/" data-id="cigusi7ul000306b1j9w1i6dv" class="article-share-link">Share</a>
       
       
     </footer>
@@ -325,7 +376,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -335,6 +386,10 @@
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2015/11/11/通过runtime转换对象为字典/">通过runtime转换对象为字典</a>
+          </li>
         
           <li>
             <a href="/2015/11/10/常用的SVN命令小结/">常用的SVN命令小结</a>
