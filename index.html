@@ -63,8 +63,8 @@
   
     <article id="post-通过runtime转换对象为字典" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/11/11/通过runtime转换对象为字典/" class="article-date">
-  <time datetime="2015-11-11T12:34:02.000Z" itemprop="datePublished">2015-11-11</time>
+    <a href="/2015/11/12/通过runtime转换对象为字典/" class="article-date">
+  <time datetime="2015-11-12T03:52:43.000Z" itemprop="datePublished">2015-11-12</time>
 </a>
     
   </div>
@@ -75,7 +75,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/11/通过runtime转换对象为字典/">通过runtime转换对象为字典</a>
+      <a class="article-title" href="/2015/11/12/通过runtime转换对象为字典/">通过runtime转换对象为字典</a>
     </h1>
   
 
@@ -83,8 +83,8 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h3 id="一，先了解一些runtime小知识">一，先了解一些<a href="https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ObjCRuntimeRef/index.html" target="_blank" rel="external">runtime</a>小知识</h3><p>众所周知，<a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html" target="_blank" rel="external">Objective-C</a>是一种面向对象的高级动态语言，它可以将很多编译时期做的事情放到运行时来处理，比如创建类和对象、进行消息传递和转发等，使得代码更具灵活性。与Object-C runtime 交互有三种方式：Objective-C源代码、NSObject方法及Runtime的函数。</p>
-<h3 id="二，如何获取属性名称">二，如何获取属性名称</h3><p>首先介绍一下runtime中的property，它是一个指向<code>objc_property</code>结构体的指针：</p>
+        <h3 id="一，runtime的一些小知识">一，<a href="https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ObjCRuntimeRef/index.html" target="_blank" rel="external">runtime</a>的一些小知识</h3><p>众所周知，<a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html" target="_blank" rel="external">Objective-C</a>是一种面向对象的高级动态语言，它可以将很多编译时期做的事情放到运行时来处理，比如创建类和对象、进行消息传递和转发等，使得代码更具灵活性。与Object-C runtime 交互有三种方式：Objective-C源代码、NSObject方法及runtime的函数。</p>
+<h3 id="二，动态获取属性名称">二，动态获取属性名称</h3><p>首先介绍一下runtime中的property，它是一个指向<code>objc_property</code>结构体的指针：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/// An opaque type that represents an Objective-C declared property.&#10;typedef struct objc_property *objc_property_t;</span><br></pre></td></tr></table></figure>
 <p>可以通过<code>class_copyPropertyList</code> 和 <code>protocol_copyPropertyList</code>方法来获取类和协议中的属性：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`objc_property_t *class_copyPropertyList(Class cls, unsigned int *outCount)objc_property_t *protocol_copyPropertyList(Protocol *proto, unsigned int *outCount)`</span><br></pre></td></tr></table></figure>
@@ -102,7 +102,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/11/11/通过runtime转换对象为字典/" data-id="ciguske5t00011nb117ashrko" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/11/12/通过runtime转换对象为字典/" data-id="cigvparu70001vob1488aau2u" class="article-share-link">Share</a>
       
       
     </footer>
@@ -161,7 +161,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/11/10/常用的SVN命令小结/" data-id="ciguske5v00021nb1g96btb7y" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/11/10/常用的SVN命令小结/" data-id="cigvparu90002vob1tzvmtg6c" class="article-share-link">Share</a>
       
       
     </footer>
@@ -214,7 +214,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/11/09/APNS测试与部署/" data-id="ciguske5d00001nb1gdppj49b" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/11/09/APNS测试与部署/" data-id="cigvpartq0000vob1w3mrp0qw" class="article-share-link">Share</a>
       
       
     </footer>
@@ -290,7 +290,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/19/iOS应用内付费(IAP)提交审核一波三折/" data-id="ciguske5x00041nb1978766e4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/19/iOS应用内付费(IAP)提交审核一波三折/" data-id="cigvparub0004vob1w8qwygj0" class="article-share-link">Share</a>
       
       
     </footer>
@@ -351,7 +351,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/05/使用github发布ios应用/" data-id="ciguske5w00031nb15zzzjhbj" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/05/使用github发布ios应用/" data-id="cigvparua0003vob1z8v6ei6v" class="article-share-link">Share</a>
       
       
     </footer>
@@ -388,7 +388,7 @@
       <ul>
         
           <li>
-            <a href="/2015/11/11/通过runtime转换对象为字典/">通过runtime转换对象为字典</a>
+            <a href="/2015/11/12/通过runtime转换对象为字典/">通过runtime转换对象为字典</a>
           </li>
         
           <li>
