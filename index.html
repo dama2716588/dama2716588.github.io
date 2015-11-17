@@ -106,7 +106,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/11/12/通过runtime转换对象为字典/" data-id="cigyrawlg00038qb1ytrkiv7z" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/11/12/通过runtime转换对象为字典/" data-id="cih37ajsz00032rb1sw0nvke3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NSDictionary/">NSDictionary</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/runtime/">runtime</a></li></ul>
@@ -157,7 +157,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svn diff -r HEAD:<span class="number">2500</span> [something]</span><br></pre></td></tr></table></figure>
 <p>发现无误，提交即可。</p>
 <p>3-3），分支与主干的合并：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 分支合到主干 cd trunk</span></span><br><span class="line">svn merge -r &lt;revision <span class="built_in">where</span> branch was cut&gt;:&lt;revision of trunk&gt; svn://branch/path</span><br><span class="line"></span><br><span class="line"><span class="comment"># 主干合到分支 cd branch</span></span><br><span class="line"><span class="comment"># 在r23创建了一个分支，trunk版本号更新到了25，想把23-25之间的改动merge到分支</span></span><br><span class="line">svn merge -r <span class="number">23</span>:<span class="number">25</span> svn://trunk/path</span><br><span class="line">svn ci -m <span class="string">"Merged trunk changes r23:25 into my branch"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># cd trunk</span></span><br><span class="line"><span class="comment"># 查看当前Branch中已经有那些改动已经被合并到Trunk中</span></span><br><span class="line">svn mergeinfo svn://branch/path</span><br><span class="line"></span><br><span class="line"><span class="comment"># cd trunk</span></span><br><span class="line"><span class="comment"># 查看Branch中那些改动还未合并</span></span><br><span class="line">svn merginfo svn://branch/path --show-revs eligible</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 分支合到主干 cd trunk</span></span><br><span class="line">svn merge -r &lt;revision <span class="built_in">where</span> branch was cut&gt;:&lt;revision of trunk&gt; svn://branch/path</span><br><span class="line"></span><br><span class="line"><span class="comment"># 分支当前版本为4847，想把4825到4847间的改动merge到主干</span></span><br><span class="line"><span class="comment"># cd trunk</span></span><br><span class="line">svn merge -r <span class="number">4825</span>:<span class="number">4847</span> svn://branch/path</span><br><span class="line">svn ci -m <span class="string">"merge branch changes r4835:4847 into trunk"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 主干合到分支 cd branch</span></span><br><span class="line"><span class="comment"># 在r23创建了一个分支，trunk版本号更新到了25，想把23-25之间的改动merge到分支</span></span><br><span class="line">svn merge -r <span class="number">23</span>:<span class="number">25</span> svn://trunk/path</span><br><span class="line">svn ci -m <span class="string">"merge trunk changes r23:25 into my branch"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># cd trunk</span></span><br><span class="line"><span class="comment"># 查看当前Branch中已经有那些改动已经被合并到Trunk中</span></span><br><span class="line">svn mergeinfo svn://branch/path</span><br><span class="line"></span><br><span class="line"><span class="comment"># cd trunk</span></span><br><span class="line"><span class="comment"># 查看Branch中那些改动还未合并</span></span><br><span class="line">svn merginfo svn://branch/path --show-revs eligible</span><br></pre></td></tr></table></figure>
 <p>3-4），merge分支B到分支A</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">step1: Checkout URL A</span><br><span class="line">       <span class="comment"># cd branch A</span></span><br><span class="line">step2: merge URL B to your working copy of A</span><br><span class="line">       svn merge -r <span class="number">10</span>:HEAD http://branch-b .</span><br><span class="line">step3: Commit A</span><br></pre></td></tr></table></figure>
 <h3 id="4，冲突提示">4，冲突提示</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">(p) postpone          暂时推后处理，我可能要和那个和我冲突的家伙商量一番</span><br><span class="line">(df) diff-full        把所有的修改列出来，比比看</span><br><span class="line">(e) edit              直接编辑冲突的文件</span><br><span class="line">(mc) mine-conflict    如果你很有自信可以只用你的修改，把别人的修改干掉</span><br><span class="line">(tc) theirs-conflict  底气不足，还是用别人修改的吧</span><br><span class="line">(s) show all options  显示其他可用的命令</span><br></pre></td></tr></table></figure>
@@ -171,7 +171,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/11/10/常用的SVN命令小结/" data-id="cigyrawlk000a8qb1g593b7b5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/11/10/常用的SVN命令小结/" data-id="cih37ajt3000a2rb1ysvoxjp5" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/svn/">svn</a></li></ul>
@@ -226,7 +226,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/11/09/APNS测试与部署/" data-id="cigyrawkz00008qb1l8n238ww" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/11/09/APNS测试与部署/" data-id="cih37ajsi00002rb1jp3cwbq6" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/推送/">推送</a></li></ul>
@@ -308,7 +308,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/19/iOS应用内付费(IAP)提交审核一波三折/" data-id="cigyrawlo000k8qb1hgm883x4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/19/iOS应用内付费(IAP)提交审核一波三折/" data-id="cih37ajt7000k2rb1qnzjeufu" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IAP/">IAP</a></li></ul>
@@ -371,7 +371,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/05/使用github发布ios应用/" data-id="cigyrawlm000f8qb1ezqa2kev" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/05/使用github发布ios应用/" data-id="cih37ajt5000f2rb1r7iosakq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OTA/">OTA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github/">github</a></li></ul>
