@@ -19,7 +19,7 @@
 <meta property="og:image" content="http://7xkptx.com1.z0.glb.clouddn.com/1f4h4e5j6ju6.png">
 <meta property="og:image" content="http://7xkptx.com1.z0.glb.clouddn.com/2fwgrrh5.png">
 <meta property="og:image" content="http://7xkptx.com1.z0.glb.clouddn.com/4bertnr6jutyk.png">
-<meta property="og:updated_time" content="2015-11-14T07:11:39.000Z">
+<meta property="og:updated_time" content="2015-12-07T05:32:42.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="APNS测试与部署">
 <meta name="twitter:description" content="APNS即Apple Push Notification Service，中文翻译为苹果推送通知服务。特点是稳定、方便，不足是没有送达结果的统计，所以衍生了针对此服务的第三方推送。比如极光推送、leancloud等，很大程度上减少了服务端的开发量。本文主要介绍APNS的开发调试及部署上线的流程。客户端准备工作如下：
@@ -108,11 +108,12 @@
 <p>返回结果：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">notBefore=Nov  <span class="number">6</span> <span class="number">07</span>:<span class="number">55</span>:<span class="number">33</span> <span class="number">2015</span> GMT</span><br><span class="line">notAfter=Nov  <span class="number">5</span> <span class="number">07</span>:<span class="number">55</span>:<span class="number">33</span> <span class="number">2016</span> GMT</span><br></pre></td></tr></table></figure></p>
 <p>连接APNS测试证书是否合法：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// Development 环境</span><br><span class="line">openssl s_client -connect gateway.sandbox.push.apple.com:<span class="number">2195</span> -cert xxx.pem -key xxx.pem </span><br><span class="line">// Distribution 环境</span><br><span class="line">openssl s_client -connect gateway.push.apple.com:<span class="number">2195</span> -cert xxx.pem -key xxx.pem</span><br></pre></td></tr></table></figure></p>
 <p>合法返回结果：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Protocol  : TLSv1</span><br><span class="line">Cipher    : AES256-SHA</span><br><span class="line">Session-ID:</span><br><span class="line">Session-ID-ctx:</span><br><span class="line">Master-Key: <span class="number">30</span>AF233C50CBEB51B7358BA47E6B4D556CC962BC288F6D51E68300D86400F927925077B5B90C4938B189146E0A4897B2</span><br><span class="line">Key-Arg   : None</span><br><span class="line">Start Time: <span class="number">1446972326</span></span><br><span class="line">Timeout   : <span class="number">300</span> (sec)</span><br><span class="line">Verify <span class="built_in">return</span> code: <span class="number">0</span> (ok)</span><br></pre></td></tr></table></figure></p>
+<h3 id="如何测试">如何测试</h3><p>Developer环境下的测试推荐一个mac上的app，<a href="https://github.com/Zambiorix/Cocoa-APNS-Test" target="_blank" rel="external">Cocoa-APNS-Test</a>，部署简单方便。Production环境下的测试则需要Adhoc证书的支持了，具体操作请参考<a href="https://segmentfault.com/a/1190000000624185" target="_blank" rel="external">这里</a>。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/11/09/APNS测试与部署/" data-id="cih37ajsi00002rb1jp3cwbq6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/11/09/APNS测试与部署/" data-id="cihvivkfw0000k3b1vzvm2a8f" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/推送/">推送</a></li></ul>
