@@ -20,7 +20,7 @@
 <meta property="og:image" content="http://7xkptx.com1.z0.glb.clouddn.com/43g34h6.png">
 <meta property="og:image" content="http://7xkptx.com1.z0.glb.clouddn.com/f43thj4b53h235g5b.png">
 <meta property="og:image" content="http://7xkptx.com1.z0.glb.clouddn.com/f2f32g43gwg.png">
-<meta property="og:updated_time" content="2015-11-14T07:11:06.000Z">
+<meta property="og:updated_time" content="2015-12-07T06:00:31.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS应用内付费(IAP)提交审核一波三折">
 <meta name="twitter:description" content="App Store的审核众所周知是一个耗时耗力的活儿，尤其是第一个版本的提交，如果App又包含的内付费的功能，那就更需要耐心了。为期一个半月的审核终于通过，简单记录下期间的经验，希望能帮助到大家。
@@ -103,8 +103,7 @@
 <li>2.2 - Apps that exhibit bugs will be rejected</li>
 <li>2.9 - Apps that are “demo”, “trial”, or “test” versions will be rejected. Beta Apps may only be submitted through TestFlight and must follow the TestFlight guidelines</li>
 <li>3.3 - Apps with names, descriptions, screenshots, or previews not relevant to the content and functionality of the App will be rejected</li>
-</ul>
-<ul>
+<li>11.4 - Apps that use IAP to purchase credits or other currencies must consume those credits within the App</li>
 <li>14.1 - Any App that is defamatory, offensive, mean-spirited, or likely to place the targeted individual or group in harm’s way will be rejected</li>
 <li>14.3 - Apps that display user generated content must include a method for filtering objectionable material, a mechanism for users to flag offensive content, and the ability to block abusive users from the service</li>
 <li>17.2 - Apps that require users to share personal information, such as email address and date of birth, in order to function will be rejected</li>
@@ -115,6 +114,8 @@
 <li><p>2.9，由于我们的App是做了日文的本地化，在首页banner图片上有细小的测试字样，提审的时候没有去除，苹果对这方面的审核非常严格，会认为你的产品当前仍处于测试版，所以不能上架。提醒开发者留意这些细节。</p>
 </li>
 <li><p>3.3，此项是关于iTunes Connect 中App介绍说明的，建议说明文案宁少勿多，不要涉及等等、更多字样，只列举明确包含的功能即可。</p>
+</li>
+<li><p>11.4，苹果关于IAP的规则是虚拟货币不可以在app内流通且只能在平台内消费，更不允许有送礼+分成等方式，关于收入的分成十分严格，请开发者谨慎对待。在产品初期制定好使用规则，不然以后改动成本巨大。</p>
 </li>
 <li><p>14.1/14.3，建议开发者对应用的评级有一个合理的定位，尤其是UGC、视频方面的App，在不清楚的情况下级别勾选越高越对审核有帮助。详细请参考<a href="https://developer.apple.com/app-store/review/guidelines/" target="_blank" rel="external">官方审核指南</a>。如果是UGC内容要有非常明显的举报入口，及一定范围内的敏感词过滤功能。</p>
 </li>
@@ -142,7 +143,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/19/iOS应用内付费(IAP)提交审核一波三折/" data-id="cihvivkgs000kk3b1pp25063i" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/19/iOS应用内付费(IAP)提交审核一波三折/" data-id="cihvjuw6v000knib1fsiiva8k" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IAP/">IAP</a></li></ul>
