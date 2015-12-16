@@ -202,7 +202,7 @@
 <h4 id="13，NSOperation的特点">13，NSOperation的特点</h4><p><strong>依赖：</strong>顾名思义，第一个方法用于添加依赖，第二个方法则用于移除依赖。需要特别注意的是，用<code>addDependency:</code>方法添加的依赖关系是单向的，比如<code>[A addDependency:B];</code>，表示 A 依赖 B，B 并不依赖 A ；</p>
 <p><strong>暂停：</strong>如果我们想要暂停和恢复执行 operation queue 中的 operation ，可以通过调用 operation queue 的 setSuspended: 方法来实现这个目的。不过需要注意的是，暂停执行 operation queue 并不能使正在执行的 operation 暂停执行，而只是简单地暂停调度新的 operation 。另外，我们<strong>并不能单独地暂停执行一个 operation</strong> ，除非直接 cancel 掉；</p>
 <p><strong>优先级：</strong> 我们只能够在执行一个 operation 或将其添加到 operation queue 前，通过 operation 的 <code>setThreadPriority:</code> 方法来修改它的线程优先级。当 operation 开始执行时，NSOperation 类中默认的 <code>start</code> 方法会使用我们指定的值来修改当前线程的优先级。另外，我们指定的这个线程优先级只会影响 <code>main</code> 方法执行时所在线程的优先级。所有其它的代码，包括 operation 的 completion block 所在的线程会一直以默认的线程优先级执行。因此，当我们自定义一个并发的 operation 类时，我们也需要在 <code>start</code> 方法中根据指定的值自行修改线程的优先级。</p>
-<h4 id="14,_UITextView代理方便的使用">14, UITextView代理方便的使用</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)textViewShouldBeginEditing:(UITextView *)textView;&#10;- (BOOL)textViewShouldEndEditing:(UITextView *)textView;&#10;- (void)textViewDidBeginEditing:(UITextView *)textView;&#10;- (void)textViewDidEndEditing:(UITextView *)textView;&#10;&#10;- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text;&#10;- (void)textViewDidChange:(UITextView *)textView;&#10;- (void)textViewDidChangeSelection:(UITextView *)textView;</span><br></pre></td></tr></table></figure>
+<h4 id="14,_UITextView代理方法的使用">14, UITextView代理方法的使用</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)textViewShouldBeginEditing:(UITextView *)textView;&#10;- (BOOL)textViewShouldEndEditing:(UITextView *)textView;&#10;- (void)textViewDidBeginEditing:(UITextView *)textView;&#10;- (void)textViewDidEndEditing:(UITextView *)textView;&#10;&#10;- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text;&#10;- (void)textViewDidChange:(UITextView *)textView;&#10;- (void)textViewDidChangeSelection:(UITextView *)textView;</span><br></pre></td></tr></table></figure>
 <h4 id="15，如何把Model转换为字典">15，如何把Model转换为字典</h4><p>通过runtime的方式：</p>
 <ul>
 <li><p>首先，可以通过<code>class_copyPropertyList</code> 和 <code>protocol_copyPropertyList</code>方法来获取类的属性；</p>
@@ -269,7 +269,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/12/16/ iOS面试总结/" data-id="cii8oua9j00002rb1jtyzv68l" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/12/16/ iOS面试总结/" data-id="cii8p16zm00004jb1zhf8y5nb" class="article-share-link">Share</a>
       
       
     </footer>
@@ -328,7 +328,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/12/14/几款mac小工具推荐/" data-id="cii8ouaaf00062rb1itgmrbv9" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/12/14/几款mac小工具推荐/" data-id="cii8p170900064jb1h285j2qq" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mac/">mac</a></li></ul>
@@ -393,7 +393,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/11/10/常用的SVN命令小结/" data-id="cii8ouaaa00012rb14mevjl8d" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/11/10/常用的SVN命令小结/" data-id="cii8p170500014jb1jidsj329" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/svn/">svn</a></li></ul>
@@ -449,7 +449,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/11/09/APNS测试与部署/" data-id="cii8ouaam000l2rb13amrm4ck" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/11/09/APNS测试与部署/" data-id="cii8p170f000l4jb1k6n7c107" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/推送/">推送</a></li></ul>
@@ -532,7 +532,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/19/iOS应用内付费(IAP)提交审核一波三折/" data-id="cii8ouaaj000g2rb1kf41vcpm" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/19/iOS应用内付费(IAP)提交审核一波三折/" data-id="cii8p170d000g4jb1mddng2zb" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IAP/">IAP</a></li></ul>
@@ -595,7 +595,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/05/使用github发布ios应用/" data-id="cii8ouaah000b2rb104ow4yfz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/05/使用github发布ios应用/" data-id="cii8p170b000b4jb1qsw9h63w" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OTA/">OTA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github/">github</a></li></ul>
