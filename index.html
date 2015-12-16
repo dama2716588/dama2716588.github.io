@@ -64,7 +64,7 @@
     <article id="post- iOS面试总结" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/12/16/ iOS面试总结/" class="article-date">
-  <time datetime="2015-12-16T10:33:08.000Z" itemprop="datePublished">2015-12-16</time>
+  <time datetime="2015-12-16T10:35:46.000Z" itemprop="datePublished">2015-12-16</time>
 </a>
     
   </div>
@@ -84,20 +84,6 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>写在前面：iOS开发者水平良莠不齐，个人比较看中知识的全面性、编码规范性及学习能力，最近在面试iOS开发有些心得想和大家分享，整理如下：</p>
-<p>评分标准：（根据问题的了解程度和解决能力判断）</p>
-<ul>
-<li><p>1分  未通过</p>
-</li>
-<li><p>2分  未通过</p>
-</li>
-<li><p>3分  通过（T3）</p>
-</li>
-<li><p>4分 A  通过 (T3-T4)</p>
-</li>
-<li><p>4分 A+ 通过 (T4-T5) </p>
-<p>​</p>
-</li>
-</ul>
 <h3 id="一，基础篇">一，基础篇</h3><h4 id="1，关键字">1，关键字</h4><p><code>strong</code> 该属性值对应 <em>_strong 关键字，即该属性所声明的变量将成为对象的持有者；</em></p>
 <p><code>weak</code> 该属性对应 <strong>weak 关键字，与 </strong>weak 定义的变量一致，该属性所声明的变量将没有对象的所有权，并且当对象被破弃之后，对象将被自动赋值nil，delegate 和 Outlet 应该用 weak 属性来声明；</p>
 <p><code>copy</code> 与 strong 的区别是声明变量是拷贝对象的持有者；</p>
@@ -175,17 +161,11 @@
 <p>Apple 使用 LLVM 在不支持全部 OpenGL 特性的 GPU (Intel 低端显卡) 上生成代码 (JIT)，令程序仍然能够正常运行。之后 LLVM 与 GCC 的集成过程引发了一些不快，GCC 系统庞大而笨重，而 Apple 大量使用的 Objective-C 在 GCC 中优先级很低。此外 GCC 作为一个纯粹的编译系统，与 IDE 配合很差。加之许可证方面的要求，Apple 无法使用修改版的 GCC 而闭源。于是 Apple 决定从零开始写 C family 的前端，也就是基于 LLVM 的 Clang 了。</p>
 <p>Clang 的特性：</p>
 <ol>
-<li><p>快：通过编译 OS X 上几乎包含了所有 C 头文件的 carbon.h 的测试，包括预处理 (Preprocess)，语法 (lex)，解析 (parse)，语义分析 (Semantic Analysis)，抽象语法树生成 (Abstract Syntax Tree) 的时间，Clang 是 Apple GCC 4.0 的 2.5x 快。(2007-7-25)</p>
-</li>
-<li><p>内存占用小：Clang 内存占用是源码的 130%，Apple GCC 则超过 10x。</p>
-<p>\3. 诊断信息可读性强：我不会排版，推荐去<a href="http://clang.llvm.org/features.html#expressivediags" target="_blank" rel="external">网站</a>观看。其中错误的语法不但有源码提示，还会在错误的调用和相关上下文的下方有<del>~</del>和^的提示，相比之下 GCC 的提示很天书。</p>
-</li>
-<li><p>GCC 兼容性。</p>
-</li>
-<li><p>设计清晰简单，容易理解，易于扩展增强。与代码基础古老的 GCC 相比，学习曲线平缓。</p>
-</li>
-<li><p>基于库的模块化设计，易于 IDE 集成及其他用途的重用。</p>
-</li>
+<li>快：通过编译 OS X 上几乎包含了所有 C 头文件的 carbon.h 的测试，包括预处理 (Preprocess)，语法 (lex)，解析 (parse)，语义分析 (Semantic Analysis)，抽象语法树生成 (Abstract Syntax Tree) 的时间，Clang 是 Apple GCC 4.0 的 2.5x 快。(2007-7-25)   </li>
+<li>内存占用小：Clang 内存占用是源码的 130%，Apple GCC 则超过 10x。      </li>
+<li>GCC 兼容性。   </li>
+<li>设计清晰简单，容易理解，易于扩展增强。与代码基础古老的 GCC 相比，学习曲线平缓。   </li>
+<li>基于库的模块化设计，易于 IDE 集成及其他用途的重用。</li>
 </ol>
 <h4 id="9，BAD_ACCESS如何调试">9，BAD_ACCESS如何调试</h4><p>BAD_ACCESS的出现是因为访问了野指针，比如对一个已经释放的对象执行了release、访问已经释放对象的成员变量或者发消息。</p>
 <ol>
@@ -289,7 +269,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/12/16/ iOS面试总结/" data-id="cii8ogzty0000ynb13rpwovos" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/12/16/ iOS面试总结/" data-id="cii8oua9j00002rb1jtyzv68l" class="article-share-link">Share</a>
       
       
     </footer>
@@ -348,67 +328,10 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/12/14/几款mac小工具推荐/" data-id="cii5tggm4000finb1w6c0x2zf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/12/14/几款mac小工具推荐/" data-id="cii8ouaaf00062rb1itgmrbv9" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mac/">mac</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-通过runtime转换对象为字典" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2015/11/12/通过runtime转换对象为字典/" class="article-date">
-  <time datetime="2015-11-12T07:34:00.000Z" itemprop="datePublished">2015-11-12</time>
-</a>
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Object-C/">Object-C</a>
-  </div>
-
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/11/12/通过runtime转换对象为字典/">通过runtime转换对象为字典</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="一，runtime的一些小知识">一，<a href="https://developer.apple.com/library/mac/documentation/Cocoa/Reference/ObjCRuntimeRef/index.html" target="_blank" rel="external">runtime</a>的一些小知识</h3><p>众所周知，<a href="https://developer.apple.com/library/mac/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html" target="_blank" rel="external">Objective-C</a>是一种面向对象的高级动态语言，它可以将很多编译时期做的事情放到运行时来处理，比如创建类和对象、进行消息传递和转发等，使得代码更具灵活性。与Object-C runtime 交互有三种方式：Objective-C源代码、NSObject方法及runtime的函数。</p>
-<h3 id="二，动态获取属性名称">二，动态获取属性名称</h3><p>首先介绍一下runtime中的property，它是一个指向<code>objc_property</code>结构体的指针：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// An opaque type that represents an Objective-C declared property.</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="keyword">struct</span> objc_property *objc_property_t;</span><br></pre></td></tr></table></figure>
-<p>可以通过<code>class_copyPropertyList</code> 和 <code>protocol_copyPropertyList</code>方法来获取类和协议中的属性：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">objc_property_t *class_copyPropertyList(Class cls, <span class="keyword">unsigned</span> <span class="keyword">int</span> *outCount)objc_property_t *protocol_copyPropertyList(Protocol *proto, <span class="keyword">unsigned</span> <span class="keyword">int</span> *outCount)</span><br></pre></td></tr></table></figure>
-<p>比如获取某个类（obj）的属性列表：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> propsCount;</span><br><span class="line">objc_property_t *props = class_copyPropertyList([obj class], &amp;propsCount)</span><br></pre></td></tr></table></figure>
-<p>通过property_getName方法就可以得到某个类属性的名字了：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">unsigned</span> <span class="keyword">int</span> propsCount;</span><br><span class="line">objc_property_t *props = class_copyPropertyList([obj class], &amp;propsCount);</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; propsCount; i++)</span><br><span class="line">&#123;</span><br><span class="line">    objc_property_t prop = props[i];</span><br><span class="line">    <span class="built_in">NSString</span> *propName = [<span class="built_in">NSString</span> stringWithUTF8String:property_getName(prop)];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>完整代码如下：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">+ (<span class="built_in">NSDictionary</span>*)getDicFomObj:(<span class="keyword">id</span>)obj</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSMutableDictionary</span> *dic = [<span class="built_in">NSMutableDictionary</span> dictionary];</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> propsCount;</span><br><span class="line">    objc_property_t *props = class_copyPropertyList([obj class], &amp;propsCount);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; propsCount; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        objc_property_t prop = props[i];</span><br><span class="line">        </span><br><span class="line">        <span class="built_in">NSString</span> *propName = [<span class="built_in">NSString</span> stringWithUTF8String:property_getName(prop)];</span><br><span class="line">        <span class="keyword">id</span> value = [obj valueForKey:propName];</span><br><span class="line">        <span class="keyword">if</span>(value == <span class="literal">nil</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            value = [<span class="built_in">NSNull</span> null];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">        &#123;</span><br><span class="line">            value = [<span class="keyword">self</span> getObjectInternal:value];</span><br><span class="line">        &#125;</span><br><span class="line">        [dic setObject:value forKey:propName];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> dic;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="三，解析属性对应的数据结构">三，解析属性对应的数据结构</h3><p>得到类属性的名称后，就可以知道该属性对应的类型了，如果是Object-C class，直接判断数据类型即可，比如NSString、NSArray、NSDictionary等。如果该属性的值对应的是派生类，则需要回到上一步重新解析，直到遍历完为止。</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">+ (<span class="keyword">id</span>)getObjectInternal:(<span class="keyword">id</span>)obj</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>([obj isKindOfClass:[<span class="built_in">NSString</span> class]]</span><br><span class="line">       || [obj isKindOfClass:[<span class="built_in">NSNumber</span> class]]</span><br><span class="line">       || [obj isKindOfClass:[<span class="built_in">NSNull</span> class]])</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> obj;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>([obj isKindOfClass:[<span class="built_in">NSArray</span> class]])</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">NSArray</span> *objarr = obj;</span><br><span class="line">        <span class="built_in">NSMutableArray</span> *arr = [<span class="built_in">NSMutableArray</span> arrayWithCapacity:objarr<span class="variable">.count</span>];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>;i &lt; objarr<span class="variable">.count</span>; i++)</span><br><span class="line">        &#123;</span><br><span class="line">            [arr setObject:[<span class="keyword">self</span> getObjectInternal:[objarr objectAtIndex:i]] atIndexedSubscript:i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> arr;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span>([obj isKindOfClass:[<span class="built_in">NSDictionary</span> class]])</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">NSDictionary</span> *objdic = obj;</span><br><span class="line">        <span class="built_in">NSMutableDictionary</span> *dic = [<span class="built_in">NSMutableDictionary</span> dictionaryWithCapacity:[objdic count]];</span><br><span class="line">        <span class="keyword">for</span>(<span class="built_in">NSString</span> *key <span class="keyword">in</span> objdic<span class="variable">.allKeys</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            [dic setObject:[<span class="keyword">self</span> getObjectInternal:[objdic objectForKey:key]] forKey:key];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dic;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="comment">// 当属性值为派生类时，重头解析</span></span><br><span class="line">    <span class="keyword">return</span> [<span class="keyword">self</span> getDicFomObj:obj];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>如此以来，通过getDicFomObj与getObjectInternal两个方法，即可完成多重结构的类的解析。</p>
-<p>参考：<a href="http://yulingtianxia.com/blog/2014/11/05/objective-c-runtime/" target="_blank" rel="external">http://yulingtianxia.com/blog/2014/11/05/objective-c-runtime/</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/11/12/通过runtime转换对象为字典/" data-id="cii5tggly0003inb1owc7svi4" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NSDictionary/">NSDictionary</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/runtime/">runtime</a></li></ul>
 
     </footer>
   </div>
@@ -470,7 +393,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/11/10/常用的SVN命令小结/" data-id="cii5tggm2000ainb1vzyp8wt0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/11/10/常用的SVN命令小结/" data-id="cii8ouaaa00012rb14mevjl8d" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/svn/">svn</a></li></ul>
@@ -526,7 +449,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/11/09/APNS测试与部署/" data-id="cii5tggle0000inb1h8sbo1g8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/11/09/APNS测试与部署/" data-id="cii8ouaam000l2rb13amrm4ck" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/推送/">推送</a></li></ul>
@@ -609,7 +532,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/19/iOS应用内付费(IAP)提交审核一波三折/" data-id="cii5tggm8000pinb16m9lg93c" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/19/iOS应用内付费(IAP)提交审核一波三折/" data-id="cii8ouaaj000g2rb1kf41vcpm" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IAP/">IAP</a></li></ul>
@@ -672,7 +595,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/05/使用github发布ios应用/" data-id="cii5tggm7000kinb15um4olqq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/05/使用github发布ios应用/" data-id="cii8ouaah000b2rb104ow4yfz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OTA/">OTA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github/">github</a></li></ul>
@@ -693,7 +616,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/App-Store/">App Store</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Object-C/">Object-C</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mac/">mac</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/svn/">svn</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/App-Store/">App Store</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mac/">mac</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/svn/">svn</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -702,7 +625,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/IAP/">IAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NSDictionary/">NSDictionary</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OTA/">OTA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/runtime/">runtime</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/svn/">svn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/推送/">推送</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/IAP/">IAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OTA/">OTA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/svn/">svn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/推送/">推送</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -711,7 +634,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/IAP/" style="font-size: 10px;">IAP</a> <a href="/tags/NSDictionary/" style="font-size: 10px;">NSDictionary</a> <a href="/tags/OTA/" style="font-size: 10px;">OTA</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/mac/" style="font-size: 10px;">mac</a> <a href="/tags/runtime/" style="font-size: 10px;">runtime</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/推送/" style="font-size: 10px;">推送</a>
+      <a href="/tags/IAP/" style="font-size: 10px;">IAP</a> <a href="/tags/OTA/" style="font-size: 10px;">OTA</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/mac/" style="font-size: 10px;">mac</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/推送/" style="font-size: 10px;">推送</a>
     </div>
   </div>
 
@@ -720,7 +643,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -740,15 +663,15 @@
           </li>
         
           <li>
-            <a href="/2015/11/12/通过runtime转换对象为字典/">通过runtime转换对象为字典</a>
-          </li>
-        
-          <li>
             <a href="/2015/11/10/常用的SVN命令小结/">常用的SVN命令小结</a>
           </li>
         
           <li>
             <a href="/2015/11/09/APNS测试与部署/">APNS测试与部署</a>
+          </li>
+        
+          <li>
+            <a href="/2015/09/19/iOS应用内付费(IAP)提交审核一波三折/">iOS应用内付费(IAP)提交审核一波三折</a>
           </li>
         
       </ul>
