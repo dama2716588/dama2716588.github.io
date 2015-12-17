@@ -91,9 +91,11 @@
 <p><code>static</code> 类全局变量，只是在编译时候进行初始化，对于static变量，无论是定义在方法体里面 还是在方法体外面其作用域都一样；</p>
 <p><code>extern</code> extern的原理很简单，就是告诉编译器：“你现在编译的文件中，有一个变量虽然没有在本文件中定义，但是它是在别的文件中定义的全局变量，你要放行！”，比如 <code>extern NSString *aaa</code>;</p>
 <p><code>const</code> </p>
-<p>1）const把对象转换为一个常量，不可修改，比如<code>const int bufSize = 512</code>；</p>
-<p>2）const 对象默认为当前文件的局部变量，在全局作用域声明的const变量是定义该对象的文件的局部变量，不能被其它文件访问，可以加extern解决；</p>
-<p><code>synchronised</code> 通过对一段代码的使用进行加锁。其他试图执行该段代码的线程都会被阻塞，直到加锁线程退出执行该段被保护的代码段，也就是说@synchronized()代码块中的最后一条语句已经被执行完毕的时候；</p>
+<ul>
+<li>const把对象转换为一个常量，不可修改，比如<code>const int bufSize = 512</code>；</li>
+<li>const 对象默认为当前文件的局部变量，在全局作用域声明的const变量是定义该对象的文件的局部变量，不能被其它文件访问，可以加extern解决；</li>
+</ul>
+<p><code>synchronised</code> 通过对一段代码的使用进行加锁。其他试图执行该段代码的线程都会被阻塞，直到加锁线程退出执行该段被保护的代码段，也就是说<code>@synchronized()</code>代码块中的最后一条语句已经被执行完毕的时候；</p>
 <h4 id="2，应用程序的状态">2，应用程序的状态</h4><p><img src="http://7xkptx.com1.z0.glb.clouddn.com/1348823833_6296.png" alt=""></p>
 <p>主要考察对app当前状态及生命周期的了解程度。具体如下：</p>
 <ul>
@@ -107,26 +109,15 @@
 </ul>
 <h4 id="3，viewController的生命周期">3，<strong>viewController的生命周期</strong></h4><p><strong>单个</strong>：</p>
 <ul>
-<li><p>initWithCoder:(NSCoder *)aDecoder：（如果使用storyboard或者xib）</p>
-</li>
-<li><p>loadView：加载view</p>
-</li>
-<li><p>viewDidLoad：view加载完毕</p>
-</li>
-<li><p>viewWillAppear：控制器的view将要显示</p>
-</li>
-<li><p>viewWillLayoutSubviews：控制器的view将要布局子控件</p>
-</li>
-<li><p>viewDidLayoutSubviews：控制器的view布局子控件完成</p>
-<p><code>这期间系统可能会多次调用viewWillLayoutSubviews 、    viewDidLayoutSubviews 俩个方法</code></p>
-</li>
-<li><p>viewDidAppear:控制器的view完全显示</p>
-</li>
-<li><p>viewWillDisappear：控制器的view即将消失的时候</p>
-<p><code>这期间系统也会调用viewWillLayoutSubviews 、viewDidLayoutSubviews 两个方法</code></p>
-</li>
-<li><p>viewDidDisappear：控制器的view完全消失的时候</p>
-</li>
+<li>initWithCoder:(NSCoder *)aDecoder：（如果使用storyboard或者xib）  </li>
+<li>loadView：加载view  </li>
+<li>viewDidLoad：view加载完毕  </li>
+<li>viewWillAppear：控制器的view将要显示  </li>
+<li>viewWillLayoutSubviews：控制器的view将要布局子控件  </li>
+<li>viewDidLayoutSubviews：控制器的view布局子控件完成<br>这期间系统可能会多次调用viewWillLayoutSubviews、viewDidLayoutSubviews 俩个方法</li>
+<li>viewDidAppear:控制器的view完全显示  </li>
+<li>viewWillDisappear：控制器的view即将消失的时候<br>这期间系统也会调用viewWillLayoutSubviews 、viewDidLayoutSubviews 两个方法  </li>
+<li>viewDidDisappear：控制器的view完全消失的时候</li>
 </ul>
 <p><strong>多个跳转</strong>：</p>
 <ul>
@@ -147,49 +138,44 @@
 <p>需要分别描述下各自的使用场景，比如通知适合一对多？iOS 代理为啥要用weak修饰? iOS系统单例有哪些？</p>
 <h4 id="5，block和weak修饰符的区别">5，<strong>block和</strong>weak修饰符的区别</h4><ul>
 <li>__block不管是ARC还是MRC模式下都可以使用，可以修饰对象，还可以修饰基本数据类型；</li>
-</ul>
-<ul>
-<li>__weak只能在ARC模式下使用，也只能修饰对象（NSString），不能修饰基本数据类型（int）；</li>
-</ul>
-<ul>
+<li>__weak只能在ARC模式下使用，也只能修饰对象，不能修饰基本数据类型；</li>
 <li><strong>block对象可以在block中被重新赋值，</strong>weak不可以；</li>
 </ul>
-<h4 id="6，Objective-C中类别和类扩展的区别">6，Objective-C中类别和类扩展的区别</h4><p>Class extension常常被误解为一个匿名的category。它们的语法的确很相似。虽然都可以用来为一个现有的类添加方法和属性，但它们的目的和行为却是不同的，category和extensions的不同在于后者可以添加属性；另外类扩展添加的方法是必须要实现的；可以运行时给category通过objc_setAssociatedObject、objc_getAssociatedObject添加和读取属性。</p>
-<h4 id="7，用@property声明的NSString（或NSArray，NSDictionary）经常使用copy关键字，为什么？如果改用strong关键字，可能造成什么问题？">7，用@property声明的NSString（或NSArray，NSDictionary）经常使用copy关键字，为什么？如果改用strong关键字，可能造成什么问题？</h4><p>1）因为父类指针可以指向子类对象,使用copy的目的是为了让本对象的属性不受外界影响,使用copy无论给我传入是一个可变对象还是不可对象,我本身持有的就是一个不可变的副本.</p>
-<p>2）如果我们使用是strong,那么这个属性就有可能指向一个可变对象,如果这个可变对象在外部被修改了,那么会影响该属性.</p>
+<h4 id="6，Objective-C中类别和类扩展的区别">6，Objective-C中类别和类扩展的区别</h4><p>Class extension常常被误解为一个匿名的category。它们的语法的确很相似。虽然都可以用来为一个现有的类添加方法和属性，但它们的目的和行为却是不同的，category和extensions的不同在于后者可以添加属性；另外类扩展添加的方法是必须要实现的；可以运行时给category通过<code>objc_setAssociatedObject</code>、<code>objc_getAssociatedObject</code>添加和读取属性。</p>
+<h4 id="7，copy的使用">7，copy的使用</h4><p>用@property声明的NSString（或NSArray，NSDictionary）经常使用copy关键字，为什么？如果改用strong关键字，可能造成什么问题？</p>
+<ul>
+<li>因为父类指针可以指向子类对象,使用copy的目的是为了让本对象的属性不受外界影响,使用copy无论给我传入是一个可变对象还是不可对象,我本身持有的就是一个不可变的副本.</li>
+<li>如果我们使用是strong,那么这个属性就有可能指向一个可变对象,如果这个可变对象在外部被修改了,那么会影响该属性.</li>
+</ul>
 <h4 id="8，LLVM_与_Clang">8，LLVM 与 Clang</h4><p>Clang 是一个 C++ 编写、基于 LLVM、发布于 LLVM BSD 许可证下的。C/C++/Objective C/Objective C++ 编译器，其目标（之一）就是超越 GCC。</p>
 <p>Apple 使用 LLVM 在不支持全部 OpenGL 特性的 GPU (Intel 低端显卡) 上生成代码 (JIT)，令程序仍然能够正常运行。之后 LLVM 与 GCC 的集成过程引发了一些不快，GCC 系统庞大而笨重，而 Apple 大量使用的 Objective-C 在 GCC 中优先级很低。此外 GCC 作为一个纯粹的编译系统，与 IDE 配合很差。加之许可证方面的要求，Apple 无法使用修改版的 GCC 而闭源。于是 Apple 决定从零开始写 C family 的前端，也就是基于 LLVM 的 Clang 了。</p>
 <p>Clang 的特性：</p>
-<ol>
-<li>快：通过编译 OS X 上几乎包含了所有 C 头文件的 carbon.h 的测试，包括预处理 (Preprocess)，语法 (lex)，解析 (parse)，语义分析 (Semantic Analysis)，抽象语法树生成 (Abstract Syntax Tree) 的时间，Clang 是 Apple GCC 4.0 的 2.5x 快。(2007-7-25)   </li>
+<ul>
+<li>快，通过编译 OS X 上几乎包含了所有 C 头文件的 carbon.h 的测试，包括预处理 (Preprocess)，语法 (lex)，解析 (parse)，语义分析 (Semantic Analysis)，抽象语法树生成 (Abstract Syntax Tree) 的时间，Clang 是 Apple GCC 4.0 的 2.5x 快。(2007-7-25)   </li>
 <li>内存占用小：Clang 内存占用是源码的 130%，Apple GCC 则超过 10x。      </li>
 <li>GCC 兼容性。   </li>
 <li>设计清晰简单，容易理解，易于扩展增强。与代码基础古老的 GCC 相比，学习曲线平缓。   </li>
 <li>基于库的模块化设计，易于 IDE 集成及其他用途的重用。</li>
-</ol>
+</ul>
 <h4 id="9，BAD_ACCESS如何调试">9，BAD_ACCESS如何调试</h4><p>BAD_ACCESS的出现是因为访问了野指针，比如对一个已经释放的对象执行了release、访问已经释放对象的成员变量或者发消息。</p>
-<ol>
+<ul>
 <li>重写object的respondsToSelector方法，现实出现EXEC_BAD_ACCESS前访问的最后一个object;</li>
 <li>设置 Scheme Zombie 模式；</li>
 <li>设置全局断点快速定位问题代码所在行；</li>
 <li>Xcode 7 已经集成了BAD_ACCESS捕获功能：<strong>Address Sanitizer</strong>。 用法如下：在配置中勾选✅Enable Address Sanitizer；</li>
-</ol>
+</ul>
 <h3 id="二，实战篇">二，实战篇</h3><h4 id="10，以下代码运行结果如何?">10，以下代码运行结果如何?</h4><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)viewDidLoad</span><br><span class="line">&#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"1"</span>);</span><br><span class="line">    <span class="built_in">dispatch_sync</span>(dispatch_get_main_queue(), ^&#123;</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"2"</span>);</span><br><span class="line">    &#125;);</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"3"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>结果：死锁</p>
 <p>原因：</p>
 <ul>
 <li>dispatch_sync在等待block语句执行完成，而block语句需要在主线程里执行，所以dispatch_sync如果在主线程调用就会造成死锁；</li>
-</ul>
-<ul>
 <li>dispatch_sync是同步的，本身就会阻塞当前线程，也即主线程。而又往主线程里塞进去一个block，所以就会发生死锁；</li>
-</ul>
-<ul>
 <li>MainThread等待dispatch_sync，dispatch_sync等待block，block等待 mainquen, mainquen等待MainThread，而MainThread等待dispatch_sync。这样就形成了一个死循环；</li>
 </ul>
-<h4 id="11，HitTest方法">11，HitTest方法</h4><p><img src="http://7xkptx.com1.z0.glb.clouddn.com/7A4CE570-939C-4462-BF38-04A461AAC1C5.png" alt=""></p>
+<h4 id="11，HitTest方法">11，HitTest方法</h4><p><img src="http://7xkptx.com1.z0.glb.clouddn.com/d43g45h47j.png" alt=""></p>
 <p>场景：</p>
 <p>View A位于上方，View B位于下方。View A上有Button 2 ，View B上有Button 1，如何穿透View A ，点击让Button 2响应？</p>
-<p>通过UIView API <code>-(UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event</code>实现：</p>
+<p><code>-(UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event</code></p>
 <ul>
 <li>我们都知道，一个屏幕事件由响应链一步步传下去。这个函数返回的view就是可以让你决定在这个point的事件，你用来接收事件的view。当然，如果这个point不在你的view的范围，返回nil；</li>
 <li>如果hitTest返回的view不为空，则会把hitTest返回的view作为第一响应者</li>
@@ -198,11 +184,12 @@
 <p>代码如下：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">View A:</span><br><span class="line">-(<span class="keyword">id</span>)hitTest:(<span class="built_in">CGPoint</span>)point withEvent:(<span class="built_in">UIEvent</span> *)event</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">UIView</span> *hitView = [<span class="keyword">super</span> hitTest:point withEvent:event];</span><br><span class="line">    <span class="keyword">if</span> (hitView == <span class="keyword">self</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nil</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">return</span> hitView;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">View B:</span><br><span class="line">- (<span class="built_in">UIView</span> *)hitTest:(<span class="built_in">CGPoint</span>)point withEvent:(<span class="built_in">UIEvent</span> *)event</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// 当touch point是在self.buttonFirst上，则hitTest返回self.buttonFirst</span></span><br><span class="line">    <span class="built_in">CGPoint</span> btnPointInA = [<span class="keyword">self</span><span class="variable">.buttonFirst</span> convertPoint:point fromView:<span class="keyword">self</span>];</span><br><span class="line">    <span class="keyword">if</span> ([<span class="keyword">self</span><span class="variable">.buttonFirst</span> pointInside:btnPointInA withEvent:event]) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">self</span><span class="variable">.buttonFirst</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 否则，返回默认处理</span></span><br><span class="line">    <span class="keyword">return</span> [<span class="keyword">super</span> hitTest:point withEvent:event];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h4 id="12，如何用GCD同步若干个异步调用？（如根据若干个url异步加载多张图片，然后在都下载完成后合成一张整图）">12，如何用GCD同步若干个异步调用？（如根据若干个url异步加载多张图片，然后在都下载完成后合成一张整图）</h4><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">dispatch_queue_t</span> queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="number">0</span>);</span><br><span class="line">dispatch_group_t group = dispatch_group_create();</span><br><span class="line">dispatch_group_async(group, queue, ^&#123; <span class="comment">/*加载图片1 */</span> &#125;);</span><br><span class="line">dispatch_group_async(group, queue, ^&#123; <span class="comment">/*加载图片2 */</span> &#125;);</span><br><span class="line">dispatch_group_async(group, queue, ^&#123; <span class="comment">/*加载图片3 */</span> &#125;); </span><br><span class="line">dispatch_group_notify(group, dispatch_get_main_queue(), ^&#123;</span><br><span class="line">        <span class="comment">// 合并图片</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="12，GCD同步">12，GCD同步</h4><p>如何用GCD同步若干个异步调用？（如根据若干个url异步加载多张图片，然后在都下载完成后合成一张整图）</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">dispatch_queue_t</span> queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="number">0</span>);</span><br><span class="line">dispatch_group_t group = dispatch_group_create();</span><br><span class="line">dispatch_group_async(group, queue, ^&#123; <span class="comment">/*加载图片1 */</span> &#125;);</span><br><span class="line">dispatch_group_async(group, queue, ^&#123; <span class="comment">/*加载图片2 */</span> &#125;);</span><br><span class="line">dispatch_group_async(group, queue, ^&#123; <span class="comment">/*加载图片3 */</span> &#125;); </span><br><span class="line">dispatch_group_notify(group, dispatch_get_main_queue(), ^&#123;</span><br><span class="line">        <span class="comment">// 合并图片</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <h4 id="13，NSOperation的特点">13，NSOperation的特点</h4><p><strong>依赖：</strong>顾名思义，第一个方法用于添加依赖，第二个方法则用于移除依赖。需要特别注意的是，用<code>addDependency:</code>方法添加的依赖关系是单向的，比如<code>[A addDependency:B];</code>，表示 A 依赖 B，B 并不依赖 A ；</p>
 <p><strong>暂停：</strong>如果我们想要暂停和恢复执行 operation queue 中的 operation ，可以通过调用 operation queue 的 setSuspended: 方法来实现这个目的。不过需要注意的是，暂停执行 operation queue 并不能使正在执行的 operation 暂停执行，而只是简单地暂停调度新的 operation 。另外，我们<strong>并不能单独地暂停执行一个 operation</strong> ，除非直接 cancel 掉；</p>
 <p><strong>优先级：</strong> 我们只能够在执行一个 operation 或将其添加到 operation queue 前，通过 operation 的 <code>setThreadPriority:</code> 方法来修改它的线程优先级。当 operation 开始执行时，NSOperation 类中默认的 <code>start</code> 方法会使用我们指定的值来修改当前线程的优先级。另外，我们指定的这个线程优先级只会影响 <code>main</code> 方法执行时所在线程的优先级。所有其它的代码，包括 operation 的 completion block 所在的线程会一直以默认的线程优先级执行。因此，当我们自定义一个并发的 operation 类时，我们也需要在 <code>start</code> 方法中根据指定的值自行修改线程的优先级。</p>
-<h4 id="14,_UITextView代理方法的使用">14, UITextView代理方法的使用</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (BOOL)textViewShouldBeginEditing:(UITextView *)textView;&#10;- (BOOL)textViewShouldEndEditing:(UITextView *)textView;&#10;- (void)textViewDidBeginEditing:(UITextView *)textView;&#10;- (void)textViewDidEndEditing:(UITextView *)textView;&#10;&#10;- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text;&#10;- (void)textViewDidChange:(UITextView *)textView;&#10;- (void)textViewDidChangeSelection:(UITextView *)textView;</span><br></pre></td></tr></table></figure>
+<h4 id="14,_UITextView代理方法的使用">14, UITextView代理方法的使用</h4><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="built_in">BOOL</span>)textViewShouldBeginEditing:(<span class="built_in">UITextView</span> *)textView;</span><br><span class="line">- (<span class="built_in">BOOL</span>)textViewShouldEndEditing:(<span class="built_in">UITextView</span> *)textView;</span><br><span class="line">- (<span class="keyword">void</span>)textViewDidBeginEditing:(<span class="built_in">UITextView</span> *)textView;</span><br><span class="line">- (<span class="keyword">void</span>)textViewDidEndEditing:(<span class="built_in">UITextView</span> *)textView;</span><br><span class="line"></span><br><span class="line">- (<span class="built_in">BOOL</span>)textView:(<span class="built_in">UITextView</span> *)textView shouldChangeTextInRange:(<span class="built_in">NSRange</span>)range replacementText:(<span class="built_in">NSString</span> *)text;</span><br><span class="line">- (<span class="keyword">void</span>)textViewDidChange:(<span class="built_in">UITextView</span> *)textView;</span><br><span class="line">- (<span class="keyword">void</span>)textViewDidChangeSelection:(<span class="built_in">UITextView</span> *)textView;</span><br></pre></td></tr></table></figure>
 <h4 id="15，如何把Model转换为字典">15，如何把Model转换为字典</h4><p>通过runtime的方式：</p>
 <ul>
 <li><p>首先，可以通过<code>class_copyPropertyList</code> 和 <code>protocol_copyPropertyList</code>方法来获取类的属性；</p>
@@ -220,13 +207,9 @@
 <li>得到类属性的名称后，就可以知道该属性对应的类型了，如果是Object-C class，直接判断数据类型即可，比如NSString、NSArray、NSDictionary等。如果该属性的值对应的是派生类，则需要回到上一步重新解析，直到遍历完为止</li>
 </ul>
 <h4 id="16，常用的SVN/Git操作">16，常用的SVN/Git操作</h4><ul>
-<li><p>SVN 分支与tag</p>
+<li><p>SVN 分支与tag<br><a href="https://www.baidu.com/s?wd=SVN&amp;tn=44039180_cpr&amp;fenlei=mv6quAkxTZn0IZRqIHckPjm4nH00T1Y3PA7bP1mvrj99uH61rHT10ZwV5Hcvrjm3rH6sPfKWUMw85HfYnjn4nH6sgvPsT6K1TL0qnfK1TL0z5HD0IgF_5y9YIZ0lQzqlpA-bmyt8mh7GuZR8mvqVQL7dugPYpyq8Q1n1Pjc1nWRvPs" target="_blank" rel="external">SVN</a>官方推荐在一个版本库的根目录下先建立trunk、branches、tags这三个文件夹，其中trunk是开发主干，存放日常开发的内容；branches存放各分支的内容，比如为不同客户定制的不同版本；tags存放某个版本状态的标签，比如验收测试版、1.0.3版等。tags中的内容是存放不再修改的，tags通常只给管理员开放写权限。</p>
 </li>
-<li><p><a href="https://www.baidu.com/s?wd=SVN&amp;tn=44039180_cpr&amp;fenlei=mv6quAkxTZn0IZRqIHckPjm4nH00T1Y3PA7bP1mvrj99uH61rHT10ZwV5Hcvrjm3rH6sPfKWUMw85HfYnjn4nH6sgvPsT6K1TL0qnfK1TL0z5HD0IgF_5y9YIZ0lQzqlpA-bmyt8mh7GuZR8mvqVQL7dugPYpyq8Q1n1Pjc1nWRvPs" target="_blank" rel="external">SVN</a>官方推荐在一个版本库的根目录下先建立trunk、branches、tags这三个文件夹，其中trunk是开发主干，存放日常开发的内容；branches存放各分支的内容，比如为不同客户定制的不同版本；tags存放某个版本状态的标签，比如验收测试版、1.0.3版等。tags中的内容是存放不再修改的，tags通常只给管理员开放写权限。</p>
-</li>
-<li><p>SVN 回滚</p>
-<p>1). 改动没有被提交:直接svn revert something就行了；当something为目录时，需要加上参数-R(Recursive,递归)，否则只会将something这个目录的改动。 </p>
-<p>2），改动已经被提交:可以使用svn diff -r HEAD:2500 [something]，此处的something可以是文件、目录或整个项目。如果需要回滚到版本号2500：</p>
+<li><p>SVN 回滚<br>1). 改动没有被提交:直接svn revert something就行了；当something为目录时，需要加上参数-R(Recursive,递归)，否则只会将something这个目录的改动。<br>2). 改动已经被提交:可以使用svn diff -r HEAD:2500 [something]，此处的something可以是文件、目录或整个项目。如果需要回滚到版本号2500：</p>
 </li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svn merge -r HEAD:<span class="number">2500</span> something</span><br></pre></td></tr></table></figure>
@@ -234,13 +217,9 @@
 <li>询问关于推送、应用内付费以及企业帐号发布等知识；</li>
 <li>对AppFlyer、Adhoc、iTunes connect等了解使用情况。</li>
 </ul>
-<h4 id="18，算法题：">18，算法题：</h4><p>1）四个人夜间要过一座桥，每人走路速度不一样，过桥需要时间分别是1，2，5，10分钟。现在只有一只手电筒在过桥时必须带，同时只能两人过，如何安排能够让四人最快速度过桥？</p>
-<p>2）25匹马赛跑，每次只能跑5匹，最快能赛几次找出跑得最快的3匹马？</p>
-<h4 id="19，编码规范">19，编码规范</h4><p>不规范：</p>
-<p><img src="http://7xkptx.com1.z0.glb.clouddn.com/iOS-1.png" alt=""></p>
-<p>修改后：</p>
-<p><img src="http://7xkptx.com1.z0.glb.clouddn.com/iOS-2.png" alt=""></p>
-<p>  ​</p>
+<h4 id="18，算法题">18，算法题</h4><p>1). 四个人夜间要过一座桥，每人走路速度不一样，过桥需要时间分别是1，2，5，10分钟。现在只有一只手电筒在过桥时必须带，同时只能两人过，如何安排能够让四人最快速度过桥？</p>
+<p>2). 25匹马赛跑，每次只能跑5匹，最快能赛几次找出跑得最快的3匹马？</p>
+<h4 id="19，编码规范">19，编码规范</h4><p>不规范：<br><img src="http://7xkptx.com1.z0.glb.clouddn.com/iOS-1.png" alt=""><br>修改后：<br><img src="http://7xkptx.com1.z0.glb.clouddn.com/iOS-2.png" alt=""><br>  ​</p>
 <h3 id="三、高级篇">三、高级篇</h3><h4 id="20，Autorelease对象什么时候释放？">20，Autorelease对象什么时候释放？</h4><p>对于每一个Runloop， 系统会隐式创建一个Autorelease pool，这样所有的release pool会构成一个象CallStack一样的一个栈式结构，在每一个Runloop结束时，当前栈顶的Autorelease pool会被销毁，这样这个pool里的每个Object会被release。那什么是一个Runloop呢？ 一个UI事件，Timer call， delegate call， 都会是一个新的Runloop。</p>
 <p>Autorelease对象是在当前的runloop迭代结束时释放的，而它能够释放的原因是系统在每个runloop迭代中都加入了自动释放池Push和Pop。</p>
 <h4 id="21，深入理解runloop">21，深入理解runloop</h4><p>一般来讲，一个线程一次只能执行一个任务，执行完成后线程就会退出。如果我们需要一个机制，让线程能随时处理事件但并不退出，这种模型通常被称作 <a href="http://en.wikipedia.org/wiki/Event_loop" target="_blank" rel="external">Event Loop</a>。 Event Loop 在很多系统和框架里都有实现，比如 Node.js 的事件处理，比如 Windows 程序的消息循环，再比如 OSX/iOS 里的 RunLoop。实现这种模型的关键点在于：如何管理事件/消息，如何让线程在没有处理消息时休眠以避免资源占用、在有消息到来时立刻被唤醒。</p>
@@ -250,21 +229,19 @@
 <h4 id="22，runtime的理解与使用">22，runtime的理解与使用</h4><p>场景一：运行时给category添加属性，比如objc_getAssociatedObject、objc_setAssociatedObject；</p>
 <p>场景二：动态获取类属性名称，比如class_copyPropertyList；</p>
 <p>场景三：消息转发，在消息转发机制执行前，Runtime 系统会再给我们一次偷梁换柱的机会，即通过重载</p>
-<p><code>-(id)forwardingTargetForSelector:(SEL)aSelector</code> 方法替换消息的接受者为其他对象：</p>
-<h4 id="23，lib库的编写与使用">23，lib库的编写与使用</h4><p>1）如何保证lib库中category文件的正常读取？</p>
-<p>2）如何保证lib对arm64及armv7s的支持？</p>
-<p>3）如何合并不同平台的lia库？</p>
-<p>4）iOS 第三方库冲突的如何处理？可以对lib库内的文件修改重修打包吗 ？</p>
-<p>​      比如：duplicate symbols for architecture armv7</p>
+<p><code>-(id)forwardingTargetForSelector:(SEL)aSelector</code> 方法替换消息的接受者为其他对象。</p>
+<h4 id="23，lib库的编写与使用">23，lib库的编写与使用</h4><ul>
+<li>如何保证lib库中category文件的正常读取？</li>
+<li>如何保证lib对arm64及armv7s的支持？</li>
+<li>如何合并不同平台的lia库？</li>
+<li>iOS 第三方库冲突的如何处理？可以对lib库内的文件修改重修打包吗 ？<br>比如：duplicate symbols for architecture armv7</li>
+</ul>
 <h4 id="24，ARM64与ARMv7">24，ARM64与ARMv7</h4><p>Arm处理器，因为其低功耗和小尺寸而闻名，几乎所有的手机处理器都基于arm，其在嵌入式系统中的应用非常广泛，它的性能在同等功耗产品中也很出色。</p>
 <p>Armv6、armv7、armv7s、arm64都是arm处理器的指令集，所有指令集原则上都是向下兼容的，如iPhone4S的CPU默认指令集为armv7指令集，但它同时也兼容armv6指令集，只是使用armv6指令集时无法充分发挥其性能，即无法使用armv7指令集中的新特性，同理，iPhone5的处理器标配armv7s指令集，同时也支持armv7指令集，只是无法进行相关的性能优化，从而导致程序的执行效率没那么高。 </p>
 <p>需要注意的是iOS模拟器没有运行arm指令集，编译运行的是x86指令集，所以，只有在iOS设备上，才会执行设备对应的arm指令集。</p>
 <p>iOS设备与ARM平台分布如下图：</p>
 <p><img src="http://7xkptx.com1.z0.glb.clouddn.com/armv7s.png" alt=""></p>
-<p>参考：</p>
-<p><a href="http://www.jianshu.com/p/2e7ae4457083" target="_blank" rel="external">http://www.jianshu.com/p/2e7ae4457083</a></p>
-<p><a href="http://www.iswifting.com/2015/07/26/71/" target="_blank" rel="external">http://www.iswifting.com/2015/07/26/71/</a></p>
-<p><a href="http://blog.leichunfeng.com/blog/2015/05/31/objective-c-autorelease-pool-implementation-principle/" target="_blank" rel="external">http://blog.leichunfeng.com/blog/2015/05/31/objective-c-autorelease-pool-implementation-principle/</a></p>
+<h4 id="参考：">参考：</h4><p><a href="http://www.jianshu.com/p/2e7ae4457083" target="_blank" rel="external">http://www.jianshu.com/p/2e7ae4457083</a><br><a href="http://www.iswifting.com/2015/07/26/71/" target="_blank" rel="external">http://www.iswifting.com/2015/07/26/71/</a><br><a href="http://blog.leichunfeng.com/blog/2015/05/31/objective-c-autorelease-pool-implementation-principle/" target="_blank" rel="external">http://blog.leichunfeng.com/blog/2015/05/31/objective-c-autorelease-pool-implementation-principle/</a></p>
 
       
     </div>
