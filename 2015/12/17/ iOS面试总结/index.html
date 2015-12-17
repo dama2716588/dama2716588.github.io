@@ -20,7 +20,7 @@ weak 该属性对应 weak 关键字，与 weak 定义的变量一致，该属性
 <meta property="og:image" content="http://7xkptx.com1.z0.glb.clouddn.com/iOS-1.png">
 <meta property="og:image" content="http://7xkptx.com1.z0.glb.clouddn.com/iOS-2.png">
 <meta property="og:image" content="http://7xkptx.com1.z0.glb.clouddn.com/armv7s.png">
-<meta property="og:updated_time" content="2015-12-17T09:35:17.000Z">
+<meta property="og:updated_time" content="2015-12-17T09:36:55.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS面试总结">
 <meta name="twitter:description" content="写在前面：iOS开发者水平良莠不齐，个人比较看中知识的全面性、编码规范性及学习能力，最近在面试iOS开发有些心得想和大家分享，整理如下：
@@ -74,7 +74,7 @@ weak 该属性对应 weak 关键字，与 weak 定义的变量一致，该属性
         <section id="main"><article id="post- iOS面试总结" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/12/17/ iOS面试总结/" class="article-date">
-  <time datetime="2015-12-17T09:35:17.000Z" itemprop="datePublished">2015-12-17</time>
+  <time datetime="2015-12-17T09:36:55.000Z" itemprop="datePublished">2015-12-17</time>
 </a>
     
   </div>
@@ -119,26 +119,15 @@ weak 该属性对应 weak 关键字，与 weak 定义的变量一致，该属性
 </ul>
 <h4 id="3，viewController的生命周期">3，<strong>viewController的生命周期</strong></h4><p><strong>单个</strong>：</p>
 <ul>
-<li><p>initWithCoder:(NSCoder *)aDecoder：（如果使用storyboard或者xib）  </p>
-</li>
-<li><p>loadView：加载view  </p>
-</li>
-<li><p>viewDidLoad：view加载完毕  </p>
-</li>
-<li><p>viewWillAppear：控制器的view将要显示  </p>
-</li>
-<li><p>viewWillLayoutSubviews：控制器的view将要布局子控件  </p>
-</li>
-<li><p>viewDidLayoutSubviews：控制器的view布局子控件完成    </p>
-<p>这期间系统可能会多次调用viewWillLayoutSubviews、viewDidLayoutSubviews 俩个方法</p>
-</li>
-<li><p>viewDidAppear:控制器的view完全显示  </p>
-</li>
-<li><p>viewWillDisappear：控制器的view即将消失的时候  </p>
-<p>这期间系统也会调用viewWillLayoutSubviews 、viewDidLayoutSubviews 两个方法  </p>
-</li>
-<li><p>viewDidDisappear：控制器的view完全消失的时候</p>
-</li>
+<li>initWithCoder:(NSCoder *)aDecoder：（如果使用storyboard或者xib）    </li>
+<li>loadView：加载view    </li>
+<li>viewDidLoad：view加载完毕    </li>
+<li>viewWillAppear：控制器的view将要显示    </li>
+<li>viewWillLayoutSubviews：控制器的view将要布局子控件    </li>
+<li>viewDidLayoutSubviews：控制器的view布局子控件完成<br>这期间系统可能会多次调用viewWillLayoutSubviews、viewDidLayoutSubviews 俩个方法  </li>
+<li>viewDidAppear:控制器的view完全显示    </li>
+<li>viewWillDisappear：控制器的view即将消失的时候<br>这期间系统也会调用viewWillLayoutSubviews 、viewDidLayoutSubviews 两个方法    </li>
+<li>viewDidDisappear：控制器的view完全消失的时候</li>
 </ul>
 <p><strong>多个跳转</strong>：</p>
 <ul>
@@ -280,7 +269,7 @@ weak 该属性对应 weak 关键字，与 weak 定义的变量一致，该属性
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/12/17/ iOS面试总结/" data-id="ciia1xczd000062b1pgy2jjgv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/12/17/ iOS面试总结/" data-id="ciia204vj00007jb1oz7hk443" class="article-share-link">Share</a>
       
       
     </footer>
