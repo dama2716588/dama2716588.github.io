@@ -64,7 +64,7 @@
     <article id="post- iOS面试总结" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/12/21/ iOS面试总结/" class="article-date">
-  <time datetime="2015-12-21T09:03:44.000Z" itemprop="datePublished">2015-12-21</time>
+  <time datetime="2015-12-21T09:10:09.000Z" itemprop="datePublished">2015-12-21</time>
 </a>
     
   </div>
@@ -222,9 +222,9 @@
 <h4 id="18，算法题">18，算法题</h4><p>1). 四个人夜间要过一座桥，每人走路速度不一样，过桥需要时间分别是1，2，5，10分钟。现在只有一只手电筒在过桥时必须带，同时只能两人过，如何安排能够让四人最快速度过桥？</p>
 <p>2). 25匹马赛跑，每次只能跑5匹，最快能赛几次找出跑得最快的3匹马？</p>
 <h4 id="19，编码规范">19，编码规范</h4><p>不规范：</p>
-<p><img src="http://7xkptx.com1.z0.glb.clouddn.com/iOS-1.png" alt=""></p>
+<p><img src="http://7xkptx.com1.z0.glb.clouddn.com/1frgrebret.jpeg" alt=""></p>
 <p>修改后：</p>
-<p><img src="http://7xkptx.com1.z0.glb.clouddn.com/iOS-2.png" alt=""></p>
+<p><img src="http://7xkptx.com1.z0.glb.clouddn.com/2fewrge45h.jpeg" alt=""></p>
 <p>  ​</p>
 <h3 id="三、高级篇">三、高级篇</h3><h4 id="20，Autorelease对象什么时候释放？">20，Autorelease对象什么时候释放？</h4><p>对于每一个Runloop， 系统会隐式创建一个Autorelease pool，这样所有的release pool会构成一个象CallStack一样的一个栈式结构，在每一个Runloop结束时，当前栈顶的Autorelease pool会被销毁，这样这个pool里的每个Object会被release。那什么是一个Runloop呢？ 一个UI事件，Timer call， delegate call， 都会是一个新的Runloop。</p>
 <p>Autorelease对象是在当前的runloop迭代结束时释放的，而它能够释放的原因是系统在每个runloop迭代中都加入了自动释放池Push和Pop。</p>
