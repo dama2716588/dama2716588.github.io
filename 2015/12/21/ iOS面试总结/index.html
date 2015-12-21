@@ -10,7 +10,7 @@
 weak 该属性对应 weak 关键字，与 weak 定义的变量一致，该属性所声明的变量将没有对象的所有权，并且当对象被破弃之后，对象将被自动赋值n">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS面试总结">
-<meta property="og:url" content="http://yoursite.com/2015/12/17/ iOS面试总结/index.html">
+<meta property="og:url" content="http://yoursite.com/2015/12/21/ iOS面试总结/index.html">
 <meta property="og:site_name" content="Pandora的技术博客">
 <meta property="og:description" content="写在前面：iOS开发者水平良莠不齐，个人比较看中知识的全面性、编码规范性及学习能力，最近在面试iOS开发有些心得想和大家分享，整理如下：
 一，基础篇1，关键字strong 该属性值对应 _strong 关键字，即该属性所声明的变量将成为对象的持有者；
@@ -20,7 +20,7 @@ weak 该属性对应 weak 关键字，与 weak 定义的变量一致，该属性
 <meta property="og:image" content="http://7xkptx.com1.z0.glb.clouddn.com/iOS-1.png">
 <meta property="og:image" content="http://7xkptx.com1.z0.glb.clouddn.com/iOS-2.png">
 <meta property="og:image" content="http://7xkptx.com1.z0.glb.clouddn.com/armv7s.png">
-<meta property="og:updated_time" content="2015-12-17T09:36:55.000Z">
+<meta property="og:updated_time" content="2015-12-21T09:03:44.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS面试总结">
 <meta name="twitter:description" content="写在前面：iOS开发者水平良莠不齐，个人比较看中知识的全面性、编码规范性及学习能力，最近在面试iOS开发有些心得想和大家分享，整理如下：
@@ -73,8 +73,8 @@ weak 该属性对应 weak 关键字，与 weak 定义的变量一致，该属性
       <div class="outer">
         <section id="main"><article id="post- iOS面试总结" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/12/17/ iOS面试总结/" class="article-date">
-  <time datetime="2015-12-17T09:36:55.000Z" itemprop="datePublished">2015-12-17</time>
+    <a href="/2015/12/21/ iOS面试总结/" class="article-date">
+  <time datetime="2015-12-21T09:03:44.000Z" itemprop="datePublished">2015-12-21</time>
 </a>
     
   </div>
@@ -241,21 +241,15 @@ weak 该属性对应 weak 关键字，与 weak 定义的变量一致，该属性
 <h4 id="21，深入理解runloop">21，深入理解runloop</h4><p>一般来讲，一个线程一次只能执行一个任务，执行完成后线程就会退出。如果我们需要一个机制，让线程能随时处理事件但并不退出，这种模型通常被称作 <a href="http://en.wikipedia.org/wiki/Event_loop" target="_blank" rel="external">Event Loop</a>。 Event Loop 在很多系统和框架里都有实现，比如 Node.js 的事件处理，比如 Windows 程序的消息循环，再比如 OSX/iOS 里的 RunLoop。实现这种模型的关键点在于：如何管理事件/消息，如何让线程在没有处理消息时休眠以避免资源占用、在有消息到来时立刻被唤醒。</p>
 <p>RunLoop 实际上就是一个对象，这个对象管理了其需要处理的事件和消息，并提供了一个入口函数来执行上面 Event Loop 的逻辑。线程执行了这个函数后，就会一直处于这个函数内部 “接受消息-&gt;等待-&gt;处理” 的循环中，直到这个循环结束（比如传入 quit 的消息），函数返回。</p>
 <p>OSX/iOS 系统中，提供了两个这样的对象：NSRunLoop 和 CFRunLoopRef。CFRunLoopRef 是在 CoreFoundation 框架内的，它提供了纯 C 函数的 API，所有这些 API 都是线程安全的。NSRunLoop 是基于 CFRunLoopRef 的封装，提供了面向对象的 API，但是这些 API 不是线程安全的。</p>
+<p>问题一：NSURLConnection或NSStream指定RunLoop Mode的原因？<br>问题二：为何NSTimer在界面滚动时无响应？</p>
+<p>参考回答一：<br>如果是在主线程，那么在滚动ScrollView或者TableView时，主线程的Run Loop会运行在UITrackingRunLoopMode模式，那么NSURLConnection或者NSStream的回调就无法运行，设置为NSRunLoopCommonModes，都可以保证NSURLConnection或者NSStream的回调可以被调用。<br>参考回答二：<br>当用户触摸界面时，主线程的run loop不再对timer事件进行处理。解决办法如下：<br><code>[[NSRunLoop currentRunLoop] addTimer:timer forMode:UITrackingRunLoopMode];</code></p>
 <p>参考：<a href="http://blog.ibireme.com/2015/05/18/runloop/" target="_blank" rel="external">http://blog.ibireme.com/2015/05/18/runloop/</a></p>
-<h4 id="22，runtime的理解与使用">22，runtime的理解与使用</h4><p>场景一：运行时给category添加属性，比如objc_getAssociatedObject、objc_setAssociatedObject；</p>
-<p>场景二：动态获取类属性名称，比如class_copyPropertyList；</p>
-<p>场景三：消息转发，在消息转发机制执行前，Runtime 系统会再给我们一次偷梁换柱的机会，即通过重载</p>
-<p><code>-(id)forwardingTargetForSelector:(SEL)aSelector</code> 方法替换消息的接受者为其他对象。</p>
+<h4 id="22，runtime的理解与使用">22，runtime的理解与使用</h4><p>场景一：运行时给category添加属性，比如<code>objc_getAssociatedObject</code>、<code>objc_setAssociatedObject</code>；<br>场景二：动态获取类属性名称，比如<code>class_copyPropertyList</code>；<br>场景三：消息转发，在消息转发机制执行前，Runtime 系统会再给我们一次偷梁换柱的机会，即通过重载<br><code>-(id)forwardingTargetForSelector:(SEL)aSelector</code> 方法替换消息的接受者为其他对象。<br>场景四：动态创建类和对象，例如：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建类实例</span></span><br><span class="line"><span class="keyword">id</span> class_createInstance ( Class cls, size_t extraBytes );</span><br><span class="line"><span class="comment">// 在指定位置创建类实例</span></span><br><span class="line"><span class="keyword">id</span> objc_constructInstance ( Class cls, <span class="keyword">void</span> *bytes );</span><br><span class="line"><span class="comment">// 销毁类实例</span></span><br><span class="line"><span class="keyword">void</span> * objc_destructInstance ( <span class="keyword">id</span> obj );</span><br></pre></td></tr></table></figure></p>
 <h4 id="23，lib库的编写与使用">23，lib库的编写与使用</h4><ul>
-<li><p>如何保证lib库中category文件的正常读取？</p>
-</li>
-<li><p>如何保证lib对arm64及armv7s的支持？</p>
-</li>
-<li><p>如何合并不同平台的lia库？</p>
-</li>
-<li><p>iOS 第三方库冲突的如何处理？可以对lib库内的文件修改重修打包吗 ？</p>
-<p>比如：duplicate symbols for architecture armv7</p>
-</li>
+<li>如何保证lib库中category文件的正常读取？  </li>
+<li>如何保证lib对arm64及armv7s的支持？  </li>
+<li>如何合并不同平台的lia库？  </li>
+<li>iOS 第三方库冲突的如何处理？可以对lib库内的文件修改重修打包吗 ？<br>比如：duplicate symbols for architecture armv7</li>
 </ul>
 <h4 id="24，ARM64与ARMv7">24，ARM64与ARMv7</h4><p>Arm处理器，因为其低功耗和小尺寸而闻名，几乎所有的手机处理器都基于arm，其在嵌入式系统中的应用非常广泛，它的性能在同等功耗产品中也很出色。</p>
 <p>Armv6、armv7、armv7s、arm64都是arm处理器的指令集，所有指令集原则上都是向下兼容的，如iPhone4S的CPU默认指令集为armv7指令集，但它同时也兼容armv6指令集，只是使用armv6指令集时无法充分发挥其性能，即无法使用armv7指令集中的新特性，同理，iPhone5的处理器标配armv7s指令集，同时也支持armv7指令集，只是无法进行相关的性能优化，从而导致程序的执行效率没那么高。 </p>
@@ -269,7 +263,7 @@ weak 该属性对应 weak 关键字，与 weak 定义的变量一致，该属性
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/12/17/ iOS面试总结/" data-id="ciia204vj00007jb1oz7hk443" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/12/21/ iOS面试总结/" data-id="ciifqkvi5000053b159pgsgbz" class="article-share-link">Share</a>
       
       
     </footer>
@@ -336,7 +330,7 @@ weak 该属性对应 weak 关键字，与 weak 定义的变量一致，该属性
       <ul>
         
           <li>
-            <a href="/2015/12/17/ iOS面试总结/">iOS面试总结</a>
+            <a href="/2015/12/21/ iOS面试总结/">iOS面试总结</a>
           </li>
         
           <li>
