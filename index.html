@@ -64,7 +64,7 @@
     <article id="post- iOS面试总结" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/12/21/ iOS面试总结/" class="article-date">
-  <time datetime="2015-12-21T09:10:09.000Z" itemprop="datePublished">2015-12-21</time>
+  <time datetime="2015-12-21T09:24:36.000Z" itemprop="datePublished">2015-12-21</time>
 </a>
     
   </div>
@@ -221,11 +221,8 @@
 </ul>
 <h4 id="18，算法题">18，算法题</h4><p>1). 四个人夜间要过一座桥，每人走路速度不一样，过桥需要时间分别是1，2，5，10分钟。现在只有一只手电筒在过桥时必须带，同时只能两人过，如何安排能够让四人最快速度过桥？</p>
 <p>2). 25匹马赛跑，每次只能跑5匹，最快能赛几次找出跑得最快的3匹马？</p>
-<h4 id="19，编码规范">19，编码规范</h4><p>不规范：</p>
-<p><img src="http://7xkptx.com1.z0.glb.clouddn.com/1frgrebret.jpeg" alt=""></p>
-<p>修改后：</p>
-<p><img src="http://7xkptx.com1.z0.glb.clouddn.com/2fewrge45h.jpeg" alt=""></p>
-<p>  ​</p>
+<h4 id="19，编码规范">19，编码规范</h4><p>不规范：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">enum</span> &#123;</span><br><span class="line">    UserSex_Man,</span><br><span class="line">    UserSex_Woman,</span><br><span class="line">&#125;UserSex;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">testA</span> : <span class="title">NSObject</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span>(<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSString</span> *name;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">assign</span>, <span class="keyword">nonatomic</span>) <span class="keyword">int</span> age;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) UserSex sex;</span><br><span class="line"></span><br><span class="line">-(<span class="keyword">id</span>)initUserModelWithUserName: (<span class="built_in">NSString</span>*)name withAge:(<span class="keyword">int</span>)age;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)doLogIn;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
+<p>修改后：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="built_in">NS_ENUM</span>(<span class="built_in">NSInteger</span>, TSTUserSexType) &#123;</span><br><span class="line">    TSTUserSexTypeMan,</span><br><span class="line">    TSTUserSexTypeWoman,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">testA</span> : <span class="title">NSObject</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSString</span>       *name;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span> ,<span class="keyword">assign</span>) <span class="keyword">int</span>            age;</span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">assign</span>) TSTUserSexType sex;</span><br><span class="line"></span><br><span class="line">- (instancetype)initUserModelWithUserName:(<span class="built_in">NSString</span>*)name withUserAge:(<span class="keyword">int</span>)age;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)doLoginWithSuccess:(<span class="keyword">void</span>(^)(<span class="keyword">id</span> response))success</span><br><span class="line">                   failure:(<span class="keyword">void</span>(^)(<span class="built_in">NSError</span> *error))failure;</span><br><span class="line"></span><br><span class="line"><span class="keyword">@end</span></span><br></pre></td></tr></table></figure></p>
 <h3 id="三、高级篇">三、高级篇</h3><h4 id="20，Autorelease对象什么时候释放？">20，Autorelease对象什么时候释放？</h4><p>对于每一个Runloop， 系统会隐式创建一个Autorelease pool，这样所有的release pool会构成一个象CallStack一样的一个栈式结构，在每一个Runloop结束时，当前栈顶的Autorelease pool会被销毁，这样这个pool里的每个Object会被release。那什么是一个Runloop呢？ 一个UI事件，Timer call， delegate call， 都会是一个新的Runloop。</p>
 <p>Autorelease对象是在当前的runloop迭代结束时释放的，而它能够释放的原因是系统在每个runloop迭代中都加入了自动释放池Push和Pop。</p>
 <h4 id="21，深入理解runloop">21，深入理解runloop</h4><p>一般来讲，一个线程一次只能执行一个任务，执行完成后线程就会退出。如果我们需要一个机制，让线程能随时处理事件但并不退出，这种模型通常被称作 <a href="http://en.wikipedia.org/wiki/Event_loop" target="_blank" rel="external">Event Loop</a>。 Event Loop 在很多系统和框架里都有实现，比如 Node.js 的事件处理，比如 Windows 程序的消息循环，再比如 OSX/iOS 里的 RunLoop。实现这种模型的关键点在于：如何管理事件/消息，如何让线程在没有处理消息时休眠以避免资源占用、在有消息到来时立刻被唤醒。</p>
@@ -253,7 +250,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/12/21/ iOS面试总结/" data-id="ciifqkvi5000053b159pgsgbz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/12/21/ iOS面试总结/" data-id="ciifrb6we0000lfb1j3wa3jm5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -312,7 +309,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/12/14/几款mac小工具推荐/" data-id="ciifqkviu000653b1hhwdbeh0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/12/14/几款mac小工具推荐/" data-id="ciifrb6xb0006lfb19slgmwi8" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mac/">mac</a></li></ul>
@@ -377,7 +374,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/11/10/常用的SVN命令小结/" data-id="ciifqkvip000153b1k440mudo" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/11/10/常用的SVN命令小结/" data-id="ciifrb6x60001lfb1ec8cg145" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/svn/">svn</a></li></ul>
@@ -433,7 +430,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/11/09/APNS测试与部署/" data-id="ciifqkvj0000l53b19o2fpk39" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/11/09/APNS测试与部署/" data-id="ciifrb6xk000llfb14ovpx734" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/推送/">推送</a></li></ul>
@@ -516,7 +513,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/19/iOS应用内付费(IAP)提交审核一波三折/" data-id="ciifqkviy000g53b1k7r2t0v0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/19/iOS应用内付费(IAP)提交审核一波三折/" data-id="ciifrb6xh000glfb1vlk11z17" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IAP/">IAP</a></li></ul>
@@ -579,7 +576,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/05/使用github发布ios应用/" data-id="ciifqkviv000b53b11yfm43c6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/05/使用github发布ios应用/" data-id="ciifrb6xe000blfb1s63ha048" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OTA/">OTA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github/">github</a></li></ul>
