@@ -63,8 +63,8 @@
   
     <article id="post- iOS面试总结" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/12/21/ iOS面试总结/" class="article-date">
-  <time datetime="2015-12-21T09:24:36.000Z" itemprop="datePublished">2015-12-21</time>
+    <a href="/2015/12/22/ iOS面试总结/" class="article-date">
+  <time datetime="2015-12-22T09:19:41.000Z" itemprop="datePublished">2015-12-22</time>
 </a>
     
   </div>
@@ -75,7 +75,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/21/ iOS面试总结/">iOS面试总结</a>
+      <a class="article-title" href="/2015/12/22/ iOS面试总结/">iOS面试总结</a>
     </h1>
   
 
@@ -231,7 +231,8 @@
 <p>问题一：NSURLConnection或NSStream指定RunLoop Mode的原因？<br>问题二：为何NSTimer在界面滚动时无响应？</p>
 <p>参考回答一：<br>如果是在主线程，那么在滚动ScrollView或者TableView时，主线程的Run Loop会运行在UITrackingRunLoopMode模式，那么NSURLConnection或者NSStream的回调就无法运行，设置为NSRunLoopCommonModes，都可以保证NSURLConnection或者NSStream的回调可以被调用。<br>参考回答二：<br>当用户触摸界面时，主线程的run loop不再对timer事件进行处理。解决办法如下：<br><code>[[NSRunLoop currentRunLoop] addTimer:timer forMode:UITrackingRunLoopMode];</code></p>
 <p>参考：<a href="http://blog.ibireme.com/2015/05/18/runloop/" target="_blank" rel="external">http://blog.ibireme.com/2015/05/18/runloop/</a></p>
-<h4 id="22，runtime的理解与使用">22，runtime的理解与使用</h4><p>场景一：运行时给category添加属性，比如<code>objc_getAssociatedObject</code>、<code>objc_setAssociatedObject</code>；<br>场景二：动态获取类属性名称，比如<code>class_copyPropertyList</code>；<br>场景三：消息转发，在消息转发机制执行前，Runtime 系统会再给我们一次偷梁换柱的机会，即通过重载<br><code>-(id)forwardingTargetForSelector:(SEL)aSelector</code> 方法替换消息的接受者为其他对象。<br>场景四：动态创建类和对象，例如：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建类实例</span></span><br><span class="line"><span class="keyword">id</span> class_createInstance ( Class cls, size_t extraBytes );</span><br><span class="line"><span class="comment">// 在指定位置创建类实例</span></span><br><span class="line"><span class="keyword">id</span> objc_constructInstance ( Class cls, <span class="keyword">void</span> *bytes );</span><br><span class="line"><span class="comment">// 销毁类实例</span></span><br><span class="line"><span class="keyword">void</span> * objc_destructInstance ( <span class="keyword">id</span> obj );</span><br></pre></td></tr></table></figure></p>
+<h4 id="22，runtime的理解与使用">22，runtime的理解与使用</h4><p>场景一：运行时给category添加属性，比如<code>objc_getAssociatedObject</code>、<code>objc_setAssociatedObject</code>；<br>场景二：动态获取类属性名称，比如<code>class_copyPropertyList</code>；<br>场景三：消息转发，在消息转发机制执行前，Runtime可以重载<code>-(id)forwardingTargetForSelector:(SEL)aSelector</code> 方法，替换消息的接受者为其他对象。<br>场景四：动态创建类和对象，例如：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 创建类实例</span></span><br><span class="line"><span class="keyword">id</span> class_createInstance ( Class cls, size_t extraBytes );</span><br><span class="line"><span class="comment">// 在指定位置创建类实例</span></span><br><span class="line"><span class="keyword">id</span> objc_constructInstance ( Class cls, <span class="keyword">void</span> *bytes );</span><br><span class="line"><span class="comment">// 销毁类实例</span></span><br><span class="line"><span class="keyword">void</span> * objc_destructInstance ( <span class="keyword">id</span> obj );</span><br></pre></td></tr></table></figure></p>
+<p>场景五：IOS中如何Hook消息？<br><code>class_replaceMethod</code>使用该函数可以在运行时动态替换某个类的函数实现，截获系统类的某个实例函数。<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">IMP orginIMP;</span><br><span class="line"><span class="built_in">NSString</span> * MyUppercaseString(<span class="keyword">id</span> SELF, SEL _cmd)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"begin uppercaseString"</span>);</span><br><span class="line">    <span class="built_in">NSString</span> *str = orginIMP (SELF, _cmd);（<span class="number">3</span>）</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"end uppercaseString"</span>);</span><br><span class="line">    <span class="keyword">return</span> str;</span><br><span class="line">&#125;</span><br><span class="line">-（<span class="keyword">void</span>）testReplaceMethod</span><br><span class="line">&#123;</span><br><span class="line">      Class strcls = [<span class="built_in">NSString</span> class];</span><br><span class="line">      SEL  oriUppercaseString = <span class="keyword">@selector</span>(uppercaseString);</span><br><span class="line">      orginIMP = [<span class="built_in">NSStringinstanceMethodForSelector</span>:oriUppercaseString];  （<span class="number">1</span>）  </span><br><span class="line">      IMP imp2 = class_replaceMethod(strcls,oriUppercaseString,(IMP)MyUppercaseString,<span class="literal">NULL</span>);（<span class="number">2</span>）</span><br><span class="line">      <span class="built_in">NSString</span> *s = <span class="string">"hello world"</span>;</span><br><span class="line">      <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>,[s uppercaseString]];</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*</span><br><span class="line">执行结果为:</span><br><span class="line">begin uppercaseString</span><br><span class="line">end uppercaseString</span><br><span class="line">HELLO WORLD</span><br><span class="line">这段代码的作用就是</span><br><span class="line">（1）得到uppercaseString这个函数的函数指针存到变量orginIMP中</span><br><span class="line">（2）将NSString类中的uppercaseString函数的实现替换为自己定义的MyUppercaseString</span><br><span class="line">（3）这样每次对NSString调用uppercaseString的时候，都会打印出log来</span><br><span class="line">*/</span></span><br></pre></td></tr></table></figure></p>
 <h4 id="23，lib库的编写与使用">23，lib库的编写与使用</h4><ul>
 <li>如何保证lib库中category文件的正常读取？  </li>
 <li>如何保证lib对arm64及armv7s的支持？  </li>
@@ -250,7 +251,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/12/21/ iOS面试总结/" data-id="ciifrb6we0000lfb1j3wa3jm5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/12/22/ iOS面试总结/" data-id="ciih6mxg90000x8b105jkaqx4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -309,7 +310,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/12/14/几款mac小工具推荐/" data-id="ciifrb6xb0006lfb19slgmwi8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/12/14/几款mac小工具推荐/" data-id="ciih6mxh20006x8b1bfnzjsu5" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mac/">mac</a></li></ul>
@@ -374,7 +375,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/11/10/常用的SVN命令小结/" data-id="ciifrb6x60001lfb1ec8cg145" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/11/10/常用的SVN命令小结/" data-id="ciih6mxgs0001x8b16u2ghl0z" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/svn/">svn</a></li></ul>
@@ -430,7 +431,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/11/09/APNS测试与部署/" data-id="ciifrb6xk000llfb14ovpx734" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/11/09/APNS测试与部署/" data-id="ciih6mxh9000lx8b1g41efqbe" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/推送/">推送</a></li></ul>
@@ -513,7 +514,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/19/iOS应用内付费(IAP)提交审核一波三折/" data-id="ciifrb6xh000glfb1vlk11z17" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/19/iOS应用内付费(IAP)提交审核一波三折/" data-id="ciih6mxh6000gx8b1cke7minr" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IAP/">IAP</a></li></ul>
@@ -576,7 +577,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/05/使用github发布ios应用/" data-id="ciifrb6xe000blfb1s63ha048" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/05/使用github发布ios应用/" data-id="ciih6mxh4000bx8b1q6h3alo3" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OTA/">OTA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github/">github</a></li></ul>
@@ -636,7 +637,7 @@
       <ul>
         
           <li>
-            <a href="/2015/12/21/ iOS面试总结/">iOS面试总结</a>
+            <a href="/2015/12/22/ iOS面试总结/">iOS面试总结</a>
           </li>
         
           <li>
