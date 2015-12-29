@@ -243,7 +243,7 @@
 <li>如何保证lib库中category文件的正常读取？  </li>
 <li>如何保证lib对armv7s的支持？<br>Build Setting -&gt; Architectures, 添加 $(ARCHS_STANDARD)和   armv7s</li>
 <li>如何合并不同平台的lib库？</li>
-<li>iOS 第三方库冲突的如何处理？可以对lib库内的文件修改重修打包吗 ？<br>实例，比如libHChatSDK.a中包含了JSONKit库，现有工程中同样包含了JSONKit库，这样在当前工程中加入libHChatSDK.a时会引起duplicate symbols for architecture armv7的编译错误，那么我们可以重新编辑libHChatSDK.a，删除JSONKit.o然后再打包合并即可，具体命令如下：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1,新建armv7s目录</span></span><br><span class="line">mkdir ~/desktop/armv7s</span><br><span class="line"><span class="comment"># 2,分离出armv7s平台</span></span><br><span class="line">lipo  libHChatSDK.a  -thin  armv7s  -output  libHChatSDK-armv7s.a</span><br><span class="line"><span class="comment"># 3,解压 libHChatSDK.a</span></span><br><span class="line"><span class="built_in">cd</span> armv7s &amp;&amp; ar xv libHChatSDK-armv7s.a</span><br><span class="line"><span class="comment"># 4,查看库中所包含的文件列表：ar -t armv7/libHChatSDK-armv7s.a</span></span><br><span class="line"><span class="comment"># 5,找到JSONKit.o并删除</span></span><br><span class="line">rm JSONKit.o</span><br><span class="line"><span class="comment"># 6,重新打包libHChatSDK-armv7s.a</span></span><br><span class="line">ar rcs libHChatSDK-armv7s.a armv7s/*.o</span><br><span class="line"><span class="comment"># 7,重复第3步，确认JSONKit已经被删除</span></span><br><span class="line"><span class="comment"># 8,按照1-7分别生成armv7平台、arm64平台及模拟器使用的x86_64、i386平台</span></span><br><span class="line"><span class="comment"># 9,最后用lipo -c 命令合并各个平台即可</span></span><br></pre></td></tr></table></figure>
+<li>iOS 第三方库冲突的如何处理？可以对lib库内的文件修改重修打包吗 ？<br>实例，比如libHChatSDK.a中包含了JSONKit库，现有工程中同样包含了JSONKit库，这样在当前工程中加入libHChatSDK.a时会引起duplicate symbols for architecture armv7的编译错误，那么我们可以重新编辑libHChatSDK.a，删除JSONKit.o然后再打包合并即可，具体命令如下：<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1,新建armv7s目录</span></span><br><span class="line">mkdir ~/desktop/armv7s</span><br><span class="line"><span class="comment"># 2,分离出armv7s平台</span></span><br><span class="line">lipo  libHChatSDK.a  -thin  armv7s  -output  libHChatSDK-armv7s.a</span><br><span class="line"><span class="comment"># 3,解压 libHChatSDK.a</span></span><br><span class="line"><span class="built_in">cd</span> armv7s &amp;&amp; ar xv libHChatSDK-armv7s.a</span><br><span class="line"><span class="comment"># 4,查看库中所包含的文件列表</span></span><br><span class="line">ar -t armv7/libHChatSDK-armv7s.a</span><br><span class="line"><span class="comment"># 5,找到JSONKit.o并删除</span></span><br><span class="line">rm JSONKit.o</span><br><span class="line"><span class="comment"># 6,重新打包libHChatSDK-armv7s.a</span></span><br><span class="line">ar rcs libHChatSDK-armv7s.a armv7s/*.o</span><br><span class="line"><span class="comment"># 7,重复第3步，确认JSONKit已经被删除</span></span><br><span class="line"><span class="comment"># 8,按照1-7分别生成armv7平台、arm64平台及模拟器使用的x86_64、i386平台</span></span><br><span class="line"><span class="comment"># 9,最后用lipo -c 命令合并各个平台即可</span></span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <p>常用的lib命令：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 用 lipo info 查看静态库支持的平台</span></span><br><span class="line">$ lipo libname.a -info</span><br><span class="line"><span class="comment"># 用 lipo remove 参数来删除平台</span></span><br><span class="line">lipo libname.a -remove x86_64 -output libname1.a</span><br><span class="line"><span class="comment"># 用 lipo create 将两个不同平台的库合并到一起</span></span><br><span class="line">$ lipo -create libname1.a libname2.a -output libname3.a</span><br><span class="line"><span class="comment"># 用 lipo thin 参数来分离平台</span></span><br><span class="line">lipo libname.a -thin armv7 -output armv7/libname-armv7.a</span><br></pre></td></tr></table></figure></p>
@@ -259,7 +259,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/12/24/ iOS面试总结/" data-id="ciir8sc2m0000d6b1339arosc" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/12/24/ iOS面试总结/" data-id="ciirbatff0000jab1xgy814op" class="article-share-link">Share</a>
       
       
     </footer>
@@ -318,7 +318,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/12/14/几款mac小工具推荐/" data-id="ciir8sc3f0006d6b165ounphv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/12/14/几款mac小工具推荐/" data-id="ciirbatg10006jab1wmu0gf7s" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mac/">mac</a></li></ul>
@@ -383,7 +383,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/11/10/常用的SVN命令小结/" data-id="ciir8sc3a0001d6b151q8brl3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/11/10/常用的SVN命令小结/" data-id="ciirbatfw0001jab1ssoaigih" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/svn/">svn</a></li></ul>
@@ -439,7 +439,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/11/09/APNS测试与部署/" data-id="ciir8sc3m000ld6b1mu4ntllu" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/11/09/APNS测试与部署/" data-id="ciirbatg6000ljab1frc6dysg" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/推送/">推送</a></li></ul>
@@ -522,7 +522,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/19/iOS应用内付费(IAP)提交审核一波三折/" data-id="ciir8sc3k000gd6b12ip7vh3b" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/19/iOS应用内付费(IAP)提交审核一波三折/" data-id="ciirbatg5000gjab1rzupaz35" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IAP/">IAP</a></li></ul>
@@ -585,7 +585,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/05/使用github发布ios应用/" data-id="ciir8sc3i000bd6b1z8h718su" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/05/使用github发布ios应用/" data-id="ciirbatg3000bjab1bo3ear92" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OTA/">OTA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github/">github</a></li></ul>
