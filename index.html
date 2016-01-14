@@ -64,7 +64,7 @@
     <article id="post-聊一聊iOS后台任务" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/01/13/聊一聊iOS后台任务/" class="article-date">
-  <time datetime="2016-01-13T12:43:07.000Z" itemprop="datePublished">2016-01-13</time>
+  <time datetime="2016-01-13T12:43:00.000Z" itemprop="datePublished">2016-01-13</time>
 </a>
     
   </div>
@@ -99,7 +99,7 @@
 <h4 id="二，非注册任务的运行">二，非注册任务的运行</h4><p>非注册任务一般耗时较短，多用来保存数据或延迟执行某一命令等，通过系统API即可实现。可以先看一段官方实例代码：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)applicationDidEnterBackground:(<span class="built_in">UIApplication</span> *)application</span><br><span class="line">&#123;</span><br><span class="line">    bgTask = [application beginBackgroundTaskWithName:<span class="string">@"MyTask"</span> expirationHandler:^&#123;</span><br><span class="line">        <span class="comment">// Clean up any unfinished task business by marking where you</span></span><br><span class="line">        <span class="comment">// stopped or ending the task outright.</span></span><br><span class="line">        [application endBackgroundTask:bgTask];</span><br><span class="line">        bgTask = <span class="built_in">UIBackgroundTaskInvalid</span>;</span><br><span class="line">    &#125;];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Start the long-running task and return immediately.</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><code>beginBackgroundTaskWithName:expirationHandler:</code>方法标识了一个后台任务的开始，并用过超时处理的回调来结束此任务。那么，超时时间具体是多少？可以通过UIApplication的只读属性backgroundTimeRemaining来获取当前后台任务执行的剩余时间，它不是具体的数字（我执行的时间大概160秒），而是iOS根据当前系统环境综合考量后估算出来的。然后执行expirationHandler回调完成一个后台任务的执行周期。</p>
-<h4 id="三，注册任务的是如何工作的">三，注册任务的是如何工作的</h4><p>有些耗时较长的工作，则需要申请专门的权限来保证正常执行而不被挂起，只有少数几种类型被允许这个做。</p>
+<h4 id="三，注册任务的流程">三，注册任务的流程</h4><p>有些耗时较长的工作，则需要申请专门的权限来保证正常执行而不被挂起，只有少数几种类型被允许这个做。</p>
 <ul>
 <li>Apps that play audible content to the user while in the background, such as a music player app</li>
 <li>Apps that record audio content while in the background</li>
@@ -130,9 +130,11 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/01/13/聊一聊iOS后台任务/" data-id="cijctg7kv0001bbb1lpr6a9qq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/01/13/聊一聊iOS后台任务/" data-id="cijdtvvud0001nyb1gxlh2d7m" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/background/">background</a></li></ul>
+
     </footer>
   </div>
   
@@ -338,7 +340,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/12/24/ iOS面试总结/" data-id="cijctg7k60000bbb1mdfucuvv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/12/24/ iOS面试总结/" data-id="cijdtvvto0000nyb1tc2g5dnc" class="article-share-link">Share</a>
       
       
     </footer>
@@ -397,7 +399,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/12/14/几款mac小工具推荐/" data-id="cijctg7l10007bbb14aeo6edd" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/12/14/几款mac小工具推荐/" data-id="cijdtvvuj0009nyb1zay1sol6" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mac/">mac</a></li></ul>
@@ -462,7 +464,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/11/10/常用的SVN命令小结/" data-id="cijctg7kx0002bbb1c5qxufso" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/11/10/常用的SVN命令小结/" data-id="cijdtvvuh0004nyb1xop7hoy1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/svn/">svn</a></li></ul>
@@ -518,7 +520,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/11/09/APNS测试与部署/" data-id="cijctg7l9000mbbb19vq2mmfe" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/11/09/APNS测试与部署/" data-id="cijdtvvup000onyb1i0fbgt1q" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/推送/">推送</a></li></ul>
@@ -601,7 +603,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/19/iOS应用内付费(IAP)提交审核一波三折/" data-id="cijctg7l5000hbbb1xxtxd6os" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/19/iOS应用内付费(IAP)提交审核一波三折/" data-id="cijdtvvun000jnyb16385tdab" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IAP/">IAP</a></li></ul>
@@ -664,7 +666,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/05/使用github发布ios应用/" data-id="cijctg7l3000cbbb1rgw039b3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/05/使用github发布ios应用/" data-id="cijdtvvul000enyb1mtr7huno" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OTA/">OTA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github/">github</a></li></ul>
@@ -694,7 +696,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/IAP/">IAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OTA/">OTA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/svn/">svn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/推送/">推送</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/IAP/">IAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OTA/">OTA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/background/">background</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/svn/">svn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/推送/">推送</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -703,7 +705,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/IAP/" style="font-size: 10px;">IAP</a> <a href="/tags/OTA/" style="font-size: 10px;">OTA</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/mac/" style="font-size: 10px;">mac</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/推送/" style="font-size: 10px;">推送</a>
+      <a href="/tags/IAP/" style="font-size: 10px;">IAP</a> <a href="/tags/OTA/" style="font-size: 10px;">OTA</a> <a href="/tags/background/" style="font-size: 10px;">background</a> <a href="/tags/github/" style="font-size: 10px;">github</a> <a href="/tags/mac/" style="font-size: 10px;">mac</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/推送/" style="font-size: 10px;">推送</a>
     </div>
   </div>
 
