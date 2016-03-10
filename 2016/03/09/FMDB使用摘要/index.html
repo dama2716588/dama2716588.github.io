@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>FMDB使用摘要 | Pandora的技术博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近项目中需要加入持久化数据缓存的需求，在比较了EGOCache与FMDB之后，决定采用基于SQLite3的FMDB来实现，结合AFNetworking封装了一套API缓存方案，在此简单介绍下具体逻辑与注意事项。
+1，使用FMDatabaseQueueFMDB的每一次数据读写操作，都可以理解为一个Operation，数据库是每个Operation对应的数据源，所以需要保证操作的线程安全，这就引入了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FMDB使用摘要">
+<meta property="og:url" content="http://yoursite.com/2016/03/09/FMDB使用摘要/index.html">
+<meta property="og:site_name" content="Pandora的技术博客">
+<meta property="og:description" content="最近项目中需要加入持久化数据缓存的需求，在比较了EGOCache与FMDB之后，决定采用基于SQLite3的FMDB来实现，结合AFNetworking封装了一套API缓存方案，在此简单介绍下具体逻辑与注意事项。
+1，使用FMDatabaseQueueFMDB的每一次数据读写操作，都可以理解为一个Operation，数据库是每个Operation对应的数据源，所以需要保证操作的线程安全，这就引入了">
+<meta property="og:updated_time" content="2016-03-10T08:39:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="FMDB使用摘要">
+<meta name="twitter:description" content="最近项目中需要加入持久化数据缓存的需求，在比较了EGOCache与FMDB之后，决定采用基于SQLite3的FMDB来实现，结合AFNetworking封装了一套API缓存方案，在此简单介绍下具体逻辑与注意事项。
+1，使用FMDatabaseQueueFMDB的每一次数据读写操作，都可以理解为一个Operation，数据库是每个Operation对应的数据源，所以需要保证操作的线程安全，这就引入了">
+  
+    <link rel="alternative" href="/atom.xml" title="Pandora的技术博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Pandora的技术博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-FMDB使用摘要" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/03/09/FMDB使用摘要/" class="article-date">
+  <time datetime="2016-03-09T08:47:00.000Z" itemprop="datePublished">2016-03-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      FMDB使用摘要
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近项目中需要加入持久化数据缓存的需求，在比较了<a href="https://github.com/enormego/EGOCache" target="_blank" rel="external">EGOCache</a>与<a href="https://github.com/ccgus/fmdb" target="_blank" rel="external">FMDB</a>之后，决定采用基于SQLite3的FMDB来实现，结合<a href="https://github.com/AFNetworking/AFNetworking" target="_blank" rel="external">AFNetworking</a>封装了一套API缓存方案，在此简单介绍下具体逻辑与注意事项。</p>
+<h4 id="1，使用FMDatabaseQueue">1，使用FMDatabaseQueue</h4><p>FMDB的每一次数据读写操作，都可以理解为一个Operation，数据库是每个Operation对应的数据源，所以需要保证操作的线程安全，这就引入了FMDatabaseQueue的概念。每次Operation顺序加入队列中，保证了数据访问的有序进行，互补干扰。</p>
+<p><code>+ (instancetype)databaseQueueWithPath:(NSString*)aPath</code></p>
+<p>通过dispatch_queue_create创建并发队列，不同的dataPath通过FMDatabaseQueue来维护，多个queue之间并发执行任务，保证了数据读写的效率。</p>
+<p><code>- (void)inDatabase:(void (^)(FMDatabase *db))block</code></p>
+<p>每次Operation通过inDatabase执行，dispatch_sync方法来添加串行任务，保证了每个FMDatabaseQueue数据的安全与有序。在添加任务前，调用<strong>dispatch_get_specific</strong>获得<strong>FMDatabaseQueue</strong>关联的线程，检查是否是同一个线程，因为同线程执行<strong>dispatch_sync</strong>会造成死锁。</p>
+<h4 id="2，存储json数据">2，存储json数据</h4><p>在GET到API返回json数据时候，常常会遇到字典或者数组嵌套的情况，使用FMDB写入数据时，如果Key-Value一一对应会比较麻烦，所以，把整条记录转换为string对象来存储，在不降低性能的情况下对数据的写入与读取十分便捷。在此需要注意sql语句中的string要作为参数写入，以免引起syntax error，例如：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 正确：</span></span><br><span class="line"><span class="built_in">NSString</span>  *insertSQl=[<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"insert or replace into '%@' (ID,JSONString) values (?,?) "</span>,tableName];</span><br><span class="line">  [_queue inTransaction:^(FMDatabase *db, <span class="built_in">BOOL</span> *rollback) &#123;</span><br><span class="line">     <span class="keyword">if</span>(![db executeUpdate:insertSQl,objId,jsonStr])&#123;</span><br><span class="line">          BDLog(<span class="string">@"rollback Table %@"</span>,tableName);</span><br><span class="line">          *rollback = <span class="literal">YES</span>;</span><br><span class="line">          <span class="keyword">return</span> ;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 错误：</span></span><br><span class="line"><span class="built_in">NSString</span>  *insertSQl=[<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"insert or replace into '%@' (ID,JSONString) values (%@,%@) "</span>,tableName,objId,jsonStr];   </span><br><span class="line">  [_queue inTransaction:^(FMDatabase *db, <span class="built_in">BOOL</span> *rollback) &#123;</span><br><span class="line">      <span class="keyword">if</span>(![db executeUpdate:insertSQl])&#123;</span><br><span class="line">          BDLog(<span class="string">@"rollback Table %@"</span>,tableName);</span><br><span class="line">          *rollback = <span class="literal">YES</span>;</span><br><span class="line">          <span class="keyword">return</span> ;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;];</span><br></pre></td></tr></table></figure>
+<p>如果是大量的数据保存操作可以通过dispatch_group_t创建并发线程来执行，在并发线程中加入串行任务，避免对主线程造成阻塞，来提高代码效率。示例如下：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 并发线程中串行执行</span></span><br><span class="line">dispatch_group_t group = dispatch_group_create();</span><br><span class="line"><span class="built_in">dispatch_queue_t</span> serialQueue = dispatch_queue_create(<span class="literal">NULL</span>, DISPATCH_QUEUE_SERIAL);</span><br><span class="line"></span><br><span class="line">dispatch_group_async(group, serialQueue, ^&#123;</span><br><span class="line">  <span class="comment">// 先执行清理工作</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">dispatch_group_notify(group, serialQueue, ^&#123;</span><br><span class="line">  <span class="comment">// 保存数据</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h4 id="3，sqlite事务">3，sqlite事务</h4><p>与关系数据库进行交互的标准 SQLite 命令类似于 SQL。命令包括 CREATE、SELECT、INSERT、UPDATE、DELETE 和 DROP。这些命令基于它们的操作性质可分为以下几种：</p>
+<ul>
+<li>DDL - 数据定义语言(CREATE、ALTER、DROP)</li>
+<li>DML - 数据操作语言(INSERT、UPDATE、DELETE)</li>
+<li>DQL - 数据查询语言(SELECT)</li>
+</ul>
+<p>事务控制命令只与 DML 命令 INSERT、UPDATE 和 DELETE 一起使用。他们不能在创建表或删除表时使用，因为这些操作在数据库中是自动提交的。</p>
+<p>SQLite中使用下面的命令来控制事务：BEGIN TRANSACTION：开始事务处理；COMMIT：保存更改，或者可以使用 END TRANSACTION 命令；ROLLBACK：回滚所做的更改。如果iOS的sqlite同时插入或者查询10000条数据，你该怎么办？减少数据库的开关操作，通过事务命令，把10000条语句封装成一个事务，只需一次COMMIT transaction即可完成。示例如下：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 开始事务</span></span><br><span class="line">-(<span class="keyword">int</span>)beginService&#123;</span><br><span class="line">     <span class="keyword">char</span> *errmsg;</span><br><span class="line">     <span class="keyword">int</span> rc = sqlite3_exec(database, <span class="string">"BEGIN transaction"</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>, &amp;errmsg);</span><br><span class="line">     <span class="keyword">return</span> rc;</span><br><span class="line"> &#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 提交事务  </span></span><br><span class="line">-(<span class="keyword">int</span>)commitService&#123;</span><br><span class="line">     <span class="keyword">char</span> *errmsg;</span><br><span class="line">     <span class="keyword">int</span> rc = sqlite3_exec(database, <span class="string">"COMMIT transaction"</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>, &amp;errmsg);</span><br><span class="line">     <span class="keyword">return</span> rc;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)execSQL</span><br><span class="line">&#123;</span><br><span class="line">   [database open]</span><br><span class="line">   [<span class="keyword">self</span> beginService];</span><br><span class="line">   <span class="keyword">for</span> (i=<span class="number">0</span>; i&lt;<span class="number">100000</span>; i++) &#123;</span><br><span class="line">          <span class="comment">//想要执行的sql语句</span></span><br><span class="line">       &#125;</span><br><span class="line">   [<span class="keyword">self</span> commitService]</span><br><span class="line">   [database close]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>FMDB对事务也有很好的支持，调用<code>- (void)inTransaction:(void (^)(FMDatabase *db, BOOL *rollback))block</code>方法即可实现，如果数据写入或读取失败，可以指定rollback参数来设置是否需要回滚，撤销本次操作。</p>
+<h4 id="4，FMDB性能测试">4，FMDB性能测试</h4><p>设备环境iphone6s , xcode7.2 ，FMDB分别读写100、500、1000条数据，测试结果如下：</p>
+<ul>
+<li>100条数据：写入用时0.655秒，读取0.012秒</li>
+<li>500条数据，写入用时2.112秒，读取0.043秒</li>
+<li>1000条数据，写入用时6.2秒，读取0.036秒</li>
+</ul>
+<p>可见FMDB的读取性能还是很不错的，大量写入数据的时候比较耗时，可以通过切换至后台线程执行，保证主线程的任务可以立即响应。</p>
+<p>参考：</p>
+<p><a href="http://www.runoob.com/sqlite/sqlite-intro.html" target="_blank" rel="external">http://www.runoob.com/sqlite/sqlite-intro.html</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/03/09/FMDB使用摘要/" data-id="cilkm0y7w000ur8b1bfalz8tz" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fmdb/">fmdb</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sqlite/">sqlite</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/01/23/Github上SSH key 的使用与管理/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Github上SSH key 的使用与管理</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- disqus
+
+-->
+
+ 
+  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-FMDB使用摘要" data-title="FMDB使用摘要" data-url="http://yoursite.com/2016/03/09/FMDB使用摘要/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'dama2716588'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+  </section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/App-Store/">App Store</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/github/">github</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mac/">mac</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/svn/">svn</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/IAP/">IAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OTA/">OTA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/background/">background</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fmdb/">fmdb</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlite/">sqlite</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/">ssh</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/svn/">svn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/推送/">推送</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/IAP/" style="font-size: 10px;">IAP</a> <a href="/tags/OTA/" style="font-size: 10px;">OTA</a> <a href="/tags/background/" style="font-size: 10px;">background</a> <a href="/tags/fmdb/" style="font-size: 10px;">fmdb</a> <a href="/tags/github/" style="font-size: 20px;">github</a> <a href="/tags/mac/" style="font-size: 10px;">mac</a> <a href="/tags/sqlite/" style="font-size: 10px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/推送/" style="font-size: 10px;">推送</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/03/09/FMDB使用摘要/">FMDB使用摘要</a>
+          </li>
+        
+          <li>
+            <a href="/2016/01/23/Github上SSH key 的使用与管理/">Github上SSH key 的使用与管理</a>
+          </li>
+        
+          <li>
+            <a href="/2016/01/13/聊一聊iOS后台任务/">聊一聊iOS后台任务</a>
+          </li>
+        
+          <li>
+            <a href="/2015/12/24/ iOS面试总结/">iOS面试总结</a>
+          </li>
+        
+          <li>
+            <a href="/2015/12/14/几款mac小工具推荐/">几款mac小工具推荐</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 Pandora<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>
