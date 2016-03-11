@@ -88,7 +88,7 @@
 <p><code>+ (instancetype)databaseQueueWithPath:(NSString*)aPath</code></p>
 <p>通过dispatch_queue_create创建并发队列，不同的dataPath通过FMDatabaseQueue来维护，多个queue之间并发执行任务，保证了数据读写的效率。</p>
 <p><code>- (void)inDatabase:(void (^)(FMDatabase *db))block</code></p>
-<p>每次Operation通过inDatabase执行，dispatch_sync方法来添加串行任务，保证了每个FMDatabaseQueue数据的安全与有序。在添加任务前，调用<strong>dispatch_get_specific</strong>获得<strong>FMDatabaseQueue</strong>关联的线程，检查是否是同一个线程，因为同线程执行<strong>dispatch_sync</strong>会造成死锁。</p>
+<p>每次Operation通过inDatabase执行，dispatch_sync方法来添加串行任务，保证了每个FMDatabaseQueue数据的安全与有序。在添加任务前，调用<strong>dispatch_get_specific</strong>获得<strong>FMDatabaseQueue</strong>关联的线程，检查是否是同一个线程，因为串行队列里面同步执行<strong>dispatch_sync</strong>会造成死锁。</p>
 <h4 id="2，存储json数据">2，存储json数据</h4><p>在GET到API返回json数据时候，常常会遇到字典或者数组嵌套的情况，使用FMDB写入数据时，如果Key-Value一一对应会比较麻烦，所以，把整条记录转换为string对象来存储，在不降低性能的情况下对数据的写入与读取十分便捷。在此需要注意sql语句中的string要作为参数写入，以免引起syntax error，例如：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 正确：</span></span><br><span class="line"><span class="built_in">NSString</span>  *insertSQl=[<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"insert or replace into '%@' (ID,JSONString) values (?,?) "</span>,tableName];</span><br><span class="line">  [_queue inTransaction:^(FMDatabase *db, <span class="built_in">BOOL</span> *rollback) &#123;</span><br><span class="line">     <span class="keyword">if</span>(![db executeUpdate:insertSQl,objId,jsonStr])&#123;</span><br><span class="line">          BDLog(<span class="string">@"rollback Table %@"</span>,tableName);</span><br><span class="line">          *rollback = <span class="literal">YES</span>;</span><br><span class="line">          <span class="keyword">return</span> ;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 错误：</span></span><br><span class="line"><span class="built_in">NSString</span>  *insertSQl=[<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"insert or replace into '%@' (ID,JSONString) values (%@,%@) "</span>,tableName,objId,jsonStr];   </span><br><span class="line">  [_queue inTransaction:^(FMDatabase *db, <span class="built_in">BOOL</span> *rollback) &#123;</span><br><span class="line">      <span class="keyword">if</span>(![db executeUpdate:insertSQl])&#123;</span><br><span class="line">          BDLog(<span class="string">@"rollback Table %@"</span>,tableName);</span><br><span class="line">          *rollback = <span class="literal">YES</span>;</span><br><span class="line">          <span class="keyword">return</span> ;</span><br><span class="line">      &#125;</span><br><span class="line">  &#125;];</span><br></pre></td></tr></table></figure>
 <p>如果是大量的数据保存操作可以通过dispatch_group_t创建并发线程来执行，在并发线程中加入串行任务，避免对主线程造成阻塞，来提高代码效率。示例如下：</p>
@@ -115,7 +115,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/03/09/FMDB使用摘要/" data-id="cilkm0y7w000ur8b1bfalz8tz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/03/09/FMDB使用摘要/" data-id="cilnhz4a0000ufzb1nuet8wb1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fmdb/">fmdb</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sqlite/">sqlite</a></li></ul>
@@ -187,7 +187,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/01/23/Github上SSH key 的使用与管理/" data-id="cilkm0y7u000or8b1hy52k5jk" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/01/23/Github上SSH key 的使用与管理/" data-id="cilnhz49y000ofzb1tzauosnk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github/">github</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ssh/">ssh</a></li></ul>
@@ -271,7 +271,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/01/13/聊一聊iOS后台任务/" data-id="cilkm0y7h0001r8b1vtg1abna" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/01/13/聊一聊iOS后台任务/" data-id="cilnhz49n0001fzb1u59iq3m1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/background/">background</a></li></ul>
@@ -485,7 +485,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/12/24/ iOS面试总结/" data-id="cilkm0y700000r8b1owwswhe6" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/12/24/ iOS面试总结/" data-id="cilnhz48y0000fzb1bjuwjh03" class="article-share-link">Share</a>
       
       
     </footer>
@@ -548,7 +548,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/12/14/几款mac小工具推荐/" data-id="cilkm0y7n0009r8b1rodkijmt" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/12/14/几款mac小工具推荐/" data-id="cilnhz49t0009fzb1pqcxbdlb" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mac/">mac</a></li></ul>
@@ -617,7 +617,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/11/10/常用的SVN命令小结/" data-id="cilkm0y7l0004r8b14idufblq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/11/10/常用的SVN命令小结/" data-id="cilnhz49q0004fzb1256h7seh" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/svn/">svn</a></li></ul>
@@ -677,7 +677,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/11/09/APNS测试与部署/" data-id="cilkm0y7z000zr8b1wus1m5nm" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/11/09/APNS测试与部署/" data-id="cilnhz4a3000zfzb17jsdwoqc" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/推送/">推送</a></li></ul>
@@ -764,7 +764,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/19/iOS应用内付费(IAP)提交审核一波三折/" data-id="cilkm0y7r000jr8b1kz7p77rf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/19/iOS应用内付费(IAP)提交审核一波三折/" data-id="cilnhz49w000jfzb1nyqmz24s" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IAP/">IAP</a></li></ul>
@@ -831,7 +831,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/05/使用github发布ios应用/" data-id="cilkm0y7p000er8b18ve5f54n" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/05/使用github发布ios应用/" data-id="cilnhz49v000efzb1izzp4nse" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OTA/">OTA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github/">github</a></li></ul>
