@@ -1107,7 +1107,7 @@ a.article-title:hover {
 }
 .article-entry pre,
 .article-entry .highlight {
-  background: #3b414d;
+  background: #4f5768;
   margin: 0 -28px;
   margin-left: 1px;
   margin-right: 1px;
@@ -1124,7 +1124,7 @@ a.article-title:hover {
 }
 .article-entry .highlight .gutter pre,
 .article-entry .gist .gist-file .gist-data .line-numbers {
-  color: #666;
+  color: #9da8b3;
   font-size: 0.85em;
 }
 .article-entry pre,
@@ -1132,13 +1132,13 @@ a.article-title:hover {
   font-family: "Source Code Pro", Consolas, Monaco, Menlo, Consolas, monospace;
 }
 .article-entry code {
-  background: #e3e3e3;
+  background: #dde0e8;
   color: #666;
   -webkit-border-radius: 3px;
   border-radius: 3px;
   border-width: 1px;
   border-color: #fff;
-  text-shadow: 0 1px #fff;
+  text-shadow: 0 0px #fff;
   padding: 0.1em 0.3em;
 }
 .article-entry pre code {
