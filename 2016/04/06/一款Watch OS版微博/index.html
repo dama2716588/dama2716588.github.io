@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>一款Watch OS版微博 | Pandora的技术博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="写在前面手表买了将近快一年的时间了，每天常用的就是运动提醒了，尤其是间隔一小时站立及步数统计，对久坐人士有很好的督促作用。一直想着做一款手表App，最近终于有些时间就开始捣鼓了，大概前后花了两个周的空闲时间，基于Watch OS 1简单实现了一款手表版的微博,如有纰漏，还望指正。
+App Groups首先了解下App Groups的概念，这是Apple在iOS8中引入的技术。旨在位于同一group">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一款Watch OS版微博">
+<meta property="og:url" content="http://dama2716588.github.io/2016/04/06/一款Watch OS版微博/index.html">
+<meta property="og:site_name" content="Pandora的技术博客">
+<meta property="og:description" content="写在前面手表买了将近快一年的时间了，每天常用的就是运动提醒了，尤其是间隔一小时站立及步数统计，对久坐人士有很好的督促作用。一直想着做一款手表App，最近终于有些时间就开始捣鼓了，大概前后花了两个周的空闲时间，基于Watch OS 1简单实现了一款手表版的微博,如有纰漏，还望指正。
+App Groups首先了解下App Groups的概念，这是Apple在iOS8中引入的技术。旨在位于同一group">
+<meta property="og:image" content="http://7xkptx.com1.z0.glb.clouddn.com/34f4wv4wrb.png">
+<meta property="og:image" content="http://7xkptx.com1.z0.glb.clouddn.com/43fwrgberh5.png">
+<meta property="og:image" content="http://7xkptx.com1.z0.glb.clouddn.com/2fwehetjty.png">
+<meta property="og:image" content="http://7xkptx.com1.z0.glb.clouddn.com/3fwregw5.png?imageView2/2/h/360">
+<meta property="og:image" content="http://7xkptx.com1.z0.glb.clouddn.com/3df3wg45g.png">
+<meta property="og:image" content="http://7xkptx.com1.z0.glb.clouddn.com/1a0cef138909a32f8519deb24.png">
+<meta property="og:updated_time" content="2016-04-06T06:49:47.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="一款Watch OS版微博">
+<meta name="twitter:description" content="写在前面手表买了将近快一年的时间了，每天常用的就是运动提醒了，尤其是间隔一小时站立及步数统计，对久坐人士有很好的督促作用。一直想着做一款手表App，最近终于有些时间就开始捣鼓了，大概前后花了两个周的空闲时间，基于Watch OS 1简单实现了一款手表版的微博,如有纰漏，还望指正。
+App Groups首先了解下App Groups的概念，这是Apple在iOS8中引入的技术。旨在位于同一group">
+  
+    <link rel="alternative" href="/atom.xml" title="Pandora的技术博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Pandora的技术博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://dama2716588.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-一款Watch OS版微博" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/04/06/一款Watch OS版微博/" class="article-date">
+  <time datetime="2016-04-06T06:49:47.000Z" itemprop="datePublished">2016-04-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      一款Watch OS版微博
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="写在前面">写在前面</h3><p>手表买了将近快一年的时间了，每天常用的就是运动提醒了，尤其是间隔一小时站立及步数统计，对久坐人士有很好的督促作用。一直想着做一款手表App，最近终于有些时间就开始捣鼓了，大概前后花了两个周的空闲时间，基于Watch OS 1简单实现了一款手表版的微博,如有纰漏，还望指正。</p>
+<h3 id="App_Groups">App Groups</h3><p>首先了解下App Groups的概念，这是Apple在iOS8中引入的技术。旨在位于同一group的app之间共享一份数据读写空间，打破了沙盒技术对应用间通信与交互的限制。比如通知中心的Today Extension作为app功能的补充而存在，Watch App也类似于此。在开始之前需要先创建App Group。可以在Xcode的Capabilities中添加，或者在Apple developer 中心来添加，本文采用后一种方式给大家介绍。</p>
+<p><img src="http://7xkptx.com1.z0.glb.clouddn.com/34f4wv4wrb.png" alt=""></p>
+<p>新生成的group id为”group.baidu.com.miniweibo”，用来关联Watch App与iPhone App，实现数据共享及进程通信。创建名为MiniWeibo的Project，对应生成MiniWeibo、MiniWeibo WatchKit 1 Extension和MiniWeibo WatchKit 1 App 三个target，然后在 Xcode 的 Capabilities 选项卡下分别打开主 target 与 WatchKit Extension target下的App Groups选项，刷新选中刚创建的group id即可。如下图所示：</p>
+<p><img src="http://7xkptx.com1.z0.glb.clouddn.com/43fwrgberh5.png" alt=""></p>
+<p>选中后会自动添加名为MiniWeibo.entitlements与MiniWeibo WatchKit 1 Extension.entitlements的两个XML文件至工程文件中，当构建整个应用时，这两个entitlements文件也会提交给 <code>codesign</code> 作为应用所需要拥有哪些授权的参考，可以在 Xcode build setting 中的 code signing entitlements 中设置。entitlements文件内部格式如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="pi">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span></span><br><span class="line"><span class="doctype">&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">plist</span> <span class="attribute">version</span>=<span class="value">"1.0"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">dict</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">key</span>&gt;</span>com.apple.security.application-groups<span class="tag">&lt;/<span class="title">key</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="title">array</span>&gt;</span></span><br><span class="line">    	<span class="tag">&lt;<span class="title">string</span>&gt;</span>group.com.baidu.miniweibo<span class="tag">&lt;/<span class="title">string</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="title">array</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">dict</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">plist</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>&lt;key&gt;com.apple.security.application-groups&lt;/key&gt;</code>标识着此应用被添加至名为group.com.baidu.miniweibo的group中，为了与扩展 (extensions) 共享数据。另外还可以添加get-task-allow用来限定只能在用于开发的证书签名下运行，以及设置asp-environment的推送环境为development或者distribution。授权信息会被包含在应用的签名信息中，可以执行<code>$ codesign -d --entitlements - Example.app</code>，返回一个XML文件，查看签名信息中具体包含了什么授权信息，方便工程配置的查看与调试。</p>
+<h3 id="数据共享与调试">数据共享与调试</h3><p>App Groups共享数据可以创建group id为标记的NSUserDefaults，来写入和读取可plist化的数据对象：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)saveTextBy<span class="built_in">NSUserDefaults</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">NSUserDefaults</span> *shared = [[<span class="built_in">NSUserDefaults</span> alloc] initWithSuiteName:<span class="string">@"group.wangzz"</span>];</span><br><span class="line">    [shared setObject:_textField<span class="variable">.text</span> forKey:<span class="string">@"wangzz"</span>];</span><br><span class="line">    [shared synchronize];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>或者通过NSFileManager的containerURLForSecurityApplicationGroupIdentifier方法，创建NSFileManager的单例，来管理App Group数据。File可以是普通的二进制文件，或者是sqlite文件。MiniWeibo采用的是基于sqlite的数据存储方式，来实现App间的通信：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSString</span> *dataBasePath = [[[[<span class="built_in">NSFileManager</span> defaultManager] containerURLForSecurityApplicationGroupIdentifier:<span class="string">@"group.com.baidu.miniweibo"</span>] URLByAppendingPathComponent:<span class="string">@"miniweibo.db"</span>] path];</span><br><span class="line">_queue = [FMDatabaseQueue databaseQueueWithPath:dataBasePath];</span><br></pre></td></tr></table></figure>
+<p>sqlite内部的数据处理是采用第三方开源库<a href="https://github.com/ccgus/fmdb" target="_blank" rel="external">FMDB</a>来实现，详细了解请参考：<a href="https://github.com/ccgus/fmdb" target="_blank" rel="external">https://github.com/ccgus/fmdb</a></p>
+<p>大致实现流程可以描述为：每个可交互的 <code>WKInterfaceObject</code> 子类都对应了一个 action，来调用Watch Kit中openParentApplication方法，唤起iOS target中<code>application:handleWatchKitExtensionRequestreply:</code>代理方法，请求网络数据，需要持久化的通过sqlite存储共享，临时数据通过reply回调，传递给Watch Extension来刷新Watch App界面。</p>
+<p>开发的过程中，需要在iPhone App 与 Watch App之间频繁进程切换，通过Xcode -&gt; Debug -&gt; Attach to Process -&gt; [process name]，绑定iOS App 与 Watch Extension进行调试。</p>
+<h3 id="工程架构">工程架构</h3><p><img src="http://7xkptx.com1.z0.glb.clouddn.com/2fwehetjty.png" alt=""></p>
+<p>Watch App是基于iOS App而存在的，WatchKit Extension主要负责逻辑部分，将随iOS App的主target被一同安装到iPhone中，通过UIApplicationDelegate及WKInterfaceController来调度手表上负责界面显示的WatchKit App。</p>
+<p><img src="http://7xkptx.com1.z0.glb.clouddn.com/3fwregw5.png?imageView2/2/h/360" alt="图片来自 http://tech.glowing.com/cn/make_apple_watch_app/"></p>
+<h4 id="1，主要类">1，主要类</h4><p>如同WKInterfaceController一样，WKInterfaceButton、WKInterfaceLabel、WKInterfaceImage等并非是UIView的子类，而是继承自NSObject，Watch App 中实际展现和渲染在屏幕上的 view 对于代码来说是非直接可见的，我们只能在 Extension target 中通过对应的代理对象对属性进行设置，由 WatchKit 传递给手表中的 Watch App 并进行界面刷新。</p>
+<h4 id="2，Glance_和_Notification">2，Glance 和 Notification</h4><p>GlanceController意为速览，算是Watch App的快捷显示及操作界面，如音乐App的播放控制，天气App的数据展示等。有些Glance界面是固定的，无需每次显示的时候刷新，只需在initWithContext中初始化即可；有些是需要动态展示，每次滑出Glance的时候都需要刷新界面，则需要调用呈现时的 <code>-willActivate</code> 方法，类似UIViewController中的viewWillAppear，相对的，<code>-didDeactivate</code>方法可以理解为viewDidDisappear，即界面即将消失。</p>
+<p>当我们加入了一个新的通知界面之后，Xcode就会为我们生成这两个interface，分为Static Notification Interface Controller 和 Dynamic Notification Interface Controller两种。动态的Interface是可选的。当一个的通知到来之后，系统会优先去呈现动态的通知界面，当动态界面不可用或者低电量时才会去呈现静态的。动态通知使得我们可以提供一个更加丰富的体验给用户，如同其他Interface Controller一样，可以通过Outlet及IBAction来关联和定义，增强可操作性。通知流程如下图：</p>
+<p><img src="http://7xkptx.com1.z0.glb.clouddn.com/3df3wg45g.png" alt=""></p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="keyword">void</span>)didReceiveRemoteNotification:(<span class="built_in">NSDictionary</span> *)remoteNotification withCompletion:(<span class="keyword">void</span> (^)(WKUserNotificationInterfaceType))completionHandler &#123;</span><br><span class="line">    <span class="comment">// This method is called when a remote notification needs to be presented.</span></span><br><span class="line">    <span class="comment">// Implement it if you use a dynamic notification interface.</span></span><br><span class="line">    <span class="comment">// Populate your dynamic notification interface as quickly as possible.</span></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="comment">// After populating your dynamic notification interface call the completion block.</span></span><br><span class="line">    completionHandler(WKUserNotificationInterfaceTypeCustom);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>​    completionHandler(WKUserNotificationInterfaceTypeCustom)中参数WKUserNotificationInterfaceTypeCustom决定了优先呈现Dynamic界面，如果是WKUserNotificationInterfaceTypeDefault则会显示Static通知界面。在调用completionHandler之前系统会短暂地显示Short-Look Interface，它不能滚动和定制，系统会显示App 的名字以及App 的图标Icon，以及一条自定义通知信息，同时在准备数据，构建Long-Look界面，然后系统会迅速的切换到The Long-Look Interface中，包含三个区域：顶部Sash、中间Content area及底部按钮区域，点击Sash、Content area都会直接进入Watch App，点击底部按钮区域可以触发Watch Kit与Watch Extension及iOS App交互。</p>
+<p>准备自定义的NotificationInterface后，就可以开始测试了，模拟器可以直接选择Notification target编译即可。真机测试，可以使用Mac 端 apns小工具<a href="https://github.com/shaojiankui/SmartPush" target="_blank" rel="external">SmartPush</a>，进行开发和生产环境的调试。至此MiniWeibo工程的开发暂告一段落，附张截图吧：</p>
+<p><img src="http://7xkptx.com1.z0.glb.clouddn.com/1a0cef138909a32f8519deb24.png" alt=""></p>
+<h3 id="开发中的几个Tips：">开发中的几个Tips：</h3><ul>
+<li><p>图片缓存</p>
+<p>使用<code>addCachedImageWithData:name:</code>来添加NSData缓存图片数据，相比较<code>addCachedImage:name:</code>方法避免了使用PND编码的过程，节省存储空间。每个Watch App大概有5mb的缓存分配，如果存储控件不足时，需要调用 <code>removeCachedImageWithName:</code>或者 <code>removeAllCachedImages</code>方法来清除数据。否则WatchKit将从最老的数据开始自动删除，为新数据腾出空间。</p>
+</li>
+</ul>
+<ul>
+<li><p>WKInterfaceLabel高度自适应与滚动</p>
+<p>不同与UIKit，很多视图控件无法通过手写的方式来管理，需要在Interface.storyboard中设置参数。比如WKInterfaceLabel需要多行显示和滚动时，需要设置Label-&gt;Lines为0，Size-&gt;Width为Relative to Container，以及Size-&gt;Height为Size To Fit Content，意为宽度与父视图一样，高度为内容自适应，即可实现多行显示与滚动了。</p>
+</li>
+<li><p>WKInterfaceGroup的使用</p>
+<p>WKInterfaceGroup继承自NSObject，可以理解为视图块，集中管理某个区域的视图显示，比如table cell。可以指定background colour、alpha及Radius等UIView的属性设置，在InterfaceController中使用频率很高。</p>
+</li>
+</ul>
+<h3 id="关于Watch_OS_2">关于Watch OS 2</h3><p>Watch OS 2引入了ClockKit与WatchConnectivity框架，不仅增强了表盘自定义控件的灵活性，数据共享操作改进很大，其中extension 是直接存在于手表中的，在Watch OS 1中通过app group管理的方式已经失效。另外HealthKit也得到增强，健康监护及运动统计类的App会大有施展空间。</p>
+<h4 id="参考">参考</h4><p>1，<a href="https://onevcat.com/2014/08/notification-today-widget/" target="_blank" rel="external">https://onevcat.com/2014/08/notification-today-widget/</a> （<a href="https://onevcat.com/#blog" target="_blank" rel="external">OneV’s Den</a>）</p>
+<p>2，<a href="http://foggry.com/blog/2014/06/23/wwdc2014zhi-app-extensionsxue-xi-bi-ji/" target="_blank" rel="external">http://foggry.com/blog/2014/06/23/wwdc2014zhi-app-extensionsxue-xi-bi-ji/</a> （<a href="http://foggry.com/" target="_blank" rel="external">王中周的技术博客</a>）</p>
+<p>3，<a href="http://objccn.io/issue-17-2/" target="_blank" rel="external">http://objccn.io/issue-17-2/</a> （<a href="http://objccn.io/" target="_blank" rel="external">objc中国</a>）</p>
+<p>4，<a href="https://developer.apple.com/library/ios/documentation/General/Conceptual/WatchKitProgrammingGuide/BasicSupport.html" target="_blank" rel="external">Apple Watch 文档</a></p>
+<h4 id=""> </h4>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://dama2716588.github.io/2016/04/06/一款Watch OS版微博/" data-id="cimohz2mx000m8ab12gppubxw" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Watch-OS/">Watch OS</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/03/11/关于GCD的几个用例/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">关于GCD的几个用例</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- disqus
+
+-->
+
+ 
+  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-一款Watch OS版微博" data-title="一款Watch OS版微博" data-url="http://dama2716588.github.io/2016/04/06/一款Watch OS版微博/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'dama2716588'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+  </section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/App-Store/">App Store</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/github/">github</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mac/">mac</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/svn/">svn</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/GCD/">GCD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IAP/">IAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OTA/">OTA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Watch-OS/">Watch OS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/background/">background</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fmdb/">fmdb</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlite/">sqlite</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/">ssh</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/svn/">svn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/推送/">推送</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/GCD/" style="font-size: 10px;">GCD</a> <a href="/tags/IAP/" style="font-size: 10px;">IAP</a> <a href="/tags/OTA/" style="font-size: 10px;">OTA</a> <a href="/tags/Watch-OS/" style="font-size: 10px;">Watch OS</a> <a href="/tags/background/" style="font-size: 10px;">background</a> <a href="/tags/fmdb/" style="font-size: 10px;">fmdb</a> <a href="/tags/github/" style="font-size: 20px;">github</a> <a href="/tags/mac/" style="font-size: 10px;">mac</a> <a href="/tags/sqlite/" style="font-size: 10px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/推送/" style="font-size: 10px;">推送</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/04/06/一款Watch OS版微博/">一款Watch OS版微博</a>
+          </li>
+        
+          <li>
+            <a href="/2016/03/11/关于GCD的几个用例/">关于GCD的几个用例</a>
+          </li>
+        
+          <li>
+            <a href="/2016/03/09/FMDB使用摘要/">FMDB使用摘要</a>
+          </li>
+        
+          <li>
+            <a href="/2016/01/23/Github上SSH key 的使用与管理/">Github上SSH key 的使用与管理</a>
+          </li>
+        
+          <li>
+            <a href="/2016/01/13/聊一聊iOS后台任务/">聊一聊iOS后台任务</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 Pandora<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>
