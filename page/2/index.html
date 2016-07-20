@@ -61,6 +61,93 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-iOS应用内付费(IAP)提交审核一波三折" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/09/19/iOS应用内付费(IAP)提交审核一波三折/" class="article-date">
+  <time datetime="2015-09-19T07:00:00.000Z" itemprop="datePublished">2015-09-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/App-Store/">App Store</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/09/19/iOS应用内付费(IAP)提交审核一波三折/">iOS应用内付费(IAP)提交审核一波三折</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>App Store的审核众所周知是一个耗时耗力的活儿，尤其是第一个版本的提交，如果App又包含的内付费的功能，那就更需要耐心了。为期一个半月的审核终于通过，简单记录下期间的经验，希望能帮助到大家。</p>
+<h4 id="首先汇总下被拒的官方回复：">首先汇总下被拒的官方回复：</h4><ul>
+<li>2.2 - Apps that exhibit bugs will be rejected</li>
+<li>2.9 - Apps that are “demo”, “trial”, or “test” versions will be rejected. Beta Apps may only be submitted through TestFlight and must follow the TestFlight guidelines</li>
+<li>3.3 - Apps with names, descriptions, screenshots, or previews not relevant to the content and functionality of the App will be rejected</li>
+<li>11.4 - Apps that use IAP to purchase credits or other currencies must consume those credits within the App</li>
+<li>14.1 - Any App that is defamatory, offensive, mean-spirited, or likely to place the targeted individual or group in harm’s way will be rejected</li>
+<li>14.3 - Apps that display user generated content must include a method for filtering objectionable material, a mechanism for users to flag offensive content, and the ability to block abusive users from the service</li>
+<li>17.2 - Apps that require users to share personal information, such as email address and date of birth, in order to function will be rejected</li>
+</ul>
+<h4 id="针对以上问题的分析与解决：">针对以上问题的分析与解决：</h4><ul>
+<li><p>2.2，苹果测试人员在审核期间会使用最新的iOS系统来测试应用，但不一定是最新的硬件。所以在提审之前要保证App在最新的系统下运行流畅，如果是iPhone的版本，也需要确保在iPad上不出问题才行。当时我们提交的时候官方最新的iOS版本是8.4.1，我们以为在8.4.0上运行没问题就好，忽略了iOS小版本的某些特性差异。</p>
+</li>
+<li><p>2.9，由于我们的App是做了日文的本地化，在首页banner图片上有细小的测试字样，提审的时候没有去除，苹果对这方面的审核非常严格，会认为你的产品当前仍处于测试版，所以不能上架。提醒开发者留意这些细节。</p>
+</li>
+<li><p>3.3，此项是关于iTunes Connect 中App介绍说明的，建议说明文案宁少勿多，不要涉及等等、更多字样，只列举明确包含的功能即可。</p>
+</li>
+<li><p>11.4，苹果关于IAP的规则是虚拟货币不可以在app内流通且只能在平台内消费，更不允许有送礼+分成等方式，关于收入的分成十分严格，请开发者谨慎对待。在产品初期制定好使用规则，不然以后改动成本巨大。</p>
+</li>
+<li><p>14.1/14.3，建议开发者对应用的评级有一个合理的定位，尤其是UGC、视频方面的App，在不清楚的情况下级别勾选越高越对审核有帮助。详细请参考<a href="https://developer.apple.com/app-store/review/guidelines/" target="_blank" rel="external">官方审核指南</a>。如果是UGC内容要有非常明显的举报入口，及一定范围内的敏感词过滤功能。</p>
+</li>
+<li><p>17.2，在App集成第三方登录时会经常遇到，苹果建议开发者有自己的帐号系统，如果是使用Facebook/Twitter/Weibo/Weixin做认证，除了拉取用户个人资料和分享，App必须包含显著的FB和TW特定账户功能。特定功能比如同步Feed至第三方系统，获取粉丝及关注列表等。针对此条款我们专门做了申诉，大家可以作为参考：</p>
+<p>Sorry but I am afraid you misunderstood the function of our application. Actually wedo not force users to share personal information in order to function, we justpull our users’ profile information when they login from Facebook and Twitter.And for the account-based features from Facebook and Twitter, users can share streaming to The-third Party platform, andafter sharing success, there will be link on the-third Party platform  which can click and jump to our app. Userscan also share their clips to Facebook and Twitter and these message will besynchronized. we made screenshots to explain this functionality of ourapplication. I hope it works to help you know more about our app. </p>
+<p>另外还配了应用内使用Facebook功能的配图，比如分享、同步Feed，最后才审核通过。下图为数次被拒的原因。</p>
+</li>
+</ul>
+<p><img src="http://7xkptx.com1.z0.glb.clouddn.com/43g34h6.png" alt="Purchases"></p>
+<h4 id="重点说一下IAP审核遇到的问题">重点说一下IAP审核遇到的问题</h4><ul>
+<li>先说购买凭证的验证，在苹果审核期间只会再Sandbox环境购买，所以购买凭证需要链接苹果测试服务器（<a href="https://sandbox.itunes.apple.com/verifyReceipt" target="_blank" rel="external">https://sandbox.itunes.apple.com/verifyReceipt</a> ）来验证，等审核通过，后端部署到苹果正式服务器（<a href="https://buy.itunes.apple.com/verifyReceipt" target="_blank" rel="external">https://buy.itunes.apple.com/verifyReceipt</a>）即可。我们在这方面犯了一个错误就是在期间后段链接的是苹果的测试服务器造成购买失败，应用被拒绝。</li>
+<li>如果应用被拒了一次，再次提交时的如果IAP商品的状态为Developer Action Needed（如下图所示），需要手动刷新下，编辑下商品名称，加个空格即可。然后状态会变为正在等待审核，再上传二进制文件。</li>
+</ul>
+<p><img src="http://7xkptx.com1.z0.glb.clouddn.com/f43thj4b53h235g5b.png" alt="Purchases"></p>
+<h4 id="One_more_thing_-_合理申诉">One more thing - 合理申诉</h4><ul>
+<li>如果应用被拒后，第一时间先确认是由于二进制文件的问题，还是文案的描述问题，或者是苹果审核团队的疑问未得到解答。如果是二进制文件被拒，则需要修复问题后重新打包上传，等待审核结果。</li>
+</ul>
+<ul>
+<li>如果是提审文案或者配图的问题只需要修改下再次提交审核即可，无需二次打包。</li>
+<li>还有一种情况是审核被拒，可以不做任何改动，直接申诉。在iTunes Connect解决方案中心会收到来自苹果审核团队的站内信，只需要详细逐条回复即可。最好绘声绘色，图文并茂，一般24小时内会得到苹果的二次确认。如果审核人员认可了你的申诉，那么你的App很快就会进入In Review的状态，离上架就只有一步之遥了。心酸经历附个图：</li>
+</ul>
+<p><img src="http://7xkptx.com1.z0.glb.clouddn.com/f2f32g43gwg.png" alt="Purchases"></p>
+<h5 id="相关引用：">相关引用：</h5><p><a href="https://blog.coding.net/blog/ios-testFlight" target="_blank" rel="external">https://blog.coding.net/blog/ios-testFlight</a><br><a href="http://blog.devtang.com/blog/2013/04/07/tricks-in-iap/" target="_blank" rel="external">http://blog.devtang.com/blog/2013/04/07/tricks-in-iap/</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://dama2716588.github.io/2015/09/19/iOS应用内付费(IAP)提交审核一波三折/" data-id="ciquts89z000u4fb1wod1ayqm" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/IAP/">IAP</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+<!-- disqus
+
+-->
+
+ 
+  
     <article id="post-使用github发布ios应用" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2015/09/05/使用github发布ios应用/" class="article-date">
@@ -112,7 +199,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://dama2716588.github.io/2015/09/05/使用github发布ios应用/" data-id="cink8bf4l000hafb1rsr5d3i1" class="article-share-link">Share</a>
+      <a data-url="http://dama2716588.github.io/2015/09/05/使用github发布ios应用/" data-id="ciquts89v000m4fb1mlkc6fjd" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/OTA/">OTA</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github/">github</a></li></ul>
@@ -141,7 +228,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/App-Store/">App Store</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/github/">github</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mac/">mac</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/svn/">svn</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/App-Store/">App Store</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/github/">github</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mac/">mac</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/svn/">svn</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -150,7 +237,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/GCD/">GCD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IAP/">IAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OTA/">OTA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Watch-OS/">Watch OS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/background/">background</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fmdb/">fmdb</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlite/">sqlite</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/">ssh</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/svn/">svn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/推送/">推送</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/GCD/">GCD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IAP/">IAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OTA/">OTA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Watch-OS/">Watch OS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/background/">background</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fmdb/">fmdb</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ipa/">ipa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlite/">sqlite</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/">ssh</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/svn/">svn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/推送/">推送</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -159,7 +246,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/GCD/" style="font-size: 10px;">GCD</a> <a href="/tags/IAP/" style="font-size: 10px;">IAP</a> <a href="/tags/OTA/" style="font-size: 10px;">OTA</a> <a href="/tags/Watch-OS/" style="font-size: 10px;">Watch OS</a> <a href="/tags/background/" style="font-size: 10px;">background</a> <a href="/tags/fmdb/" style="font-size: 10px;">fmdb</a> <a href="/tags/github/" style="font-size: 20px;">github</a> <a href="/tags/mac/" style="font-size: 10px;">mac</a> <a href="/tags/sqlite/" style="font-size: 10px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/推送/" style="font-size: 10px;">推送</a>
+      <a href="/tags/GCD/" style="font-size: 10px;">GCD</a> <a href="/tags/IAP/" style="font-size: 10px;">IAP</a> <a href="/tags/OTA/" style="font-size: 10px;">OTA</a> <a href="/tags/Watch-OS/" style="font-size: 10px;">Watch OS</a> <a href="/tags/background/" style="font-size: 10px;">background</a> <a href="/tags/fmdb/" style="font-size: 10px;">fmdb</a> <a href="/tags/github/" style="font-size: 20px;">github</a> <a href="/tags/ipa/" style="font-size: 10px;">ipa</a> <a href="/tags/mac/" style="font-size: 10px;">mac</a> <a href="/tags/sqlite/" style="font-size: 10px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/推送/" style="font-size: 10px;">推送</a>
     </div>
   </div>
 
@@ -168,7 +255,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -178,6 +265,10 @@
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/07/20/逆向Appstore应用（一）/">逆向Appstore应用（一）</a>
+          </li>
         
           <li>
             <a href="/2016/04/06/一款Watch OS版微博/">一款Watch OS版微博</a>
@@ -193,10 +284,6 @@
         
           <li>
             <a href="/2016/01/23/Github上SSH key 的使用与管理/">Github上SSH key 的使用与管理</a>
-          </li>
-        
-          <li>
-            <a href="/2016/01/13/聊一聊iOS后台任务/">聊一聊iOS后台任务</a>
           </li>
         
       </ul>

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>逆向Appstore应用（一） | Pandora的技术博客</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="写在前面最近在做一些iOS启动速度优化和App瘦身相关的工作，有时候需要横向对比一下竞品的数据，免不了要对一些商店的App在许可范围内做一些手脚，下面以开源中国的iPhone客户端为例给大家简单介绍下操作步骤。
+当前环境：
+
+一台越狱iPhone，系统为iOS8.3
+mac OS X EI 10.11.5
+iTunes 12.4
+
+通过iTunes获取ipa
+点击下载，然后到我的Apps中找到刚刚">
+<meta property="og:type" content="article">
+<meta property="og:title" content="逆向Appstore应用（一）">
+<meta property="og:url" content="http://dama2716588.github.io/2016/07/20/逆向Appstore应用（一）/index.html">
+<meta property="og:site_name" content="Pandora的技术博客">
+<meta property="og:description" content="写在前面最近在做一些iOS启动速度优化和App瘦身相关的工作，有时候需要横向对比一下竞品的数据，免不了要对一些商店的App在许可范围内做一些手脚，下面以开源中国的iPhone客户端为例给大家简单介绍下操作步骤。
+当前环境：
+
+一台越狱iPhone，系统为iOS8.3
+mac OS X EI 10.11.5
+iTunes 12.4
+
+通过iTunes获取ipa
+点击下载，然后到我的Apps中找到刚刚">
+<meta property="og:image" content="http://7xkptx.com1.z0.glb.clouddn.com/t34hy45u76.png">
+<meta property="og:image" content="http://7xkptx.com1.z0.glb.clouddn.com/05ce2ce5f74e040661b53791b.png">
+<meta property="og:image" content="http://7xkptx.com1.z0.glb.clouddn.com/e3fef6ddadbd919bbee9602a5.png">
+<meta property="og:updated_time" content="2016-07-20T11:48:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="逆向Appstore应用（一）">
+<meta name="twitter:description" content="写在前面最近在做一些iOS启动速度优化和App瘦身相关的工作，有时候需要横向对比一下竞品的数据，免不了要对一些商店的App在许可范围内做一些手脚，下面以开源中国的iPhone客户端为例给大家简单介绍下操作步骤。
+当前环境：
+
+一台越狱iPhone，系统为iOS8.3
+mac OS X EI 10.11.5
+iTunes 12.4
+
+通过iTunes获取ipa
+点击下载，然后到我的Apps中找到刚刚">
+  
+    <link rel="alternative" href="/atom.xml" title="Pandora的技术博客" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+  
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Pandora的技术博客</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://dama2716588.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-逆向Appstore应用（一）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/20/逆向Appstore应用（一）/" class="article-date">
+  <time datetime="2016-07-20T11:39:00.000Z" itemprop="datePublished">2016-07-20</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/App-Store/">App Store</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      逆向Appstore应用（一）
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="写在前面">写在前面</h3><p>最近在做一些iOS启动速度优化和App瘦身相关的工作，有时候需要横向对比一下竞品的数据，免不了要对一些商店的App在许可范围内做一些手脚，下面以<a href="http://git.oschina.net/oschina/iphone-app" target="_blank" rel="external">开源中国</a>的iPhone客户端为例给大家简单介绍下操作步骤。</p>
+<p>当前环境：</p>
+<ul>
+<li>一台越狱iPhone，系统为iOS8.3</li>
+<li>mac OS X EI 10.11.5</li>
+<li>iTunes 12.4</li>
+</ul>
+<h3 id="通过iTunes获取ipa">通过iTunes获取ipa</h3><p><img src="http://7xkptx.com1.z0.glb.clouddn.com/t34hy45u76.png" alt=""></p>
+<p>点击下载，然后到我的Apps中找到刚刚下载的开源中国.ipa文件，将后缀.ipa修改为.zip，直接解压即可。找到Payload文件夹下的iosapp包文件，查看包内容，就是开发者上传Appstore的全部内容了。里面包含有png、xib等资源文件，以及本地化语言包，签名包以及二进制文件。</p>
+<h3 id="使用工具解密二进制文件">使用工具解密二进制文件</h3><p>App Store上的应用都使用了DRM(Digital Rights Management)数字版权加密保护技术，想更多了解DMG历史请戳<a href="http://www.ifanr.com/473806" target="_blank" rel="external">这里</a>。首先得破解加密的可执行文件，可以通过编译<a href="https://github.com/stefanesser/dumpdecrypted" target="_blank" rel="external">dumpdecrypted</a>来解密，原理是让app预先加载一个解密的dumpdecrypted.dylib，然后在程序运行后，将代码动态解密，最后在内存中dump出来整个程序。（如果没有越狱设备，可以通过第三方市场下载未加密的ipa文件，跳过此步骤）。</p>
+<p><img src="http://7xkptx.com1.z0.glb.clouddn.com/05ce2ce5f74e040661b53791b.png" alt=""></p>
+<p>找到刚才解压好的开源中国二进制，名为iosapp，运行：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">otool -l iosapp_本地路径 | grep crypt</span><br><span class="line"><span class="preprocessor"># 结果为：</span></span><br><span class="line">     cryptoff <span class="number">16384</span></span><br><span class="line">    cryptsize <span class="number">5619712</span></span><br><span class="line">      cryptid <span class="number">1</span></span><br><span class="line">     cryptoff <span class="number">16384</span></span><br><span class="line">    cryptsize <span class="number">6144000</span></span><br><span class="line">      cryptid <span class="number">1</span></span><br></pre></td></tr></table></figure>
+<p>cryptid 1代表加密，cryptid 0代表未加密。两个分别对应着armv7和arm64，也就是它们都有加密。接下来要开始编译dumpdecrypted.dylib文件了，首先clone <a href="https://github.com/stefanesser/dumpdecrypted.git" target="_blank" rel="external">dumpdecrypted</a>到桌面，cd到dump decrypted目录，执行以下命令，即可生成dumpdecrypted.dylib文件了。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> make</span><br><span class="line">`xcrun --sdk iphoneos --find gcc` -Os  -Wimplicit -isysroot `xcrun --sdk iphoneos --show-sdk-path` -F`xcrun --sdk iphoneos --show-sdk-path`/System/Library/Frameworks -F`xcrun --sdk iphoneos --show-sdk-path`/System/Library/PrivateFrameworks -arch armv7 -arch armv7s -arch arm64 -c -o dumpdecrypted<span class="variable">.o</span> dumpdecrypted<span class="variable">.c</span></span><br></pre></td></tr></table></figure>
+<p>编译后的目录如下：</p>
+<p><img src="http://7xkptx.com1.z0.glb.clouddn.com/e3fef6ddadbd919bbee9602a5.png" alt=""></p>
+<p>如何使用dumpdecrypted.dylib文件来破解spa包中的二进制文件呢？</p>
+<p>首先需要在已经越狱的iPhone中下载几个插件：</p>
+<ul>
+<li>OpenSSH，用来建立与iPhone的ssh链接，传递文件用；</li>
+<li>adv-cmds，在iPhone上使用<em>ps命令</em>查看进程，方便找到当前运行的App在iPhone中的文件目录；</li>
+<li>iFile，在iPhone上建立一个web server，方便与mac传递数据；</li>
+</ul>
+<p>通过Cydia安装好插件后，就要开始解密iosapp这个文件了。在iPhone设置中查找当前链接网络的ip地址，比如是：192.168.0.100，打开mac命令行，建立ssh链接：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh root@192.168.0.100</span><br></pre></td></tr></table></figure>
+<p>此时提示输入密码，默认为：alpine，无需修改。连接成功后，cd 到 /var/mobile/Containers/Bundle/Application/ 目录下，可能看到所有安装的App文件夹，在iPhone中打开开源中国App，保持前台运行。然后在mac终端执行以下命令：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -e | grep var</span><br></pre></td></tr></table></figure>
+<p>结果如下：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> <span class="number">143</span> ??         <span class="number">0</span>:<span class="number">04.00</span> /usr/libexec/pkd -d/var/db/PlugInKit-Annotations</span><br><span class="line"> <span class="number">398</span> ??         <span class="number">0</span>:<span class="number">01.08</span> /private/var/db/stash/_<span class="variable">.T1qNfY</span>/Applications/MobileSafari<span class="variable">.app</span>/webbookmarksd</span><br><span class="line"> <span class="number">529</span> ??         <span class="number">0</span>:<span class="number">04.78</span> /private/var/db/stash/_<span class="variable">.T1qNfY</span>/Applications/Stocks<span class="variable">.app</span>/PlugIns/StocksWidget<span class="variable">.appex</span>/StocksWidget</span><br><span class="line"> <span class="number">530</span> ??         <span class="number">0</span>:<span class="number">01.77</span> /private/var/db/stash/_<span class="variable">.T1qNfY</span>/Applications/MobileCal<span class="variable">.app</span>/PlugIns/CalendarWidget<span class="variable">.appex</span>/CalendarWidget</span><br><span class="line"><span class="number">3490</span> ??         <span class="number">0</span>:<span class="number">14.24</span> /var/mobile/Containers/Bundle/Application/<span class="number">7738</span>D5DE-B38D-<span class="number">4</span>BF1-<span class="number">9551</span>-BF671978045F/CocoaPods<span class="variable">.app</span>/CocoaPods</span><br><span class="line"><span class="number">3622</span> ??         <span class="number">0</span>:<span class="number">08.91</span> /var/mobile/Containers/Bundle/Application/B590E6C8-D5FA-<span class="number">4697</span>-AF4B-EF717ADBCB90/BaiduBoxApp<span class="variable">.app</span>/BaiduBoxApp</span><br><span class="line"><span class="number">4328</span> ??         <span class="number">0</span>:<span class="number">06.65</span> /var/mobile/Containers/Bundle/Application/<span class="number">86E38</span>E63-<span class="number">5</span>FF3-<span class="number">4</span>EF5-AB07-D13C4CB70168/iosapp<span class="variable">.app</span>/iosapp</span><br><span class="line"><span class="number">4350</span> ??         <span class="number">0</span>:<span class="number">01.47</span> /var/mobile/Containers/Bundle/Application/FBA32574-<span class="number">0453</span>-<span class="number">4</span>BB6-<span class="number">9</span>F46-A87757F22325/WeChat<span class="variable">.app</span>/WeChat</span><br><span class="line"><span class="number">4394</span> ttys000    <span class="number">0</span>:<span class="number">00.01</span> grep var</span><br></pre></td></tr></table></figure>
+<p>由此可见开源中国的App运行在/var/mobile/Containers/Bundle/Application/86E38E63-5FF3-4EF5-AB07-D13C4CB70168/iosapp.app/目录下，在mac终端，cd到dumpdecrypted.dylib所在目录，将dumpdecrypted.dylib拷贝到开源中国的Documents目录下:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp dumpdecrypted.dylib root@172.24.64.228:/var/mobile/Containers/Bundle/Application/86E38E63-5FF3-4EF5-AB07-D13C4CB70168/Documents/dumpdecrypted.dylib</span><br></pre></td></tr></table></figure>
+<p>传输成功显示：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dumpdecrypted.dylib                                     <span class="number">100</span>%  <span class="number">193</span>KB <span class="number">192.9</span>KB/s   <span class="number">00</span>:<span class="number">00</span></span><br></pre></td></tr></table></figure>
+<p>然后进入iPhone中开源中国所在根目录的Documents下，执行<code>DYLD_INSERT_LIBRARIES=dumpdecrypted.dylib</code>相关的命令，即将开始编译：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DYLD_I<span class="built_in">NSERT_LIBRARIES</span>=dumpdecrypted<span class="variable">.dylib</span> /var/mobile/Containers/Bundle/Application/<span class="number">86E38</span>E63-<span class="number">5</span>FF3-<span class="number">4</span>EF5-AB07-D13C4CB70168/iosapp<span class="variable">.app</span>/iosapp</span><br></pre></td></tr></table></figure>
+<p>成功后，会在Documents目录生成名为iosapp.decrypted的文件，至此就算是破解成功了。</p>
+<p>如果显示<code>dumpdecrypted.dylib: stat() failed with errno=1</code> 即“Operation not permitted”，表示操作权限不够，可以将dumpdecrypted.dylib文件sip至手机的usr/lib目录下，然后在执行DYLD_INSERT_LIBRARIES=dumpdecrypted.dylib命令编译，此时会在usr/lib目录下生成iosapp.decrypted文件。</p>
+<h3 id="解密后的文件如何使用？">解密后的文件如何使用？</h3><p>在得到iosapp.decrypted后，真正的逆向App工作才刚刚开始。未完待续…</p>
+<p>参考链接：</p>
+<p><a href="http://www.ifanr.com/473806" target="_blank" rel="external">http://www.ifanr.com/473806</a></p>
+<p><a href="http://www.liuchendi.com/2015/12/23/iOS/24_dumpdecrypted/" target="_blank" rel="external">http://www.liuchendi.com/2015/12/23/iOS/24_dumpdecrypted/</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://dama2716588.github.io/2016/07/20/逆向Appstore应用（一）/" data-id="ciquts89i00014fb1m0wbot72" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ipa/">ipa</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/04/06/一款Watch OS版微博/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">一款Watch OS版微博</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+<!-- disqus
+
+-->
+
+ 
+  <section id="comments">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="post-逆向Appstore应用（一）" data-title="逆向Appstore应用（一）" data-url="http://dama2716588.github.io/2016/07/20/逆向Appstore应用（一）/"></div>
+    <!-- 多说评论框 end -->
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+    var duoshuoQuery = {short_name:'dama2716588'};
+      (function() {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0] 
+         || document.getElementsByTagName('body')[0]).appendChild(ds);
+      })();
+      </script>
+    <!-- 多说公共JS代码 end -->
+  </section>
+  </section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/App-Store/">App Store</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/github/">github</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mac/">mac</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/svn/">svn</a><span class="category-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/GCD/">GCD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IAP/">IAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OTA/">OTA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Watch-OS/">Watch OS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/background/">background</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fmdb/">fmdb</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ipa/">ipa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlite/">sqlite</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/">ssh</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/svn/">svn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/推送/">推送</a><span class="tag-list-count">1</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/GCD/" style="font-size: 10px;">GCD</a> <a href="/tags/IAP/" style="font-size: 10px;">IAP</a> <a href="/tags/OTA/" style="font-size: 10px;">OTA</a> <a href="/tags/Watch-OS/" style="font-size: 10px;">Watch OS</a> <a href="/tags/background/" style="font-size: 10px;">background</a> <a href="/tags/fmdb/" style="font-size: 10px;">fmdb</a> <a href="/tags/github/" style="font-size: 20px;">github</a> <a href="/tags/ipa/" style="font-size: 10px;">ipa</a> <a href="/tags/mac/" style="font-size: 10px;">mac</a> <a href="/tags/sqlite/" style="font-size: 10px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/推送/" style="font-size: 10px;">推送</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/07/20/逆向Appstore应用（一）/">逆向Appstore应用（一）</a>
+          </li>
+        
+          <li>
+            <a href="/2016/04/06/一款Watch OS版微博/">一款Watch OS版微博</a>
+          </li>
+        
+          <li>
+            <a href="/2016/03/11/关于GCD的几个用例/">关于GCD的几个用例</a>
+          </li>
+        
+          <li>
+            <a href="/2016/03/09/FMDB使用摘要/">FMDB使用摘要</a>
+          </li>
+        
+          <li>
+            <a href="/2016/01/23/Github上SSH key 的使用与管理/">Github上SSH key 的使用与管理</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 Pandora<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+
+  </div>
+</body>
+</html>
