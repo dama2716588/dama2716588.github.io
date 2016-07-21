@@ -30,7 +30,7 @@ iTunes 12.4
 <meta property="og:image" content="http://7xkptx.com1.z0.glb.clouddn.com/t34hy45u76.png">
 <meta property="og:image" content="http://7xkptx.com1.z0.glb.clouddn.com/05ce2ce5f74e040661b53791b.png">
 <meta property="og:image" content="http://7xkptx.com1.z0.glb.clouddn.com/e3fef6ddadbd919bbee9602a5.png">
-<meta property="og:updated_time" content="2016-07-20T11:48:11.000Z">
+<meta property="og:updated_time" content="2016-07-21T03:37:04.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="逆向Appstore应用（一）">
 <meta name="twitter:description" content="写在前面最近在做一些iOS启动速度优化和App瘦身相关的工作，有时候需要横向对比一下竞品的数据，免不了要对一些商店的App在许可范围内做一些手脚，下面以开源中国的iPhone客户端为例给大家简单介绍下操作步骤。
@@ -146,20 +146,19 @@ iTunes 12.4
 <p>由此可见开源中国的App运行在/var/mobile/Containers/Bundle/Application/86E38E63-5FF3-4EF5-AB07-D13C4CB70168/iosapp.app/目录下，在mac终端，cd到dumpdecrypted.dylib所在目录，将dumpdecrypted.dylib拷贝到开源中国的Documents目录下:</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp dumpdecrypted.dylib root@172.24.64.228:/var/mobile/Containers/Bundle/Application/86E38E63-5FF3-4EF5-AB07-D13C4CB70168/Documents/dumpdecrypted.dylib</span><br></pre></td></tr></table></figure>
 <p>传输成功显示：</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dumpdecrypted.dylib                                     <span class="number">100</span>%  <span class="number">193</span>KB <span class="number">192.9</span>KB/s   <span class="number">00</span>:<span class="number">00</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dumpdecrypted.dylib   <span class="number">100</span>%  <span class="number">193</span>KB <span class="number">192.9</span>KB/s   <span class="number">00</span>:<span class="number">00</span></span><br></pre></td></tr></table></figure>
 <p>然后进入iPhone中开源中国所在根目录的Documents下，执行<code>DYLD_INSERT_LIBRARIES=dumpdecrypted.dylib</code>相关的命令，即将开始编译：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DYLD_I<span class="built_in">NSERT_LIBRARIES</span>=dumpdecrypted<span class="variable">.dylib</span> /var/mobile/Containers/Bundle/Application/<span class="number">86E38</span>E63-<span class="number">5</span>FF3-<span class="number">4</span>EF5-AB07-D13C4CB70168/iosapp<span class="variable">.app</span>/iosapp</span><br></pre></td></tr></table></figure>
 <p>成功后，会在Documents目录生成名为iosapp.decrypted的文件，至此就算是破解成功了。</p>
-<p>如果显示<code>dumpdecrypted.dylib: stat() failed with errno=1</code> 即“Operation not permitted”，表示操作权限不够，可以将dumpdecrypted.dylib文件sip至手机的usr/lib目录下，然后在执行DYLD_INSERT_LIBRARIES=dumpdecrypted.dylib命令编译，此时会在usr/lib目录下生成iosapp.decrypted文件。</p>
+<p>如果显示<code>dumpdecrypted.dylib: stat() failed with errno=1</code> 即“Operation not permitted”，表示操作权限不够，可以将dumpdecrypted.dylib文件sip至手机的usr/lib目录下，然后再执行<code>DYLD_INSERT_LIBRARIES=dumpdecrypted.dylib</code>命令编译，此时会在usr/lib目录下生成iosapp.decrypted文件。</p>
 <h3 id="解密后的文件如何使用？">解密后的文件如何使用？</h3><p>在得到iosapp.decrypted后，真正的逆向App工作才刚刚开始。未完待续…</p>
-<p>参考链接：</p>
-<p><a href="http://www.ifanr.com/473806" target="_blank" rel="external">http://www.ifanr.com/473806</a></p>
+<h4 id="参考：">参考：</h4><p><a href="http://www.ifanr.com/473806" target="_blank" rel="external">http://www.ifanr.com/473806</a></p>
 <p><a href="http://www.liuchendi.com/2015/12/23/iOS/24_dumpdecrypted/" target="_blank" rel="external">http://www.liuchendi.com/2015/12/23/iOS/24_dumpdecrypted/</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://dama2716588.github.io/2016/07/20/逆向Appstore应用（一）/" data-id="ciquts89i00014fb1m0wbot72" class="article-share-link">Share</a>
+      <a data-url="http://dama2716588.github.io/2016/07/20/逆向Appstore应用（一）/" data-id="ciqvrmecy0001neb1iltmvscb" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ipa/">ipa</a></li></ul>
