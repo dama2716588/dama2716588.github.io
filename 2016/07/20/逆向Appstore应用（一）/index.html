@@ -31,7 +31,7 @@ iTunes 12.4
 <meta property="og:image" content="http://7xkptx.com1.z0.glb.clouddn.com/old-dbd-magenta.jpg">
 <meta property="og:image" content="http://7xkptx.com1.z0.glb.clouddn.com/05ce2ce5f74e040661b53791b.png">
 <meta property="og:image" content="http://7xkptx.com1.z0.glb.clouddn.com/e3fef6ddadbd919bbee9602a5.png">
-<meta property="og:updated_time" content="2016-08-04T11:45:54.000Z">
+<meta property="og:updated_time" content="2016-08-04T11:49:23.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="逆向Appstore应用（一）">
 <meta name="twitter:description" content="写在前面最近在做一些iOS启动速度优化和App瘦身相关的工作，有时候需要横向对比一下竞品的数据，免不了要对一些商店的App在许可范围内做一些手脚，下面以开源中国的iPhone客户端为例给大家简单介绍下操作步骤。
@@ -123,7 +123,7 @@ iTunes 12.4
 </ul>
 <h3 id="通过iTunes获取ipa">通过iTunes获取ipa</h3><p><img src="http://7xkptx.com1.z0.glb.clouddn.com/t34hy45u76.png" alt=""></p>
 <p>点击下载，然后到我的Apps中找到刚刚下载的开源中国.ipa文件，将后缀.ipa修改为.zip，直接解压即可。找到Payload文件夹下的iosapp包文件，查看包内容，就是开发者上传Appstore的全部内容了。里面包含有png、xib等资源文件，以及本地化语言包，签名包以及二进制文件。</p>
-<h3 id="使用工具解密二进制文件">使用工具解密二进制文件</h3><p><img src="http://7xkptx.com1.z0.glb.clouddn.com/old-dbd-magenta.jpg" alt=""></p>
+<h3 id="使用工具解密二进制文件">使用工具解密二进制文件</h3><p><img src="http://7xkptx.com1.z0.glb.clouddn.com/old-dbd-magenta.jpg" alt="配图来自ifanr"></p>
 <p>App Store上的应用都使用了DRM(Digital Rights Management)数字版权加密保护技术，想更多了解DMG历史请戳<a href="http://www.ifanr.com/473806" target="_blank" rel="external">这里</a>。首先得破解加密的可执行文件，可以通过编译<a href="https://github.com/stefanesser/dumpdecrypted" target="_blank" rel="external">dumpdecrypted</a>来解密，原理是让app预先加载一个解密的dumpdecrypted.dylib，然后在程序运行后，将代码动态解密，最后在内存中dump出来整个程序。（如果没有越狱设备，可以通过第三方市场下载未加密的ipa文件，跳过此步骤）。</p>
 <p><img src="http://7xkptx.com1.z0.glb.clouddn.com/05ce2ce5f74e040661b53791b.png" alt=""></p>
 <p>找到刚才解压好的开源中国二进制，名为iosapp，运行：</p>
@@ -160,7 +160,7 @@ iTunes 12.4
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://dama2716588.github.io/2016/07/20/逆向Appstore应用（一）/" data-id="cirg9ckv50001n0b1fh6d2tjx" class="article-share-link">Share</a>
+      <a data-url="http://dama2716588.github.io/2016/07/20/逆向Appstore应用（一）/" data-id="cirg9g62m0001pjb1osdgsfy6" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ipa/">ipa</a></li></ul>
