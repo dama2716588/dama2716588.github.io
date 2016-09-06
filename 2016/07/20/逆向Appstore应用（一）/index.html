@@ -31,7 +31,9 @@ iTunes 12.4
 <meta property="og:image" content="http://7xkptx.com1.z0.glb.clouddn.com/old-dbd-magenta.jpg">
 <meta property="og:image" content="http://7xkptx.com1.z0.glb.clouddn.com/05ce2ce5f74e040661b53791b.png">
 <meta property="og:image" content="http://7xkptx.com1.z0.glb.clouddn.com/e3fef6ddadbd919bbee9602a5.png">
-<meta property="og:updated_time" content="2016-08-04T11:49:23.000Z">
+<meta property="og:image" content="http://7xkptx.com1.z0.glb.clouddn.com/f3fh389h4f.png">
+<meta property="og:image" content="http://7xkptx.com1.z0.glb.clouddn.com/9518200bbe399f475dea89e86.png">
+<meta property="og:updated_time" content="2016-09-06T09:46:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="逆向Appstore应用（一）">
 <meta name="twitter:description" content="写在前面最近在做一些iOS启动速度优化和App瘦身相关的工作，有时候需要横向对比一下竞品的数据，免不了要对一些商店的App在许可范围内做一些手脚，下面以开源中国的iPhone客户端为例给大家简单介绍下操作步骤。
@@ -145,14 +147,17 @@ iTunes 12.4
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps -e | grep var</span><br></pre></td></tr></table></figure>
 <p>结果如下：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"> <span class="number">143</span> ??         <span class="number">0</span>:<span class="number">04.00</span> /usr/libexec/pkd -d/var/db/PlugInKit-Annotations</span><br><span class="line"> <span class="number">398</span> ??         <span class="number">0</span>:<span class="number">01.08</span> /private/var/db/stash/_<span class="variable">.T1qNfY</span>/Applications/MobileSafari<span class="variable">.app</span>/webbookmarksd</span><br><span class="line"> <span class="number">529</span> ??         <span class="number">0</span>:<span class="number">04.78</span> /private/var/db/stash/_<span class="variable">.T1qNfY</span>/Applications/Stocks<span class="variable">.app</span>/PlugIns/StocksWidget<span class="variable">.appex</span>/StocksWidget</span><br><span class="line"> <span class="number">530</span> ??         <span class="number">0</span>:<span class="number">01.77</span> /private/var/db/stash/_<span class="variable">.T1qNfY</span>/Applications/MobileCal<span class="variable">.app</span>/PlugIns/CalendarWidget<span class="variable">.appex</span>/CalendarWidget</span><br><span class="line"><span class="number">3490</span> ??         <span class="number">0</span>:<span class="number">14.24</span> /var/mobile/Containers/Bundle/Application/<span class="number">7738</span>D5DE-B38D-<span class="number">4</span>BF1-<span class="number">9551</span>-BF671978045F/CocoaPods<span class="variable">.app</span>/CocoaPods</span><br><span class="line"><span class="number">3622</span> ??         <span class="number">0</span>:<span class="number">08.91</span> /var/mobile/Containers/Bundle/Application/B590E6C8-D5FA-<span class="number">4697</span>-AF4B-EF717ADBCB90/BaiduBoxApp<span class="variable">.app</span>/BaiduBoxApp</span><br><span class="line"><span class="number">4328</span> ??         <span class="number">0</span>:<span class="number">06.65</span> /var/mobile/Containers/Bundle/Application/<span class="number">86E38</span>E63-<span class="number">5</span>FF3-<span class="number">4</span>EF5-AB07-D13C4CB70168/iosapp<span class="variable">.app</span>/iosapp</span><br><span class="line"><span class="number">4350</span> ??         <span class="number">0</span>:<span class="number">01.47</span> /var/mobile/Containers/Bundle/Application/FBA32574-<span class="number">0453</span>-<span class="number">4</span>BB6-<span class="number">9</span>F46-A87757F22325/WeChat<span class="variable">.app</span>/WeChat</span><br><span class="line"><span class="number">4394</span> ttys000    <span class="number">0</span>:<span class="number">00.01</span> grep var</span><br></pre></td></tr></table></figure>
-<p>由此可见开源中国的App运行在/var/mobile/Containers/Bundle/Application/86E38E63-5FF3-4EF5-AB07-D13C4CB70168/iosapp.app/目录下，在mac终端，cd到dumpdecrypted.dylib所在目录，将dumpdecrypted.dylib拷贝到开源中国的Documents目录下:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp dumpdecrypted.dylib root@172.24.64.228:/var/mobile/Containers/Bundle/Application/86E38E63-5FF3-4EF5-AB07-D13C4CB70168/Documents/dumpdecrypted.dylib</span><br></pre></td></tr></table></figure>
+<p>由此可见开源中国的App运行在/var/mobile/Containers/Bundle/Application/86E38E63-5FF3-4EF5-AB07-D13C4CB70168/iosapp.app/目录下，每个app目录下都有一个Info.plist。我们可以通过这个Info.plist得到app的Bundle ID：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /var/mobile/Containers/Bundle/Application/<span class="number">86E38</span>E63-<span class="number">5</span>FF3-<span class="number">4</span>EF5-AB07-D13C4CB70168/iosapp<span class="variable">.app</span>/Info<span class="variable">.plist</span></span><br></pre></td></tr></table></figure></p>
+<p>得到开源中的的Bundle ID为net.oschina.iosapp，由于App的运行会受到沙盒的限制，因此dump出来的app只能保存在data目录下，这里我们可以通过Bundle ID和一个private API得到data目录的位置：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">Class cls = <span class="built_in">NSClassFromString</span>(<span class="string">@"LSApplicationWorkspace"</span>);</span><br><span class="line"><span class="keyword">id</span> s = [(<span class="keyword">id</span>)cls performSelector:<span class="built_in">NSSelectorFromString</span>(<span class="string">@"defaultWorkspace"</span>)];</span><br><span class="line"><span class="built_in">NSArray</span> *arr = [s performSelector:<span class="built_in">NSSelectorFromString</span>(<span class="string">@"allInstalledApplications"</span>)];</span><br><span class="line">Class Proxy  = <span class="built_in">NSClassFromString</span>(<span class="string">@"LSApplicationProxy"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">id</span> proxy <span class="keyword">in</span> arr) &#123;</span><br><span class="line">    <span class="keyword">id</span> bundleID = [proxy valueForKey:<span class="string">@"applicationIdentifier"</span>];</span><br><span class="line">    <span class="keyword">if</span> (bundleID &amp;&amp; [bundleID isEqualToString:<span class="string">@"net.oschina.iosapp"</span>]) &#123;</span><br><span class="line">        <span class="keyword">id</span> dataUrl = [proxy valueForKey:<span class="string">@"dataContainerURL"</span>];</span><br><span class="line">        <span class="built_in">NSLog</span>(<span class="string">@"dataUrl : %@"</span>,dataUrl);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>打印出来的data url为<code>file:///private/var/mobile/Containers/Data/Application/6C425F0E-217C-4051-A131-735F3A816D89</code>，接下来在mac终端，cd到dumpdecrypted.dylib所在目录，将dumpdecrypted.dylib拷贝到开源中国的Documents目录下:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp dumpdecrypted.dylib root@172.24.64.228:/private/var/mobile/Containers/Data/Application/6C425F0E-217C-4051-A131-735F3A816D89/Documents/dumpdecrypted.dylib</span><br></pre></td></tr></table></figure>
 <p>传输成功显示：</p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dumpdecrypted.dylib   <span class="number">100</span>%  <span class="number">193</span>KB <span class="number">192.9</span>KB/s   <span class="number">00</span>:<span class="number">00</span></span><br></pre></td></tr></table></figure>
 <p>然后进入iPhone中开源中国所在根目录的Documents下，执行<code>DYLD_INSERT_LIBRARIES=dumpdecrypted.dylib</code>相关的命令，即将开始编译：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DYLD_I<span class="built_in">NSERT_LIBRARIES</span>=dumpdecrypted<span class="variable">.dylib</span> /var/mobile/Containers/Bundle/Application/<span class="number">86E38</span>E63-<span class="number">5</span>FF3-<span class="number">4</span>EF5-AB07-D13C4CB70168/iosapp<span class="variable">.app</span>/iosapp</span><br></pre></td></tr></table></figure>
-<p>成功后，会在Documents目录生成名为iosapp.decrypted的文件，至此就算是破解成功了。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DYLD_I<span class="built_in">NSERT_LIBRARIES</span>=dumpdecrypted<span class="variable">.dylib</span> /var/mobile/Containers/Bundle/Application/<span class="number">7202242</span>C-DABA-<span class="number">4520</span>-<span class="number">8</span>D3D-<span class="number">81448728</span>F587/iosapp<span class="variable">.app</span>/iosapp</span><br></pre></td></tr></table></figure>
+<p>成功后，会在Documents目录生成名为iosapp.decrypted的文件，至此就算是破解成功了，如下图所示：<br><img src="http://7xkptx.com1.z0.glb.clouddn.com/f3fh389h4f.png" alt=""></p>
 <p>如果显示<code>dumpdecrypted.dylib: stat() failed with errno=1</code> 即“Operation not permitted”，表示操作权限不够，可以将dumpdecrypted.dylib文件sip至手机的usr/lib目录下，然后再执行<code>DYLD_INSERT_LIBRARIES=dumpdecrypted.dylib</code>命令编译，此时会在usr/lib目录下生成iosapp.decrypted文件。</p>
+<p><img src="http://7xkptx.com1.z0.glb.clouddn.com/9518200bbe399f475dea89e86.png" alt=""><br>砸壳后的app只能解密砸壳运行时的架构，可以看到在arm64架构下显示cryptid为0，已经成功解密。</p>
 <h3 id="解密后的文件如何使用？">解密后的文件如何使用？</h3><p>在得到iosapp.decrypted后，真正的逆向App工作才刚刚开始。未完待续…</p>
 <h4 id="参考：">参考：</h4><p><a href="http://www.ifanr.com/473806" target="_blank" rel="external">http://www.ifanr.com/473806</a></p>
 <p><a href="http://www.liuchendi.com/2015/12/23/iOS/24_dumpdecrypted/" target="_blank" rel="external">http://www.liuchendi.com/2015/12/23/iOS/24_dumpdecrypted/</a></p>
@@ -160,7 +165,7 @@ iTunes 12.4
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://dama2716588.github.io/2016/07/20/逆向Appstore应用（一）/" data-id="cirg9g62m0001pjb1osdgsfy6" class="article-share-link">Share</a>
+      <a data-url="http://dama2716588.github.io/2016/07/20/逆向Appstore应用（一）/" data-id="cisrge2c40002cyb1pk4d9wyw" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ipa/">ipa</a></li></ul>
@@ -170,6 +175,15 @@ iTunes 12.4
   
     
 <nav id="article-nav">
+  
+    <a href="/2016/09/06/逆向Appstore应用（二）/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          逆向Appstore应用（二）
+        
+      </div>
+    </a>
   
   
     <a href="/2016/04/06/一款Watch OS版微博/" id="article-nav-older" class="article-nav-link-wrap">
@@ -240,7 +254,7 @@ iTunes 12.4
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">2</span></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">April 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/03/">March 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/12/">December 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a><span class="archive-list-count">2</span></li></ul>
     </div>
   </div>
 
@@ -250,6 +264,10 @@ iTunes 12.4
     <h3 class="widget-title">Recents</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/09/06/逆向Appstore应用（二）/">逆向Appstore应用（二）</a>
+          </li>
         
           <li>
             <a href="/2016/07/20/逆向Appstore应用（一）/">逆向Appstore应用（一）</a>
@@ -265,10 +283,6 @@ iTunes 12.4
         
           <li>
             <a href="/2016/03/09/FMDB使用摘要/">FMDB使用摘要</a>
-          </li>
-        
-          <li>
-            <a href="/2016/01/23/Github上SSH key 的使用与管理/">Github上SSH key 的使用与管理</a>
           </li>
         
       </ul>
