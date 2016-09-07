@@ -63,10 +63,14 @@
   
     <article id="post-逆向Appstore应用（二）" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/09/06/逆向Appstore应用（二）/" class="article-date">
-  <time datetime="2016-09-06T12:26:19.000Z" itemprop="datePublished">2016-09-06</time>
+    <a href="/2016/09/07/逆向Appstore应用（二）/" class="article-date">
+  <time datetime="2016-09-07T04:45:00.000Z" itemprop="datePublished">2016-09-07</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Appstore/">Appstore</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -75,7 +79,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/06/逆向Appstore应用（二）/">逆向Appstore应用（二）</a>
+      <a class="article-title" href="/2016/09/07/逆向Appstore应用（二）/">逆向Appstore应用（二）</a>
     </h1>
   
 
@@ -131,7 +135,7 @@
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ security cms -D -<span class="tag">i</span> <span class="string">"extracted/Payload/$APPLICATION/embedded.mobileprovision"</span> &gt; t_entitlements_full<span class="class">.plist</span></span><br><span class="line">$ /usr/libexec/PlistBuddy -x -c <span class="string">'Print:Entitlements'</span> t_entitlements_full<span class="class">.plist</span> &gt; t_entitlements.plist</span><br></pre></td></tr></table></figure>
 <p>得到t_entitlements.plist后，把它作为参数传递给codesign，重新签名app文件：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">codesign -f -s <span class="string">"iPhone Distribution: abc"</span> /Users/pandora/Desktop/shell/oschina/Payload/iosapp<span class="variable">.app</span>/ --entitlements t_entitlements<span class="variable">.plist</span></span><br></pre></td></tr></table></figure>
-<p>最后，压缩Payload文件夹，转化为ipa格式的文件，终于安装成功！</p>
+<p>最后，压缩Payload文件夹，转化为ipa格式的文件，终于安装成功！本次重签名未更改bundleID，安装的时候会覆盖之前从Appstore下载的应用。如果想更改应用bundleID，可以使用<a href="https://github.com/fastlane-old/sigh" target="_blank" rel="external">sigh</a>来重签名应用。</p>
 <h4 id="参考：">参考：</h4><p><a href="https://objccn.io/issue-17-2/" target="_blank" rel="external">ObjC中国</a></p>
 <p><a href="http://www.jianshu.com/p/6b659c669338" target="_blank" rel="external">iOS重签名探索</a></p>
 <p><a href="http://www.pchou.info/ios/2015/12/14/ios-certification-and-code-sign.html" target="_blank" rel="external">漫谈iOS程序的证书和签名机制</a></p>
@@ -140,9 +144,11 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://dama2716588.github.io/2016/09/06/逆向Appstore应用（二）/" data-id="cisrge2c20001cyb1t3sujfd9" class="article-share-link">Share</a>
+      <a data-url="http://dama2716588.github.io/2016/09/07/逆向Appstore应用（二）/" data-id="cissfc40x00012zb188jrodpa" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ipa/">ipa</a></li></ul>
+
     </footer>
   </div>
   
@@ -229,7 +235,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://dama2716588.github.io/2016/07/20/逆向Appstore应用（一）/" data-id="cisrge2c40002cyb1pk4d9wyw" class="article-share-link">Share</a>
+      <a data-url="http://dama2716588.github.io/2016/07/20/逆向Appstore应用（一）/" data-id="cissfc41100062zb1g235qpi9" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ipa/">ipa</a></li></ul>
@@ -315,7 +321,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://dama2716588.github.io/2016/04/06/一款Watch OS版微博/" data-id="cisrge2ck000scyb118a6p71l" class="article-share-link">Share</a>
+      <a data-url="http://dama2716588.github.io/2016/04/06/一款Watch OS版微博/" data-id="cissfc41e000v2zb12cvtb2cn" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Watch-OS/">Watch OS</a></li></ul>
@@ -382,7 +388,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://dama2716588.github.io/2016/03/11/关于GCD的几个用例/" data-id="cisrge2ce000kcyb1rrfif6xd" class="article-share-link">Share</a>
+      <a data-url="http://dama2716588.github.io/2016/03/11/关于GCD的几个用例/" data-id="cissfc419000n2zb1uofb284k" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GCD/">GCD</a></li></ul>
@@ -452,7 +458,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://dama2716588.github.io/2016/03/09/FMDB使用摘要/" data-id="cisrge2ct0015cyb16nunuukb" class="article-share-link">Share</a>
+      <a data-url="http://dama2716588.github.io/2016/03/09/FMDB使用摘要/" data-id="cissfc41m00182zb1639gu5bc" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fmdb/">fmdb</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sqlite/">sqlite</a></li></ul>
@@ -524,7 +530,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://dama2716588.github.io/2016/01/23/Github上SSH key 的使用与管理/" data-id="cisrge2cq000zcyb1co4v8oeg" class="article-share-link">Share</a>
+      <a data-url="http://dama2716588.github.io/2016/01/23/Github上SSH key 的使用与管理/" data-id="cissfc41j00122zb1jg931xdt" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github/">github</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ssh/">ssh</a></li></ul>
@@ -608,7 +614,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://dama2716588.github.io/2016/01/13/聊一聊iOS后台任务/" data-id="cisrge2c90007cyb198r4drun" class="article-share-link">Share</a>
+      <a data-url="http://dama2716588.github.io/2016/01/13/聊一聊iOS后台任务/" data-id="cissfc413000a2zb1vdoe5xbw" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/background/">background</a></li></ul>
@@ -829,7 +835,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://dama2716588.github.io/2015/12/24/ iOS面试总结/" data-id="cisrge2bk0000cyb1lx742q0b" class="article-share-link">Share</a>
+      <a data-url="http://dama2716588.github.io/2015/12/24/ iOS面试总结/" data-id="cissfc40g00002zb1a6xph45w" class="article-share-link">Share</a>
       
       
     </footer>
@@ -892,7 +898,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://dama2716588.github.io/2015/12/14/几款mac小工具推荐/" data-id="cisrge2cc000fcyb1yqjtg2gf" class="article-share-link">Share</a>
+      <a data-url="http://dama2716588.github.io/2015/12/14/几款mac小工具推荐/" data-id="cissfc417000i2zb15sj59xxp" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mac/">mac</a></li></ul>
@@ -961,7 +967,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://dama2716588.github.io/2015/11/10/常用的SVN命令小结/" data-id="cisrge2cb000acyb1ro3qd1qw" class="article-share-link">Share</a>
+      <a data-url="http://dama2716588.github.io/2015/11/10/常用的SVN命令小结/" data-id="cissfc415000d2zb1qkaiba36" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/svn/">svn</a></li></ul>
@@ -990,7 +996,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/App-Store/">App Store</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/github/">github</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mac/">mac</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/svn/">svn</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/App-Store/">App Store</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Appstore/">Appstore</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/github/">github</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mac/">mac</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/svn/">svn</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -999,7 +1005,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/GCD/">GCD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IAP/">IAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OTA/">OTA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Watch-OS/">Watch OS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/background/">background</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fmdb/">fmdb</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ipa/">ipa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlite/">sqlite</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/">ssh</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/svn/">svn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/推送/">推送</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/GCD/">GCD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IAP/">IAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OTA/">OTA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Watch-OS/">Watch OS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/background/">background</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fmdb/">fmdb</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ipa/">ipa</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlite/">sqlite</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/">ssh</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/svn/">svn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/推送/">推送</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -1008,7 +1014,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/GCD/" style="font-size: 10px;">GCD</a> <a href="/tags/IAP/" style="font-size: 10px;">IAP</a> <a href="/tags/OTA/" style="font-size: 10px;">OTA</a> <a href="/tags/Watch-OS/" style="font-size: 10px;">Watch OS</a> <a href="/tags/background/" style="font-size: 10px;">background</a> <a href="/tags/fmdb/" style="font-size: 10px;">fmdb</a> <a href="/tags/github/" style="font-size: 20px;">github</a> <a href="/tags/ipa/" style="font-size: 10px;">ipa</a> <a href="/tags/mac/" style="font-size: 10px;">mac</a> <a href="/tags/sqlite/" style="font-size: 10px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/推送/" style="font-size: 10px;">推送</a>
+      <a href="/tags/GCD/" style="font-size: 10px;">GCD</a> <a href="/tags/IAP/" style="font-size: 10px;">IAP</a> <a href="/tags/OTA/" style="font-size: 10px;">OTA</a> <a href="/tags/Watch-OS/" style="font-size: 10px;">Watch OS</a> <a href="/tags/background/" style="font-size: 10px;">background</a> <a href="/tags/fmdb/" style="font-size: 10px;">fmdb</a> <a href="/tags/github/" style="font-size: 20px;">github</a> <a href="/tags/ipa/" style="font-size: 20px;">ipa</a> <a href="/tags/mac/" style="font-size: 10px;">mac</a> <a href="/tags/sqlite/" style="font-size: 10px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/推送/" style="font-size: 10px;">推送</a>
     </div>
   </div>
 
@@ -1029,7 +1035,7 @@
       <ul>
         
           <li>
-            <a href="/2016/09/06/逆向Appstore应用（二）/">逆向Appstore应用（二）</a>
+            <a href="/2016/09/07/逆向Appstore应用（二）/">逆向Appstore应用（二）</a>
           </li>
         
           <li>

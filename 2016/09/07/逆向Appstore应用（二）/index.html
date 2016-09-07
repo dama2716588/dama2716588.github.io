@@ -12,7 +12,7 @@
 基于该Certificate生成">
 <meta property="og:type" content="article">
 <meta property="og:title" content="逆向Appstore应用（二）">
-<meta property="og:url" content="http://dama2716588.github.io/2016/09/06/逆向Appstore应用（二）/index.html">
+<meta property="og:url" content="http://dama2716588.github.io/2016/09/07/逆向Appstore应用（二）/index.html">
 <meta property="og:site_name" content="Pandora的技术博客">
 <meta property="og:description" content="准备工作代码签名 (code signing) 对一个App来讲至关重要，是iOS系统安全的重要组成部分，决定了App的哪些功能是被授权或者禁止的。尽管各种证书、配置文件等让初学这头痛不已，但确实给用户带来了极大的安全保障。
 文件及环境：
@@ -23,7 +23,7 @@
 <meta property="og:image" content="http://7xkptx.com1.z0.glb.clouddn.com/vw3g54gd34f.png">
 <meta property="og:image" content="http://7xkptx.com1.z0.glb.clouddn.com/ef3egfwergf3.png">
 <meta property="og:image" content="http://7xkptx.com1.z0.glb.clouddn.com/fefegewr4f45f43f.png">
-<meta property="og:updated_time" content="2016-09-06T12:26:19.000Z">
+<meta property="og:updated_time" content="2016-09-07T04:47:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="逆向Appstore应用（二）">
 <meta name="twitter:description" content="准备工作代码签名 (code signing) 对一个App来讲至关重要，是iOS系统安全的重要组成部分，决定了App的哪些功能是被授权或者禁止的。尽管各种证书、配置文件等让初学这头痛不已，但确实给用户带来了极大的安全保障。
@@ -78,10 +78,14 @@
       <div class="outer">
         <section id="main"><article id="post-逆向Appstore应用（二）" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/09/06/逆向Appstore应用（二）/" class="article-date">
-  <time datetime="2016-09-06T12:26:19.000Z" itemprop="datePublished">2016-09-06</time>
+    <a href="/2016/09/07/逆向Appstore应用（二）/" class="article-date">
+  <time datetime="2016-09-07T04:45:00.000Z" itemprop="datePublished">2016-09-07</time>
 </a>
     
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Appstore/">Appstore</a>
+  </div>
+
   </div>
   <div class="article-inner">
     
@@ -146,7 +150,7 @@
 <figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ security cms -D -<span class="tag">i</span> <span class="string">"extracted/Payload/$APPLICATION/embedded.mobileprovision"</span> &gt; t_entitlements_full<span class="class">.plist</span></span><br><span class="line">$ /usr/libexec/PlistBuddy -x -c <span class="string">'Print:Entitlements'</span> t_entitlements_full<span class="class">.plist</span> &gt; t_entitlements.plist</span><br></pre></td></tr></table></figure>
 <p>得到t_entitlements.plist后，把它作为参数传递给codesign，重新签名app文件：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">codesign -f -s <span class="string">"iPhone Distribution: abc"</span> /Users/pandora/Desktop/shell/oschina/Payload/iosapp<span class="variable">.app</span>/ --entitlements t_entitlements<span class="variable">.plist</span></span><br></pre></td></tr></table></figure>
-<p>最后，压缩Payload文件夹，转化为ipa格式的文件，终于安装成功！</p>
+<p>最后，压缩Payload文件夹，转化为ipa格式的文件，终于安装成功！本次重签名未更改bundleID，安装的时候会覆盖之前从Appstore下载的应用。如果想更改应用bundleID，可以使用<a href="https://github.com/fastlane-old/sigh" target="_blank" rel="external">sigh</a>来重签名应用。</p>
 <h4 id="参考：">参考：</h4><p><a href="https://objccn.io/issue-17-2/" target="_blank" rel="external">ObjC中国</a></p>
 <p><a href="http://www.jianshu.com/p/6b659c669338" target="_blank" rel="external">iOS重签名探索</a></p>
 <p><a href="http://www.pchou.info/ios/2015/12/14/ios-certification-and-code-sign.html" target="_blank" rel="external">漫谈iOS程序的证书和签名机制</a></p>
@@ -155,9 +159,11 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://dama2716588.github.io/2016/09/06/逆向Appstore应用（二）/" data-id="cisrge2c20001cyb1t3sujfd9" class="article-share-link">Share</a>
+      <a data-url="http://dama2716588.github.io/2016/09/07/逆向Appstore应用（二）/" data-id="cissfc40x00012zb188jrodpa" class="article-share-link">Share</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ipa/">ipa</a></li></ul>
+
     </footer>
   </div>
   
@@ -182,7 +188,7 @@
  
   <section id="comments">
     <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="post-逆向Appstore应用（二）" data-title="逆向Appstore应用（二）" data-url="http://dama2716588.github.io/2016/09/06/逆向Appstore应用（二）/"></div>
+    <div class="ds-thread" data-thread-key="post-逆向Appstore应用（二）" data-title="逆向Appstore应用（二）" data-url="http://dama2716588.github.io/2016/09/07/逆向Appstore应用（二）/"></div>
     <!-- 多说评论框 end -->
     <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
     <script type="text/javascript">
@@ -206,7 +212,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Categories</h3>
     <div class="widget">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/App-Store/">App Store</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/github/">github</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mac/">mac</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/svn/">svn</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/App-Store/">App Store</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/Appstore/">Appstore</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/github/">github</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/mac/">mac</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/svn/">svn</a><span class="category-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -215,7 +221,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tags</h3>
     <div class="widget">
-      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/GCD/">GCD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IAP/">IAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OTA/">OTA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Watch-OS/">Watch OS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/background/">background</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fmdb/">fmdb</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ipa/">ipa</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlite/">sqlite</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/">ssh</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/svn/">svn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/推送/">推送</a><span class="tag-list-count">1</span></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/GCD/">GCD</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IAP/">IAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/OTA/">OTA</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Watch-OS/">Watch OS</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/background/">background</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/fmdb/">fmdb</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/github/">github</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ipa/">ipa</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mac/">mac</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/sqlite/">sqlite</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssh/">ssh</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/svn/">svn</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/推送/">推送</a><span class="tag-list-count">1</span></li></ul>
     </div>
   </div>
 
@@ -224,7 +230,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/GCD/" style="font-size: 10px;">GCD</a> <a href="/tags/IAP/" style="font-size: 10px;">IAP</a> <a href="/tags/OTA/" style="font-size: 10px;">OTA</a> <a href="/tags/Watch-OS/" style="font-size: 10px;">Watch OS</a> <a href="/tags/background/" style="font-size: 10px;">background</a> <a href="/tags/fmdb/" style="font-size: 10px;">fmdb</a> <a href="/tags/github/" style="font-size: 20px;">github</a> <a href="/tags/ipa/" style="font-size: 10px;">ipa</a> <a href="/tags/mac/" style="font-size: 10px;">mac</a> <a href="/tags/sqlite/" style="font-size: 10px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/推送/" style="font-size: 10px;">推送</a>
+      <a href="/tags/GCD/" style="font-size: 10px;">GCD</a> <a href="/tags/IAP/" style="font-size: 10px;">IAP</a> <a href="/tags/OTA/" style="font-size: 10px;">OTA</a> <a href="/tags/Watch-OS/" style="font-size: 10px;">Watch OS</a> <a href="/tags/background/" style="font-size: 10px;">background</a> <a href="/tags/fmdb/" style="font-size: 10px;">fmdb</a> <a href="/tags/github/" style="font-size: 20px;">github</a> <a href="/tags/ipa/" style="font-size: 20px;">ipa</a> <a href="/tags/mac/" style="font-size: 10px;">mac</a> <a href="/tags/sqlite/" style="font-size: 10px;">sqlite</a> <a href="/tags/ssh/" style="font-size: 10px;">ssh</a> <a href="/tags/svn/" style="font-size: 10px;">svn</a> <a href="/tags/推送/" style="font-size: 10px;">推送</a>
     </div>
   </div>
 
@@ -245,7 +251,7 @@
       <ul>
         
           <li>
-            <a href="/2016/09/06/逆向Appstore应用（二）/">逆向Appstore应用（二）</a>
+            <a href="/2016/09/07/逆向Appstore应用（二）/">逆向Appstore应用（二）</a>
           </li>
         
           <li>
