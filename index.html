@@ -64,7 +64,7 @@
     <article id="post-逆向Appstore应用（二）" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/09/07/逆向Appstore应用（二）/" class="article-date">
-  <time datetime="2016-09-07T05:40:06.000Z" itemprop="datePublished">2016-09-07</time>
+  <time datetime="2016-09-07T12:27:43.000Z" itemprop="datePublished">2016-09-07</time>
 </a>
     
   </div>
@@ -132,16 +132,19 @@
 <p>t_entitlements.plist内容如下：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span><br><span class="line">&lt;!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd"&gt;</span><br><span class="line">&lt;plist version="1.0"&gt;</span><br><span class="line">&lt;dict&gt;</span><br><span class="line">	&lt;key&gt;application-identifier&lt;/key&gt;</span><br><span class="line">	&lt;string&gt;C789GLWV85.com.baidu.abc&lt;/string&gt;</span><br><span class="line">	&lt;key&gt;aps-environment&lt;/key&gt;</span><br><span class="line">	&lt;string&gt;production&lt;/string&gt;</span><br><span class="line">	&lt;key&gt;com.apple.developer.associated-domains&lt;/key&gt;</span><br><span class="line">	&lt;string&gt;*&lt;/string&gt;</span><br><span class="line">	&lt;key&gt;com.apple.developer.team-identifier&lt;/key&gt;</span><br><span class="line">	&lt;string&gt;C789GLWV85&lt;/string&gt;</span><br><span class="line">	&lt;key&gt;com.apple.security.application-groups&lt;/key&gt;</span><br><span class="line">	&lt;array&gt;</span><br><span class="line">		&lt;string&gt;group.com.baidu.abc&lt;/string&gt;</span><br><span class="line">	&lt;/array&gt;</span><br><span class="line">	&lt;key&gt;get-task-allow&lt;/key&gt;</span><br><span class="line">	&lt;false/&gt;</span><br><span class="line">	&lt;key&gt;keychain-access-groups&lt;/key&gt;</span><br><span class="line">	&lt;array&gt;</span><br><span class="line">		&lt;string&gt;C789GLWV85.*&lt;/string&gt;</span><br><span class="line">	&lt;/array&gt;</span><br><span class="line">&lt;/dict&gt;</span><br><span class="line">&lt;/plist&gt;</span><br></pre></td></tr></table></figure></p>
 <p>得到t_entitlements.plist后，把它作为参数传递给codesign，重新签名app文件：</p>
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">codesign -f -s <span class="string">"iPhone Distribution: abc"</span> /Users/pandora/Desktop/shell/oschina/Payload/iosapp<span class="variable">.app</span>/ --entitlements t_entitlements<span class="variable">.plist</span></span><br></pre></td></tr></table></figure>
-<p>最后，压缩Payload文件夹，转化为ipa格式的文件，终于安装成功！本次重签名未更改bundleID，安装的时候会覆盖之前从Appstore下载的应用。如果想更改应用bundleID，可以使用<a href="https://github.com/fastlane-old/sigh" target="_blank" rel="external">sigh</a>来重签名应用。</p>
+<p>最后，压缩Payload文件夹，转化为ipa格式的文件，终于安装成功！本次重签名未更改bundleID，安装的时候会覆盖之前从Appstore下载的应用。如果希望两个App共存的话，需要先替换App包中Info.plist的Bundle identifier的值：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/libexec/PlistBuddy -c <span class="string">"Set :CFBundleIdentifier com.baidu.abc"</span> ./Payload/iosapp<span class="variable">.app</span>/Info<span class="variable">.plist</span></span><br></pre></td></tr></table></figure></p>
+<p>然后再重新执行：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">codesign -f -s <span class="string">"iPhone Distribution: abc"</span> /Users/pandora/Desktop/shell/oschina/Payload/iosapp<span class="variable">.app</span>/ --entitlements t_entitlements<span class="variable">.plist</span></span><br></pre></td></tr></table></figure></p>
+<p>就得到了更改bundle id后的App包，将其压缩转换为ipa文件，使用同步堆安装至手机，就可以实现两个相同的App共存了。</p>
 <h4 id="参考：">参考：</h4><p><a href="https://objccn.io/issue-17-2/" target="_blank" rel="external">ObjC中国</a></p>
 <p><a href="http://www.jianshu.com/p/6b659c669338" target="_blank" rel="external">iOS重签名探索</a></p>
+<p><a href="http://www.enterpriseios.com/forum/topic/Resigning_3rd_party_apps" target="_blank" rel="external">Resigning 3rd party apps</a></p>
 <p><a href="http://www.pchou.info/ios/2015/12/14/ios-certification-and-code-sign.html" target="_blank" rel="external">漫谈iOS程序的证书和签名机制</a></p>
 <p><a href="http://gold.xitu.io/entry/56ee241c731956005d22ac8e" target="_blank" rel="external">iOS 冰与火之歌番外篇 - App Hook 答疑以及 iOS 9 砸壳</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://dama2716588.github.io/2016/09/07/逆向Appstore应用（二）/" data-id="cissh7vz60001pxb1mjn5ouhg" class="article-share-link">Share</a>
+      <a data-url="http://dama2716588.github.io/2016/09/07/逆向Appstore应用（二）/" data-id="cissvskg60001lhb1fjg8xgbp" class="article-share-link">Share</a>
       
       
     </footer>
@@ -230,7 +233,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://dama2716588.github.io/2016/07/20/逆向Appstore应用（一）/" data-id="cissh7vz80002pxb1hq77hkko" class="article-share-link">Share</a>
+      <a data-url="http://dama2716588.github.io/2016/07/20/逆向Appstore应用（一）/" data-id="cissvskg80002lhb1v0acegzz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ipa/">ipa</a></li></ul>
@@ -316,7 +319,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://dama2716588.github.io/2016/04/06/一款Watch OS版微博/" data-id="cissh7vzn000spxb1ym9wounn" class="article-share-link">Share</a>
+      <a data-url="http://dama2716588.github.io/2016/04/06/一款Watch OS版微博/" data-id="cissvskgo000slhb1prurldnb" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Watch-OS/">Watch OS</a></li></ul>
@@ -383,7 +386,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://dama2716588.github.io/2016/03/11/关于GCD的几个用例/" data-id="cissh7vzj000kpxb1kdx8ezom" class="article-share-link">Share</a>
+      <a data-url="http://dama2716588.github.io/2016/03/11/关于GCD的几个用例/" data-id="cissvskgk000klhb1stxz5hna" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GCD/">GCD</a></li></ul>
@@ -453,7 +456,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://dama2716588.github.io/2016/03/09/FMDB使用摘要/" data-id="cissh7vzw0015pxb1k67lmny7" class="article-share-link">Share</a>
+      <a data-url="http://dama2716588.github.io/2016/03/09/FMDB使用摘要/" data-id="cissvskgz0015lhb1hi68oycv" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fmdb/">fmdb</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sqlite/">sqlite</a></li></ul>
@@ -525,7 +528,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://dama2716588.github.io/2016/01/23/Github上SSH key 的使用与管理/" data-id="cissh7vzt000zpxb1sx33ernn" class="article-share-link">Share</a>
+      <a data-url="http://dama2716588.github.io/2016/01/23/Github上SSH key 的使用与管理/" data-id="cissvskgu000zlhb1zgv4pijp" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github/">github</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ssh/">ssh</a></li></ul>
@@ -609,7 +612,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://dama2716588.github.io/2016/01/13/聊一聊iOS后台任务/" data-id="cissh7vzd0007pxb1pwmwiy0l" class="article-share-link">Share</a>
+      <a data-url="http://dama2716588.github.io/2016/01/13/聊一聊iOS后台任务/" data-id="cissvskgd0007lhb1rp448lzu" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/background/">background</a></li></ul>
@@ -830,7 +833,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://dama2716588.github.io/2015/12/24/ iOS面试总结/" data-id="cissh7vyr0000pxb1xikrq181" class="article-share-link">Share</a>
+      <a data-url="http://dama2716588.github.io/2015/12/24/ iOS面试总结/" data-id="cissvskfq0000lhb1tnp5fe7p" class="article-share-link">Share</a>
       
       
     </footer>
@@ -893,7 +896,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://dama2716588.github.io/2015/12/14/几款mac小工具推荐/" data-id="cissh7vzh000fpxb17pmapgpr" class="article-share-link">Share</a>
+      <a data-url="http://dama2716588.github.io/2015/12/14/几款mac小工具推荐/" data-id="cissvskgh000flhb1d0n0i889" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mac/">mac</a></li></ul>
@@ -962,7 +965,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://dama2716588.github.io/2015/11/10/常用的SVN命令小结/" data-id="cissh7vzf000apxb1itrru6yk" class="article-share-link">Share</a>
+      <a data-url="http://dama2716588.github.io/2015/11/10/常用的SVN命令小结/" data-id="cissvskgf000alhb17rupjc7d" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/svn/">svn</a></li></ul>
