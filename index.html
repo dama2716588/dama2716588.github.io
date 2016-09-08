@@ -64,7 +64,7 @@
     <article id="post-逆向Appstore应用（二）" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/09/08/逆向Appstore应用（二）/" class="article-date">
-  <time datetime="2016-09-08T03:41:13.000Z" itemprop="datePublished">2016-09-08</time>
+  <time datetime="2016-09-08T11:14:19.000Z" itemprop="datePublished">2016-09-08</time>
 </a>
     
   </div>
@@ -135,7 +135,7 @@
 <figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">codesign -f -s <span class="string">"iPhone Distribution: abc"</span> /Users/pandora/Desktop/shell/oschina/Payload/iosapp<span class="variable">.app</span>/ --entitlements t_entitlements<span class="variable">.plist</span></span><br></pre></td></tr></table></figure>
 <p>最后，压缩Payload文件夹，转化为ipa格式的文件，终于安装成功！本次重签名未更改bundleID，安装的时候会覆盖之前从Appstore下载的应用。如果希望两个或多个App共存的话，需要先替换App包中Info.plist的Bundle identifier的值：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/libexec/PlistBuddy -c <span class="string">"Set :CFBundleIdentifier com.baidu.abc"</span> ./Payload/iosapp<span class="variable">.app</span>/Info<span class="variable">.plist</span></span><br></pre></td></tr></table></figure></p>
 <p>然后再重新执行：<br><figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">codesign -f -s <span class="string">"iPhone Distribution: abc"</span> /Users/pandora/Desktop/shell/oschina/Payload/iosapp<span class="variable">.app</span>/ --entitlements t_entitlements<span class="variable">.plist</span></span><br></pre></td></tr></table></figure></p>
-<p>就得到了更改bundle id后的App包，将其压缩转换为ipa文件，使用同步堆安装至手机，就可以实现多个相同的App共存了。</p>
+<p>就得到了更改bundle id后的App包，将其压缩转换为ipa文件，使用同步堆安装至手机，就可以实现多个相同的App共存了。总结，共需6步：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#1，解密二进制文件</span><br><span class="line">#2，替换embedded.mobileprovision</span><br><span class="line">#3，修改Bundle ID</span><br><span class="line">$ /usr/libexec/PlistBuddy -c "Set :CFBundleIdentifier com.baidu.bac" ./Payload/iosapp.app/Info.plist</span><br><span class="line">#4，生成mobileprovision证书对应的entitlements文件</span><br><span class="line">$ security cms -D -i "./Payload/iosapp.app/embedded.mobileprovision" &gt; t_entitlements_full.plist</span><br><span class="line">$ /usr/libexec/PlistBuddy -x -c 'Print:Entitlements' t_entitlements_full.plist &gt; t_entitlements.plist</span><br><span class="line">#5，将Certificate和entitlements作为参数，传递给codesign签名</span><br><span class="line">$ codesign -f -s "iPhone Distribution: abc" /Users/pandora/Desktop/shell/demo/oschina/Payload/iosapp.app/ --entitlements t_entitlements.plist</span><br><span class="line"># 成功提示：replacing existing signature</span><br><span class="line">#6，压缩签名后的Payload文件夹，转换zip为ipa格式，安装即可。</span><br></pre></td></tr></table></figure></p>
 <h4 id="参考：">参考：</h4><p><a href="https://objccn.io/issue-17-2/" target="_blank" rel="external">ObjC中国</a></p>
 <p><a href="http://www.jianshu.com/p/6b659c669338" target="_blank" rel="external">iOS重签名探索</a></p>
 <p><a href="http://www.enterpriseios.com/forum/topic/Resigning_3rd_party_apps" target="_blank" rel="external">Resigning 3rd party apps</a></p>
@@ -145,7 +145,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://dama2716588.github.io/2016/09/08/逆向Appstore应用（二）/" data-id="cistrmgqf0001eqb1vfgfaetu" class="article-share-link">Share</a>
+      <a data-url="http://dama2716588.github.io/2016/09/08/逆向Appstore应用（二）/" data-id="cisu8m6wt0001qub1xwh8r23w" class="article-share-link">Share</a>
       
       
     </footer>
@@ -234,7 +234,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://dama2716588.github.io/2016/07/20/逆向Appstore应用（一）/" data-id="cistrmgqh0002eqb17k2fgqls" class="article-share-link">Share</a>
+      <a data-url="http://dama2716588.github.io/2016/07/20/逆向Appstore应用（一）/" data-id="cisu8m6wv0002qub1i8gmw4da" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ipa/">ipa</a></li></ul>
@@ -320,7 +320,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://dama2716588.github.io/2016/04/06/一款Watch OS版微博/" data-id="cistrmgqx000seqb1mu03x7cf" class="article-share-link">Share</a>
+      <a data-url="http://dama2716588.github.io/2016/04/06/一款Watch OS版微博/" data-id="cisu8m6xa000squb1t77jolny" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Watch-OS/">Watch OS</a></li></ul>
@@ -387,7 +387,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://dama2716588.github.io/2016/03/11/关于GCD的几个用例/" data-id="cistrmgqs000keqb1rwti592k" class="article-share-link">Share</a>
+      <a data-url="http://dama2716588.github.io/2016/03/11/关于GCD的几个用例/" data-id="cisu8m6x5000kqub1foq2aa4d" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GCD/">GCD</a></li></ul>
@@ -457,7 +457,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://dama2716588.github.io/2016/03/09/FMDB使用摘要/" data-id="cistrmgr50015eqb1m6xniajr" class="article-share-link">Share</a>
+      <a data-url="http://dama2716588.github.io/2016/03/09/FMDB使用摘要/" data-id="cisu8m6xi0015qub13ublv2ce" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fmdb/">fmdb</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sqlite/">sqlite</a></li></ul>
@@ -529,7 +529,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://dama2716588.github.io/2016/01/23/Github上SSH key 的使用与管理/" data-id="cistrmgr3000zeqb1ds5wp5cj" class="article-share-link">Share</a>
+      <a data-url="http://dama2716588.github.io/2016/01/23/Github上SSH key 的使用与管理/" data-id="cisu8m6xg000zqub1hq5nn1e4" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github/">github</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ssh/">ssh</a></li></ul>
@@ -613,7 +613,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://dama2716588.github.io/2016/01/13/聊一聊iOS后台任务/" data-id="cistrmgqm0007eqb16arqy96v" class="article-share-link">Share</a>
+      <a data-url="http://dama2716588.github.io/2016/01/13/聊一聊iOS后台任务/" data-id="cisu8m6x00007qub1yk1yntf4" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/background/">background</a></li></ul>
@@ -834,7 +834,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://dama2716588.github.io/2015/12/24/ iOS面试总结/" data-id="cistrmgq00000eqb1cp066q6n" class="article-share-link">Share</a>
+      <a data-url="http://dama2716588.github.io/2015/12/24/ iOS面试总结/" data-id="cisu8m6w80000qub1iaqj0mx5" class="article-share-link">Share</a>
       
       
     </footer>
@@ -897,7 +897,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://dama2716588.github.io/2015/12/14/几款mac小工具推荐/" data-id="cistrmgqq000feqb1120kq8ud" class="article-share-link">Share</a>
+      <a data-url="http://dama2716588.github.io/2015/12/14/几款mac小工具推荐/" data-id="cisu8m6x3000fqub1pzeaghal" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mac/">mac</a></li></ul>
@@ -966,7 +966,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://dama2716588.github.io/2015/11/10/常用的SVN命令小结/" data-id="cistrmgqo000aeqb1q7e0fo09" class="article-share-link">Share</a>
+      <a data-url="http://dama2716588.github.io/2015/11/10/常用的SVN命令小结/" data-id="cisu8m6x2000aqub16eyntr02" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/svn/">svn</a></li></ul>
